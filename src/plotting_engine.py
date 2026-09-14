@@ -24,14 +24,10 @@ def generate_suite(event_log_df, output_dir, prefix="", topics=['climate']):
             t_df = topic_df[topic_df['treatment'] == treatment]
             safe_prefix = f"{prefix}_{treatment}_{topic}" if is_dual else f"{prefix}_{treatment}"
             
-            plot_diet_categories(t_df, output_dir, safe_prefix)
-            plot_diet_vs_amplification(t_df, output_dir, safe_prefix)
+            plot_chronological_feed_amp(t_df, output_dir, safe_prefix)
             plot_temporal_heatmaps(t_df, output_dir, safe_prefix)
             plot_feed_sources(t_df, output_dir, safe_prefix)
             plot_exposure_distributions(t_df, output_dir, safe_prefix, is_sim)
-            plot_contrary_neighbors_effect(t_df, output_dir, safe_prefix)
-            if is_dual and (topic != config.EMPIRICAL_BASE_TOPIC and topic != 'base_topic'):
-                plot_cross_pressured_profiles(t_df, output_dir, safe_prefix)
 
 def generate_share_distributions(event_log_df, output_dir, prefix="", topics=['climate']):
     if event_log_df.empty or 'treatment' not in event_log_df.columns: return
@@ -78,13 +74,13 @@ def plot_share_distributions(df, output_dir, prefix, is_sim=False):
     
     if has_center:
         width = 0.25
-        ax.bar(x_ticks - width, l_dist, width, color='#3498db', edgecolor='black', zorder=3, label='Combined Left (L/CL)')
+        ax.bar(x_ticks - width, l_dist, width, color='#2980b9', edgecolor='black', zorder=3, label='Combined Left (L/CL)')
         ax.bar(x_ticks, c_dist, width, color='#bdc3c7', edgecolor='black', zorder=3, label='Pure Center (C)')
-        ax.bar(x_ticks + width, r_dist, width, color='#e74c3c', edgecolor='black', zorder=3, label='Combined Right (R/CR)')
+        ax.bar(x_ticks + width, r_dist, width, color='#c0392b', edgecolor='black', zorder=3, label='Combined Right (R/CR)')
     else:
         width = 0.35
-        ax.bar(x_ticks - width/2, l_dist, width, color='#3498db', edgecolor='black', zorder=3, label='Combined Left (L/CL)')
-        ax.bar(x_ticks + width/2, r_dist, width, color='#e74c3c', edgecolor='black', zorder=3, label='Combined Right (R/CR)')
+        ax.bar(x_ticks - width/2, l_dist, width, color='#2980b9', edgecolor='black', zorder=3, label='Combined Left (L/CL)')
+        ax.bar(x_ticks + width/2, r_dist, width, color='#c0392b', edgecolor='black', zorder=3, label='Combined Right (R/CR)')
     
     ax.set_xlabel("Total Items Shared")
     ax.set_ylabel("Avg Participants" if is_sim else "Number of Participants")
@@ -136,13 +132,13 @@ def plot_exposure_distributions(df, output_dir, prefix, is_sim=False):
         
         if has_center:
             width = 0.25
-            ax.bar(x_ticks - width, l_dist, width, color='#3498db', edgecolor='black', zorder=3, label='Left (L/CL)')
+            ax.bar(x_ticks - width, l_dist, width, color='#2980b9', edgecolor='black', zorder=3, label='Left (L/CL)')
             ax.bar(x_ticks, c_dist, width, color='#bdc3c7', edgecolor='black', zorder=3, label='Center (C)')
-            ax.bar(x_ticks + width, r_dist, width, color='#e74c3c', edgecolor='black', zorder=3, label='Right (R/CR)')
+            ax.bar(x_ticks + width, r_dist, width, color='#c0392b', edgecolor='black', zorder=3, label='Right (R/CR)')
         else:
             width = 0.35
-            ax.bar(x_ticks - width/2, l_dist, width, color='#3498db', edgecolor='black', zorder=3, label='Left (L/CL)')
-            ax.bar(x_ticks + width/2, r_dist, width, color='#e74c3c', edgecolor='black', zorder=3, label='Right (R/CR)')
+            ax.bar(x_ticks - width/2, l_dist, width, color='#2980b9', edgecolor='black', zorder=3, label='Left (L/CL)')
+            ax.bar(x_ticks + width/2, r_dist, width, color='#c0392b', edgecolor='black', zorder=3, label='Right (R/CR)')
         
         ax.set_ylabel("Avg Participants" if is_sim else "Participants")
         ax.set_xlabel("Number of Items Seen")
@@ -157,111 +153,68 @@ def plot_exposure_distributions(df, output_dir, prefix, is_sim=False):
     plt.savefig(os.path.join(output_dir, f"Plot_05_Exposure_Dist_{prefix}.pdf"), dpi=300, bbox_inches='tight')
     plt.close(fig)
 
-def plot_diet_categories(df, output_dir, prefix):
-    fig, ax = plt.subplots(figsize=(10, 6))
-    item_colors = {'Left': '#3498db', 'Center': '#bdc3c7', 'Right': '#e74c3c'}
-    x_indices = np.arange(config.ROUNDS)
-    
-    seen_df = df[df['action'] == 'seen'].copy()
-    if seen_df.empty or 'chamber' not in seen_df.columns: return
-    
-    left_chamber_diets = {'Left': [], 'Center': [], 'Right': []}
-    right_chamber_diets = {'Left': [], 'Center': [], 'Right': []}
-    
-    for r in range(1, config.ROUNDS + 1):
-        r_df = seen_df[seen_df['round'] == r]
-        
-        def calc_props(target_chamber):
-            sub = r_df[r_df['chamber'] == target_chamber]
-            tot = len(sub) if len(sub) > 0 else 1
-            return {
-                'Left': len(sub[sub['item_cat'].isin(['Left', 'Center-Left'])]) / tot,
-                'Center': len(sub[sub['item_cat'] == 'Center']) / tot,
-                'Right': len(sub[sub['item_cat'].isin(['Right', 'Center-Right'])]) / tot
-            }
-            
-        l_props = calc_props('Left')
-        r_props = calc_props('Right')
-        
-        for k in ['Left', 'Center', 'Right']:
-            left_chamber_diets[k].append(l_props[k])
-            right_chamber_diets[k].append(r_props[k])
-
-    bottom_l, bottom_r = np.zeros(config.ROUNDS), np.zeros(config.ROUNDS)
-    width = 0.35
-    
-    for k in ['Left', 'Center', 'Right']:
-        ax.bar(x_indices - width/2, left_chamber_diets[k], width, bottom=bottom_l, color=item_colors[k], edgecolor='white')
-        bottom_l += np.array(left_chamber_diets[k])
-        ax.bar(x_indices + width/2, right_chamber_diets[k], width, bottom=bottom_r, color=item_colors[k], edgecolor='black', hatch='//')
-        bottom_r += np.array(right_chamber_diets[k])
-
-    ax.set_ylabel("Proportion of Total Feed")
-    ax.set_ylim(0, 1.05)
-    ax.set_xticks(x_indices)
-    ax.set_xticklabels([f"Round {r}\n(L | R)" for r in range(1, config.ROUNDS + 1)])
-    
-    legend_elements = [
-        mpatches.Patch(color='#3498db', label='Left Items'), 
-        mpatches.Patch(color='#bdc3c7', label='Center Items'), 
-        mpatches.Patch(color='#e74c3c', label='Right Items'),
-        mpatches.Patch(facecolor='gray', edgecolor='white', label='Left Chamber'), 
-        mpatches.Patch(facecolor='gray', edgecolor='black', hatch='//', label='Right Chamber')
-    ]
-        
-    ax.legend(handles=legend_elements, loc='upper center', bbox_to_anchor=(0.5, 1.15), ncol=3, fontsize='small')
-    plt.title(f"Diet by Structural Chamber\n({prefix})", pad=20)
-    plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, f"Plot_01_Diet_{prefix}.pdf"), dpi=300)
-    plt.close(fig)
-
-def plot_diet_vs_amplification(df, output_dir, prefix):
+def plot_chronological_feed_amp(df, output_dir, prefix):
+    """
+    Replaces old Plot 01 & 08.
+    Creates two 5-category stacked bar charts: 01A (Incoming Diet) and 01B (Outgoing Amplification).
+    """
     if df.empty or 'chamber' not in df.columns: return
     
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6), sharey=True)
-    item_colors = {'Left': '#3498db', 'Center': '#bdc3c7', 'Right': '#e74c3c'}
+    cats = ['Left', 'Center-Left', 'Center', 'Center-Right', 'Right']
+    colors = {'Left': '#2980b9', 'Center-Left': '#7fb3d5', 'Center': '#bdc3c7', 'Center-Right': '#d98880', 'Right': '#c0392b'}
+    x_indices = np.arange(config.ROUNDS)
+    width = 0.35
     
-    for idx, chamber in enumerate(['Left', 'Right']):
-        ax = axes[idx]
-        chamber_df = df[df['chamber'] == chamber]
-        if chamber_df.empty: continue
+    for action, plot_name, title in [('seen', '01A_Incoming_Diet', 'Incoming Feed (Diet)'), ('shared', '01B_Outgoing_Amp', 'Outgoing Shares (Amplification)')]:
+        act_df = df[df['action'] == action]
+        if act_df.empty: continue
+        
+        fig, ax = plt.subplots(figsize=(10, 6))
+        
+        left_chamber_data = {c: [] for c in cats}
+        right_chamber_data = {c: [] for c in cats}
+        
+        for r in range(1, config.ROUNDS + 1):
+            r_df = act_df[act_df['round'] == r]
             
-        seen_tot = len(chamber_df[chamber_df['action'] == 'seen'])
-        share_tot = len(chamber_df[chamber_df['action'] == 'shared'])
-        
-        seen_props = {k: 0.0 for k in ['Left', 'Center', 'Right']}
-        share_props = {k: 0.0 for k in ['Left', 'Center', 'Right']}
-        
-        if seen_tot > 0:
-            seen_props['Left'] = len(chamber_df[(chamber_df['action'] == 'seen') & (chamber_df['item_cat'].isin(['Left', 'Center-Left']))]) / seen_tot
-            seen_props['Center'] = len(chamber_df[(chamber_df['action'] == 'seen') & (chamber_df['item_cat'] == 'Center')]) / seen_tot
-            seen_props['Right'] = len(chamber_df[(chamber_df['action'] == 'seen') & (chamber_df['item_cat'].isin(['Right', 'Center-Right']))]) / seen_tot
+            def calc_props(chamber):
+                sub = r_df[r_df['chamber'] == chamber]
+                tot = len(sub) if len(sub) > 0 else 1
+                return {c: len(sub[sub['item_cat'] == c]) / tot for c in cats}
+                
+            l_props = calc_props('Left')
+            r_props = calc_props('Right')
             
-        if share_tot > 0:
-            share_props['Left'] = len(chamber_df[(chamber_df['action'] == 'shared') & (chamber_df['item_cat'].isin(['Left', 'Center-Left']))]) / share_tot
-            share_props['Center'] = len(chamber_df[(chamber_df['action'] == 'shared') & (chamber_df['item_cat'] == 'Center')]) / share_tot
-            share_props['Right'] = len(chamber_df[(chamber_df['action'] == 'shared') & (chamber_df['item_cat'].isin(['Right', 'Center-Right']))]) / share_tot
-
-        x = np.arange(3)
-        width = 0.35
+            for c in cats:
+                left_chamber_data[c].append(l_props[c])
+                right_chamber_data[c].append(r_props[c])
+                
+        bottom_l = np.zeros(config.ROUNDS)
+        bottom_r = np.zeros(config.ROUNDS)
         
-        ax.bar(x - width/2, list(seen_props.values()), width, label='Incoming Feed (Diet)', color=[item_colors[k] for k in seen_props.keys()], alpha=0.5, edgecolor='black')
-        ax.bar(x + width/2, list(share_props.values()), width, label='Outgoing Shares (Amp)', color=[item_colors[k] for k in share_props.keys()], edgecolor='black')
+        for c in cats:
+            # Left Chamber Bar
+            ax.bar(x_indices - width/2, left_chamber_data[c], width, bottom=bottom_l, color=colors[c], edgecolor='white')
+            bottom_l += np.array(left_chamber_data[c])
+            
+            # Right Chamber Bar
+            ax.bar(x_indices + width/2, right_chamber_data[c], width, bottom=bottom_r, color=colors[c], edgecolor='black', hatch='//')
+            bottom_r += np.array(right_chamber_data[c])
+            
+        ax.set_ylabel("Proportion of Volume")
+        ax.set_ylim(0, 1.05)
+        ax.set_xticks(x_indices)
+        ax.set_xticklabels([f"Round {r}\n(L | R)" for r in range(1, config.ROUNDS + 1)])
         
-        ax.set_title(f"{chamber} Chamber", fontweight='bold')
-        ax.set_xticks(x)
-        ax.set_xticklabels(['Left Items', 'Center Items', 'Right Items'])
-        ax.set_ylim(0, 1.0)
-        if idx == 0: ax.set_ylabel("Proportion of Volume")
-        ax.grid(axis='y', alpha=0.3)
+        legend_elements = [mpatches.Patch(color=colors[c], label=c) for c in cats]
+        legend_elements.append(mpatches.Patch(facecolor='gray', edgecolor='white', label='Left Chamber'))
+        legend_elements.append(mpatches.Patch(facecolor='gray', edgecolor='black', hatch='//', label='Right Chamber'))
         
-    handles = [mpatches.Patch(facecolor='gray', alpha=0.5, edgecolor='black', label='Incoming Feed (Diet)'),
-               mpatches.Patch(facecolor='gray', alpha=1.0, edgecolor='black', label='Outgoing Shares (Amplification)')]
-    fig.legend(handles=handles, loc='upper center', bbox_to_anchor=(0.5, 1.05), ncol=2)
-    plt.suptitle(f"Diet vs. Amplification Gap\n({prefix})", y=1.15, fontsize=14)
-    plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, f"Plot_08_Diet_vs_Amp_{prefix}.pdf"), dpi=300, bbox_inches='tight')
-    plt.close(fig)
+        ax.legend(handles=legend_elements, loc='upper center', bbox_to_anchor=(0.5, 1.15), ncol=4, fontsize='small')
+        plt.title(f"{title} by Structural Chamber\n({prefix})", pad=20, fontweight='bold')
+        plt.tight_layout()
+        plt.savefig(os.path.join(output_dir, f"Plot_{plot_name}_{prefix}.pdf"), dpi=300)
+        plt.close(fig)
 
 def plot_feed_sources(df, output_dir, prefix):
     metrics = stats_suite.calculate_sourcing_metrics(df)
@@ -346,72 +299,6 @@ def plot_temporal_heatmaps(df, output_dir, prefix):
         plt.savefig(os.path.join(output_dir, f"Plot_{name}_{prefix}_SideBySide.pdf"), dpi=300, bbox_inches='tight')
         plt.close(fig_main)
 
-def plot_contrary_neighbors_effect(df, output_dir, prefix):
-    if df.empty or 'contrary_neighbors' not in df.columns: return
-    
-    # Calculate share rate per user
-    user_stats = df.groupby(['user_id', 'contrary_neighbors', 'action']).size().unstack(fill_value=0).reset_index()
-    for col in ['seen', 'shared']: 
-        if col not in user_stats.columns: user_stats[col] = 0
-    
-    user_stats['share_rate'] = np.where(user_stats['seen'] > 0, user_stats['shared'] / user_stats['seen'], np.nan)
-    user_stats = user_stats.dropna(subset=['share_rate'])
-    if user_stats.empty: return
-
-    fig, ax = plt.subplots(figsize=(8, 6))
-    
-    sns.pointplot(data=user_stats, x='contrary_neighbors', y='share_rate', errorbar=('ci', 95), capsize=.1, color='#2c3e50', ax=ax, markers='o', zorder=5)
-    sns.stripplot(data=user_stats, x='contrary_neighbors', y='share_rate', color='#3498db', alpha=0.4, jitter=True, ax=ax, zorder=1)
-    
-    ax.set_title(f"Effect of Contrary Neighbors on Share Rate\n({prefix})", fontweight='bold')
-    ax.set_xlabel("Number of Contrary Neighbors")
-    ax.set_ylabel("Individual Share Rate")
-    ax.set_ylim(0, 1.05)
-    ax.grid(axis='y', alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, f"Plot_09_Contrary_Neighbors_{prefix}.pdf"), dpi=300, bbox_inches='tight')
-    plt.close(fig)
-
-def plot_cross_pressured_profiles(df, output_dir, prefix):
-    """Specifically plots behavior of the 4 2D quadrants (LL, LR, RL, RR) on the secondary topic."""
-    if df.empty or 'chamber' not in df.columns: return
-    
-    # Identify the exact 2D quadrant based on Chamber (Base Topic) + User_Cat (Secondary Topic)
-    def map_quadrant(row):
-        base_lean = 'L' if row['chamber'] == 'Left' else 'R'
-        side_lean = 'L' if 'Left' in row['user_cat'] else ('R' if 'Right' in row['user_cat'] else 'C')
-        return f"{base_lean}{side_lean}"
-        
-    df['quadrant'] = df.apply(map_quadrant, axis=1)
-    
-    # We only want to plot the strict dual-profiles (ignore Center users here for clarity)
-    target_quads = ['LL', 'LR', 'RL', 'RR']
-    quad_df = df[df['quadrant'].isin(target_quads)]
-    if quad_df.empty: return
-    
-    user_stats = quad_df.groupby(['user_id', 'quadrant', 'action']).size().unstack(fill_value=0).reset_index()
-    for col in ['seen', 'shared']: 
-        if col not in user_stats.columns: user_stats[col] = 0
-    user_stats['share_rate'] = np.where(user_stats['seen'] > 0, user_stats['shared'] / user_stats['seen'], np.nan)
-    user_stats = user_stats.dropna(subset=['share_rate'])
-    
-    fig, ax = plt.subplots(figsize=(8, 6))
-    order = ['LL', 'LR', 'RL', 'RR']
-    
-    sns.barplot(data=user_stats, x='quadrant', y='share_rate', order=order, color='#bdc3c7', edgecolor='black', errorbar=None, ax=ax, alpha=0.7)
-    sns.stripplot(data=user_stats, x='quadrant', y='share_rate', order=order, color='#c0392b', alpha=0.6, jitter=True, ax=ax)
-    
-    ax.set_title(f"Secondary Topic Sharing by Cross-Pressured Profiles\n({prefix})", fontweight='bold')
-    ax.set_xlabel("Profile (Base Topic | Secondary Topic)")
-    ax.set_ylabel("Individual Share Rate")
-    ax.set_ylim(0, 1.05)
-    ax.grid(axis='y', alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, f"Plot_10_Cross_Pressured_{prefix}.pdf"), dpi=300, bbox_inches='tight')
-    plt.close(fig)
-
 def generate_correlation_heatmaps(phase2_csv, output_dir, topics=['climate'], empirical=False, phase1_csv=None):
     if phase1_csv is None:
         base_dir = os.path.dirname(phase2_csv)
@@ -429,12 +316,28 @@ def generate_correlation_heatmaps(phase2_csv, output_dir, topics=['climate'], em
     else:
         df = df2
         
-    if 'participant._is_bot' in df.columns: df = df[df['participant._is_bot'] == 0]
+    if 'participant._is_bot' in df.columns: 
+        df = df[df['participant._is_bot'] == 0]
+        
     is_dual = len(topics) > 1
     
     for topic in topics:
         # STRICT PHASE 1 ANCHORING
-        op_cols = [c for c in df.columns if topic in c and ('phase_1' in c or 'baseline' in c)]
+        op_cols = []
+        if is_dual:
+            targets = [f'{topic}_opinion_1', f'{topic}_opinion_2']
+        else:
+            targets = [
+                f'{topic}_opinion_1', f'{topic}_opinion_2', f'{topic}_opinion_3', f'{topic}_opinion_4', 
+                'opinion_1', 'opinion_2', 'opinion_3', 'opinion_4', 
+                'baseline_opinion_1', 'baseline_opinion_2', 'baseline_opinion_3', 'baseline_opinion_4'
+            ]
+            
+        for t in targets:
+            match = next((c for c in df.columns if t in c and ('phase_1' in c or 'participant' in c)), None)
+            if match and match not in op_cols:
+                op_cols.append(match)
+                
         op_cols = sorted(list(set(op_cols)))
         
         if not op_cols: continue
@@ -510,6 +413,6 @@ def generate_correlation_heatmaps(phase2_csv, output_dir, topics=['climate'], em
         safe_suffix = f"_{topic}" if is_dual else ""
         _plot_hm(['Left', 'Center', 'Right'], '3', '3-Bucket Correlation', f'Plot_07A_Corr{safe_suffix}.pdf')
         
-        # Only output the noisy 5-Bucket correlation if Empirical
+        # Only output the 5-Bucket correlation if Empirical data
         if empirical:
             _plot_hm(leanings_5, '5', '5-Bucket Correlation', f'Plot_07C_Corr{safe_suffix}.pdf')

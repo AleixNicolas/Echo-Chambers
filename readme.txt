@@ -1,14 +1,14 @@
 =============================================================================
- ECHO CHAMBER & POLARIZATION SIMULATION PIPELINE (v2.0)
+ ECHO CHAMBER & POLARIZATION SIMULATION PIPELINE (v2.2)
 =============================================================================
 
 This repository evaluates empirical oTree network experiments and runs 
 large-scale Monte Carlo stochastic simulations to analyze algorithmic 
 interventions on echo chamber formation. 
 
-With the v2.0 update, the pipeline fully supports Dual-Topic multiplexing, 
-decoupling physical network topology (Base Topic) from information diffusion 
-(Secondary Topic) to accurately measure cross-pressured sharing behaviors.
+The pipeline supports Dual-Topic multiplexing, decoupling physical network 
+topology (Base Topic) from information diffusion (Secondary Topic) to 
+accurately measure cross-pressured sharing behaviors.
 
 --- ARCHITECTURE ------------------------------------------------------------
 Root Directory (Execution Scripts):
@@ -35,6 +35,7 @@ Before running, verify the Master Switches in `config.py`:
 - EMPIRICAL_BASE_TOPIC       : The topic determining physical network clustering (e.g., "imm").
 - EMPIRICAL_SIDE_TOPIC       : The secondary topic diffusing through the network (e.g., "climate").
 - INVERT_OPINIONS_FOR        : Topics requiring a 1-5 scale inversion (so '5' always equals Left).
+- DETAILED_SIM_N             : List of specific N values to generate plots for during sweeps.
 
 --- EXECUTION ORDER ---------------------------------------------------------
 1. Configure settings in `config.py` (set `CURRENT_EMPIRICAL_TRIAL_ID`).
@@ -45,11 +46,12 @@ Before running, verify the Master Switches in `config.py`:
 6. Run `python run_power_analysis.py` for statistical confidence sweeps.
 
 --- PLOT INDEX --------------------------------------------------------------
-- Plot 01 (Diet by Chamber)      : Proportion of Left/Center/Right news consumed, grouped 
-                                   securely by the physical Left vs. Right network chambers.
+- Plots 01A & 01B (Diet/Amp)     : Chronological stacked bar charts breaking down the 5-category 
+                                   ideological composition of the Incoming Feed (01A) vs. the 
+                                   Outgoing Shares (01B), separated by physical network chamber.
 - Plots 02 & 03 (Heatmaps)       : Matrix visualizations of feed composition and sharing rates, 
                                    cross-tabulated into distinct graphs for the Left and Right 
-                                   physical chambers to expose cross-pressured behaviors.
+                                   physical chambers.
 - Plot 04 (Sourcing)             : Tracks where items originate (Initial Pool, Neighbor Shares, 
                                    or System Backlog) over the duration of the trial.
 - Plot 05 & 06 (Distributions)   : Histograms displaying the spread of item exposure and active 
