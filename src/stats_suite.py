@@ -27,8 +27,8 @@ def calc_rate(mat, base_mat, mode='row'):
             denom = base_mat
             rates = np.where(denom > 0, mat / denom, 0)
             
+    # Mask initialized but [2, :] (Center) is NO LONGER hidden
     mask = np.zeros((5, 5), dtype=bool)
-    mask[2, :] = True
     
     if mode == 'row': mask = mask | np.broadcast_to(denom == 0, rates.shape) 
     else: mask = mask | (denom == 0)
@@ -84,11 +84,6 @@ def calculate_sourcing_metrics(df):
     return metrics
 
 def extract_node_outcomes(seen_events, nodes_data, cat, metric, window_size=None, topic_filter=None):
-    """
-    Extracts polarization outcomes.
-    nodes_data can be {node_str: {'opinion': val}} or {node_int: val}.
-    topic_filter allows isolating events from a specific topic ('base_topic' or 'side_topic').
-    """
     valid_nodes = []
     for n_key, info in nodes_data.items():
         op = info['opinion'] if (isinstance(info, dict) and 'opinion' in info) else float(info)
@@ -106,7 +101,6 @@ def extract_node_outcomes(seen_events, nodes_data, cat, metric, window_size=None
         i_lean = float(event[2])
         r = int(event[3])
         
-        # Topic filter verification
         if topic_filter is not None and len(event) >= 8:
             if event[7] != topic_filter:
                 continue

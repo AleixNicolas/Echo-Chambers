@@ -31,43 +31,19 @@ def run_simulation_batch():
                     os.makedirs(plots_dir, exist_ok=True)
 
                     print(f"   Running Segregated Treatment ({config.NUM_TRIALS} trials)...")
-                    seg_results = core_engine.run_batch(
-                        baseline_data["segregated_baseline"], 
-                        global_pool, 
-                        regime_rules, 
-                        config.NUM_TRIALS, 
-                        priority_flag
-                    )
+                    seg_results = core_engine.run_batch(baseline_data["segregated_baseline"], global_pool, regime_rules, config.NUM_TRIALS, priority_flag)
                     
                     print(f"   Running Integrated Treatment ({config.NUM_TRIALS} trials)...")
-                    int_results = core_engine.run_batch(
-                        baseline_data["integrated_baseline"], 
-                        global_pool, 
-                        regime_rules, 
-                        config.NUM_TRIALS, 
-                        priority_flag
-                    )
+                    int_results = core_engine.run_batch(baseline_data["integrated_baseline"], global_pool, regime_rules, config.NUM_TRIALS, priority_flag)
                     
                     print("   Formatting Data and Generating Multi-Topic Plots...")
-                    results_store = {'segregated': seg_results, 'integrated': int_results}
+                    results_store = {'segregated': seg_res, 'integrated': int_results}
                     sweep_aggregator[n] = results_store
                     
-                    # Convert to Universal DataFrame with dual-topic logging
                     event_log_df = data_wrangle.build_simulation_event_log(results_store)
                     
-                    # Generates plots for both base_topic and side_topic
-                    plotting_engine.generate_suite(
-                        event_log_df, 
-                        plots_dir, 
-                        prefix=f"Sim_N{n}_K{k}", 
-                        topics=config.SIM_TOPICS
-                    )
-                    plotting_engine.generate_share_distributions(
-                        event_log_df,
-                        plots_dir,
-                        prefix=f"Sim_N{n}_K{k}",
-                        topics=config.SIM_TOPICS
-                    )
+                    plotting_engine.generate_suite(event_log_df, plots_dir, prefix=f"Sim_N{n}_K{k}", topics=config.SIM_TOPICS)
+                    plotting_engine.generate_share_distributions(event_log_df, plots_dir, prefix=f"Sim_N{n}_K{k}", topics=config.SIM_TOPICS)
                 
                 if sweep_aggregator:
                     reporting_engine.export_sweep_summary(sweep_aggregator, sweep_dir, k, regime_name, priority_str)

@@ -34,29 +34,24 @@ def _safe_parse_dict(val):
     return {}
 
 def get_col(base, r, topic, is_dual):
-    """Dynamically generate oTree column names matching the exact CSV headers."""
     return f'phase_2.{r}.player.{topic}_{base}' if is_dual else f'phase_2.{r}.player.{base}'
 
 def get_treatment(row):
-    """Safely extract the network treatment structure for the user."""
     for col in ['phase_2.1.player.network_treatment', 'participant.network_treatment']:
         if col in row and pd.notna(row[col]) and str(row[col]).strip():
             return str(row[col]).strip()
     return 'segregated'
 
 def get_node_id(row, topic, is_dual):
-    """Safely extract the topic-specific or generic node ID to track network position."""
     col_dual = f'phase_2.1.player.{topic}_node_id'
     if is_dual and col_dual in row and pd.notna(row[col_dual]) and str(row[col_dual]).strip():
         return str(int(float(row[col_dual])))
-    
     for col in ['phase_2.1.player.node_id', 'participant.node_id']:
         if col in row and pd.notna(row[col]) and str(row[col]).strip():
             return str(int(float(row[col])))
     return "-1"
 
 def get_user_opinion(row, network_data, topic, is_dual):
-    """Robustly extract user baseline opinion on a 1-5 scale."""
     col_names = []
     if is_dual:
         col_names = [
@@ -67,14 +62,10 @@ def get_user_opinion(row, network_data, topic, is_dual):
         ]
     else:
         col_names = [
-            f'phase_1.1.player.{topic}_opinion_4',
-            f'phase_2.1.player.{topic}_opinion_4',
-            f'participant.{topic}_opinion_4', 
-            f'{topic}_opinion_4',
-            'phase_1.1.player.opinion_4',
-            'phase_2.1.player.opinion_4',
-            'participant.opinion_4',
-            'opinion_4'
+            f'phase_1.1.player.{topic}_opinion_4', f'phase_2.1.player.{topic}_opinion_4',
+            f'participant.{topic}_opinion_4', f'{topic}_opinion_4',
+            'phase_1.1.player.opinion_4', 'phase_2.1.player.opinion_4',
+            'participant.opinion_4', 'opinion_4'
         ]
         
     for col in col_names:
@@ -82,7 +73,7 @@ def get_user_opinion(row, network_data, topic, is_dual):
             try:
                 val = float(row[col])
                 val = max(1.0, min(5.0, val))
-                if topic in ['imm', 'immigration']:
+                if topic in config.INVERT_OPINIONS_FOR:
                     return 6.0 - val
                 else:
                     return val
@@ -242,8 +233,10 @@ def build_empirical_event_log(phase1_csv_path, phase2_csv_path, network_map_path
     
     with open(network_map_path, 'r') as f: network_data = json.load(f)
     is_dual = len(topics) > 1
-    
     event_logs = []
+    
+    # Identify which index of the 2D category string represents the base topic
+    base_idx = 0 if config.EMPIRICAL_BASE_TOPIC.lower() == 'climate' else 1
     
     for topic in topics:
         uid_to_node, node_to_uid = {}, {}
@@ -254,11 +247,9 @@ def build_empirical_event_log(phase1_csv_path, phase2_csv_path, network_map_path
             if node_id != "-1":
                 uid = str(row.get('participant.code', row.name)).upper()
                 treatment = get_treatment(row)
-                
                 uid_to_node[uid] = (treatment, node_id)
                 if treatment not in node_to_uid: node_to_uid[treatment] = {}
                 node_to_uid[treatment][node_id] = uid
-                
                 op_raw = get_user_opinion(row, network_data, topic, is_dual)
                 node_to_cat[treatment][str(node_id)] = config.get_emp_user_bucket(op_raw)
 
@@ -288,21 +279,25 @@ def build_empirical_event_log(phase1_csv_path, phase2_csv_path, network_map_path
             treatment = get_treatment(row)
             trial_id = f"empirical_{treatment}"
             
+            # Extract actual structural Chamber based on their Base Topic leaning
+            chamber = 'Right'
+            raw_cat_str = str(row.get('participant.assigned_category', row.get('phase_2.1.player.category', ''))).strip().upper()
+            if len(raw_cat_str) >= 2:
+                target_char = raw_cat_str[base_idx] if base_idx < len(raw_cat_str) else 'C'
+                chamber = 'Left' if target_char == 'L' else 'Right'
+            elif raw_cat_str.startswith('L') or 'LEFT' in raw_cat_str:
+                chamber = 'Left'
+            
             adj_list = network_data.get(f"{treatment}_baseline", {}).get('network', {})
             my_neighbors = adj_list.get(str(node_id), [])
-            contrary_count = 0
-            for nb in my_neighbors:
-                nb_cat = node_to_cat[treatment].get(str(nb), 'Center')
-                if ('Left' in user_cat and 'Right' in nb_cat) or ('Right' in user_cat and 'Left' in nb_cat):
-                    contrary_count += 1
+            contrary_count = sum(1 for nb in my_neighbors if ('Left' in user_cat and 'Right' in node_to_cat[treatment].get(str(nb), 'Center')) or ('Right' in user_cat and 'Left' in node_to_cat[treatment].get(str(nb), 'Center')))
             
             user_history, user_shared_history, parser_backlogs = set(), set(), set()
             
             for r in range(1, config.ROUNDS + 1):
                 if r > 1:
                     s_col_prev = get_col('outgoing_shares', r-1, topic, is_dual)
-                    prev_shares = _safe_parse_list(row.get(s_col_prev, '[]'))
-                    user_shared_history.update([str(s) for s in prev_shares])
+                    user_shared_history.update([str(s) for s in _safe_parse_list(row.get(s_col_prev, '[]'))])
                 
                 parser_backlogs = {i for i in parser_backlogs if i not in user_shared_history}
                 
@@ -330,35 +325,39 @@ def build_empirical_event_log(phase1_csv_path, phase2_csv_path, network_map_path
                     user_history.add(iid)
                     event_logs.append({
                         'trial_id': trial_id, 'topic': topic, 'user_id': uid, 'treatment': treatment, 
-                        'op_raw': op_raw, 'user_cat': user_cat, 'contrary_neighbors': contrary_count, 
-                        'round': r, 'item_id': iid, 'item_cat': item_cat, 'action': 'seen', 
-                        'source': src_type, 'is_backlog': is_b
+                        'chamber': chamber, 'op_raw': op_raw, 'user_cat': user_cat, 
+                        'contrary_neighbors': contrary_count, 'round': r, 'item_id': iid, 
+                        'item_cat': item_cat, 'action': 'seen', 'source': src_type, 'is_backlog': is_b
                     })
                     if iid in shares:
                         event_logs.append({
                             'trial_id': trial_id, 'topic': topic, 'user_id': uid, 'treatment': treatment, 
-                            'op_raw': op_raw, 'user_cat': user_cat, 'contrary_neighbors': contrary_count, 
-                            'round': r, 'item_id': iid, 'item_cat': item_cat, 'action': 'shared', 
-                            'source': src_type, 'is_backlog': is_b
+                            'chamber': chamber, 'op_raw': op_raw, 'user_cat': user_cat, 
+                            'contrary_neighbors': contrary_count, 'round': r, 'item_id': iid, 
+                            'item_cat': item_cat, 'action': 'shared', 'source': src_type, 'is_backlog': is_b
                         })
 
                 parser_backlogs.update(deliveries[uid][r])
                 parser_backlogs = {i for i in parser_backlogs if i not in feed_ids}
 
-    base_columns = ['trial_id', 'topic', 'user_id', 'treatment', 'op_raw', 'user_cat', 'contrary_neighbors', 'round', 'item_id', 'item_cat', 'action', 'source', 'is_backlog']
+    base_columns = ['trial_id', 'topic', 'user_id', 'treatment', 'chamber', 'op_raw', 'user_cat', 'contrary_neighbors', 'round', 'item_id', 'item_cat', 'action', 'source', 'is_backlog']
     if not event_logs:
-        print("[!] Warning: Zero events parsed. Returning empty DataFrame to prevent crash.")
         return pd.DataFrame(columns=base_columns)
         
     return pd.DataFrame(event_logs)
 
 def build_simulation_event_log(results_store):
-    """Universal logging for simulation data supporting both base_topic and side_topic."""
     logs = []
     for struct in ['integrated', 'segregated']:
         if struct not in results_store: continue
         for t_idx, trial_data in enumerate(results_store[struct]['trials']):
             trial_id = f"{struct}_{t_idx}"
+            
+            # Determine halfway point for chamber assignment
+            if not trial_data['node_opinions']: continue
+            max_node = max([int(n) for n in trial_data['node_opinions'].keys()])
+            half_point = (max_node + 1) / 2
+            
             for ev_type in ['seen_events', 'share_events']:
                 action = 'seen' if ev_type == 'seen_events' else 'shared'
                 for ev in trial_data[ev_type]:
@@ -368,19 +367,14 @@ def build_simulation_event_log(results_store):
                         node, u, i, rnd, itm_id, src, is_b = ev
                         topic = 'base_topic'
                         
+                    # Structural chamber logic based on node position
+                    chamber = 'Left' if int(node) < half_point else 'Right'
+                        
                     logs.append({
-                        'trial_id': trial_id,
-                        'topic': topic,
-                        'user_id': f"{trial_id}_{node}", 
-                        'treatment': struct, 
-                        'op_raw': u, 
-                        'user_cat': config.get_bucket(u, is_item=False),
-                        'contrary_neighbors': 0,
-                        'round': rnd, 
-                        'item_id': itm_id, 
-                        'item_cat': config.get_bucket(i, is_item=True), 
-                        'action': action, 
-                        'source': src, 
-                        'is_backlog': is_b
+                        'trial_id': trial_id, 'topic': topic, 'user_id': f"{trial_id}_{node}", 
+                        'treatment': struct, 'chamber': chamber, 'op_raw': u, 
+                        'user_cat': config.get_bucket(u, is_item=False), 'contrary_neighbors': 0,
+                        'round': rnd, 'item_id': itm_id, 'item_cat': config.get_bucket(i, is_item=True), 
+                        'action': action, 'source': src, 'is_backlog': is_b
                     })
     return pd.DataFrame(logs)
