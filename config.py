@@ -4,7 +4,6 @@ import os
 # 1. PIPELINE MODE & MASTER SWITCHES
 # ==========================================
 # Determines which topic forms the structural backbone of the network.
-# Used by the data wrangler to map 2D profiles into physical Left/Right chambers.
 EMPIRICAL_BASE_TOPIC = "imm"  
 EMPIRICAL_SIDE_TOPIC = "climate"
 
@@ -16,17 +15,13 @@ INVERT_OPINIONS_FOR = ['imm', 'immigration']
 # 2. PATH CONFIGURATION & FOLDER STRUCTURE
 # ==========================================
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# ---> Change this string when you run a new human cohort! <---
 CURRENT_EMPIRICAL_TRIAL_ID = "Trial_2026_09_07"
 
 DATA_DIR = os.path.join(SCRIPT_DIR, "data")
 BASELINES_DIR = os.path.join(DATA_DIR, "baselines")
-
 EMPIRICAL_DATA_DIR = os.path.join(DATA_DIR, "empirical", CURRENT_EMPIRICAL_TRIAL_ID)
 EMPIRICAL_RAW_DIR = os.path.join(EMPIRICAL_DATA_DIR, "raw")
 EMPIRICAL_PROCESSED_DIR = os.path.join(EMPIRICAL_DATA_DIR, "processed")
-
 RESULTS_DIR = os.path.join(SCRIPT_DIR, "Results")
 EMPIRICAL_RESULTS_DIR = os.path.join(RESULTS_DIR, "Empirical", CURRENT_EMPIRICAL_TRIAL_ID)
 SIMULATION_RESULTS_DIR = os.path.join(RESULTS_DIR, "Simulations_dual")
@@ -53,6 +48,9 @@ N_VALUES = [20, 40, 60, 80, 100]
 K_VALUES = [4, 5]                 
 NUM_TRIALS = 100
 SIM_TOPICS = ['base_topic', 'side_topic']
+
+# Only generate detailed PDFs for these N values to prevent folder bloat
+DETAILED_SIM_N = [20, 60]
 
 PPM_CROSS_EDGE_FRACTIONS = [0.067] 
 PRIORITY_QUEUING = True            
@@ -110,7 +108,6 @@ def get_emp_item_bucket(lean_str):
     clean_str = str(lean_str).strip().title()
     if clean_str in ['Left']: return 'Left'
     if clean_str in ['Lean Left', 'Center Left', 'Center-Left']: return 'Center-Left'
-    if clean_str in ['Center']: return 'Center'
     if clean_str in ['Lean Right', 'Center Right', 'Center-Right']: return 'Center-Right'
     if clean_str in ['Right']: return 'Right'
     return 'Center'

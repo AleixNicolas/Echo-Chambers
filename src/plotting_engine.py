@@ -1,8 +1,8 @@
 import os
 import math
+import ast
 import numpy as np
 import pandas as pd
-import matplotlib.subplots as plt_sub
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import seaborn as sns
@@ -25,9 +25,13 @@ def generate_suite(event_log_df, output_dir, prefix="", topics=['climate']):
             safe_prefix = f"{prefix}_{treatment}_{topic}" if is_dual else f"{prefix}_{treatment}"
             
             plot_diet_categories(t_df, output_dir, safe_prefix)
-            plot_feed_sources(t_df, output_dir, safe_prefix)
+            plot_diet_vs_amplification(t_df, output_dir, safe_prefix)
             plot_temporal_heatmaps(t_df, output_dir, safe_prefix)
+            plot_feed_sources(t_df, output_dir, safe_prefix)
             plot_exposure_distributions(t_df, output_dir, safe_prefix, is_sim)
+            plot_contrary_neighbors_effect(t_df, output_dir, safe_prefix)
+            if is_dual and (topic != config.EMPIRICAL_BASE_TOPIC and topic != 'base_topic'):
+                plot_cross_pressured_profiles(t_df, output_dir, safe_prefix)
 
 def generate_share_distributions(event_log_df, output_dir, prefix="", topics=['climate']):
     if event_log_df.empty or 'treatment' not in event_log_df.columns: return
@@ -211,6 +215,54 @@ def plot_diet_categories(df, output_dir, prefix):
     plt.savefig(os.path.join(output_dir, f"Plot_01_Diet_{prefix}.pdf"), dpi=300)
     plt.close(fig)
 
+def plot_diet_vs_amplification(df, output_dir, prefix):
+    if df.empty or 'chamber' not in df.columns: return
+    
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6), sharey=True)
+    item_colors = {'Left': '#3498db', 'Center': '#bdc3c7', 'Right': '#e74c3c'}
+    
+    for idx, chamber in enumerate(['Left', 'Right']):
+        ax = axes[idx]
+        chamber_df = df[df['chamber'] == chamber]
+        if chamber_df.empty: continue
+            
+        seen_tot = len(chamber_df[chamber_df['action'] == 'seen'])
+        share_tot = len(chamber_df[chamber_df['action'] == 'shared'])
+        
+        seen_props = {k: 0.0 for k in ['Left', 'Center', 'Right']}
+        share_props = {k: 0.0 for k in ['Left', 'Center', 'Right']}
+        
+        if seen_tot > 0:
+            seen_props['Left'] = len(chamber_df[(chamber_df['action'] == 'seen') & (chamber_df['item_cat'].isin(['Left', 'Center-Left']))]) / seen_tot
+            seen_props['Center'] = len(chamber_df[(chamber_df['action'] == 'seen') & (chamber_df['item_cat'] == 'Center')]) / seen_tot
+            seen_props['Right'] = len(chamber_df[(chamber_df['action'] == 'seen') & (chamber_df['item_cat'].isin(['Right', 'Center-Right']))]) / seen_tot
+            
+        if share_tot > 0:
+            share_props['Left'] = len(chamber_df[(chamber_df['action'] == 'shared') & (chamber_df['item_cat'].isin(['Left', 'Center-Left']))]) / share_tot
+            share_props['Center'] = len(chamber_df[(chamber_df['action'] == 'shared') & (chamber_df['item_cat'] == 'Center')]) / share_tot
+            share_props['Right'] = len(chamber_df[(chamber_df['action'] == 'shared') & (chamber_df['item_cat'].isin(['Right', 'Center-Right']))]) / share_tot
+
+        x = np.arange(3)
+        width = 0.35
+        
+        ax.bar(x - width/2, list(seen_props.values()), width, label='Incoming Feed (Diet)', color=[item_colors[k] for k in seen_props.keys()], alpha=0.5, edgecolor='black')
+        ax.bar(x + width/2, list(share_props.values()), width, label='Outgoing Shares (Amp)', color=[item_colors[k] for k in share_props.keys()], edgecolor='black')
+        
+        ax.set_title(f"{chamber} Chamber", fontweight='bold')
+        ax.set_xticks(x)
+        ax.set_xticklabels(['Left Items', 'Center Items', 'Right Items'])
+        ax.set_ylim(0, 1.0)
+        if idx == 0: ax.set_ylabel("Proportion of Volume")
+        ax.grid(axis='y', alpha=0.3)
+        
+    handles = [mpatches.Patch(facecolor='gray', alpha=0.5, edgecolor='black', label='Incoming Feed (Diet)'),
+               mpatches.Patch(facecolor='gray', alpha=1.0, edgecolor='black', label='Outgoing Shares (Amplification)')]
+    fig.legend(handles=handles, loc='upper center', bbox_to_anchor=(0.5, 1.05), ncol=2)
+    plt.suptitle(f"Diet vs. Amplification Gap\n({prefix})", y=1.15, fontsize=14)
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, f"Plot_08_Diet_vs_Amp_{prefix}.pdf"), dpi=300, bbox_inches='tight')
+    plt.close(fig)
+
 def plot_feed_sources(df, output_dir, prefix):
     metrics = stats_suite.calculate_sourcing_metrics(df)
     if not metrics: return
@@ -234,29 +286,21 @@ def plot_feed_sources(df, output_dir, prefix):
 
 def plot_temporal_heatmaps(df, output_dir, prefix):
     cmap_base = plt.cm.Greens; cmap_base.set_bad(color='#d3d3d3')
-    rounds_to_plot = config.ROUNDS - 1
-    if rounds_to_plot <= 0: return
-
+    indiv_dir = os.path.join(output_dir, "individual_plots")
+    os.makedirs(indiv_dir, exist_ok=True)
+    
     for name, mode in [("02_InFeed_Comp", 'row'), ("03_Share_Rate", 'element'), ("03B_Norm_Share_Volume", 'norm_vol')]:
-        for chamber in ['Left', 'Right']:
+        fig_main, axes_main = plt.subplots(1, 2, figsize=(14, 6), sharey=True)
+        
+        for idx, chamber in enumerate(['Left', 'Right']):
+            ax_main = axes_main[idx]
             if 'chamber' not in df.columns: continue
             chamber_df = df[df['chamber'] == chamber]
-            if chamber_df.empty: continue
             
-            total_subplots = rounds_to_plot + 1 if 'Share' in name else config.ROUNDS
-            cols = min(3, total_subplots)
-            rows = math.ceil(total_subplots / cols)
-            
-            fig, axes = plt.subplots(rows, cols, figsize=(7 * cols, 6 * rows), sharey=True)
-            axes_flat = np.array([axes]).flatten() if type(axes) is not np.ndarray else axes.flatten()
-            ims = []
-            
-            for plot_idx in range(total_subplots):
-                ax = axes_flat[plot_idx]
-                r_target = plot_idx + 1 if plot_idx < (total_subplots - 1 if 'Share' in name else total_subplots) else None
-                
-                mat_seen = stats_suite.build_matrix(chamber_df[chamber_df['action'] == 'seen'], r_target)
-                mat_share = stats_suite.build_matrix(chamber_df[chamber_df['action'] == 'shared'], r_target)
+            # --- MAIN AGGREGATE DASHBOARD (ALL ROUNDS) ---
+            if not chamber_df.empty:
+                mat_seen = stats_suite.build_matrix(chamber_df[chamber_df['action'] == 'seen'], None)
+                mat_share = stats_suite.build_matrix(chamber_df[chamber_df['action'] == 'shared'], None)
                 mat_trg = mat_share if 'Share' in name else mat_seen
                 
                 if mode == 'norm_vol':
@@ -264,32 +308,119 @@ def plot_temporal_heatmaps(df, output_dir, prefix):
                     v_rate = np.divide(mat_trg, row_sums, out=np.zeros_like(mat_trg, dtype=float), where=row_sums!=0)
                 else:
                     v_rate = stats_suite.calc_rate(mat_trg, mat_seen, mode)
-                
-                im = ax.imshow(v_rate, origin='upper', cmap=cmap_base, vmin=0, vmax=1.0)
-                ims.append(im)
-                ax.set_xticks(range(5)); ax.set_yticks(range(5))
-                ax.set_xticklabels([l.replace(' ', '\n') for l in config.LEANING_ORDER])
-                if plot_idx == 0 or plot_idx % cols == 0:
-                    ax.set_yticklabels([config.POS_LABELS[p] for p in [5, 4, 3, 2, 1]])
-                    ax.set_ylabel("User Baseline Opinion", fontsize=12)
-
-            for i in range(total_subplots, len(axes_flat)): axes_flat[i].set_visible(False)
-            if ims:
-                fig.colorbar(ims[-1], ax=axes_flat.tolist(), fraction=0.015, pad=0.04, label="Rate")
+                    
+                im = ax_main.imshow(v_rate, origin='upper', cmap=cmap_base, vmin=0, vmax=1.0)
+                ax_main.set_title(f"{chamber} Chamber", fontweight='bold')
+                ax_main.set_xticks(range(5)); ax_main.set_yticks(range(5))
+                ax_main.set_xticklabels([l.replace(' ', '\n') for l in config.LEANING_ORDER])
+                if idx == 0: ax_main.set_yticklabels([config.POS_LABELS[p] for p in [5, 4, 3, 2, 1]])
+                if idx == 0: ax_main.set_ylabel("User Baseline Opinion", fontsize=12)
             
-            plt.suptitle(f"{name.replace('_', ' ')} - {chamber} Chamber", fontsize=16)
-            plt.savefig(os.path.join(output_dir, f"Plot_{name}_{prefix}_{chamber}Chamber.pdf"), dpi=300, bbox_inches='tight')
-            plt.close(fig)
+            # --- INDIVIDUAL ARCHIVE PLOTS (ROUND-BY-ROUND) ---
+            if not chamber_df.empty:
+                for r_target in [None] + list(range(1, config.ROUNDS + 1)):
+                    mat_s = stats_suite.build_matrix(chamber_df[chamber_df['action'] == 'seen'], r_target)
+                    mat_sh = stats_suite.build_matrix(chamber_df[chamber_df['action'] == 'shared'], r_target)
+                    mat_t = mat_sh if 'Share' in name else mat_s
+                    if mode == 'norm_vol':
+                        r_sums = mat_s.sum(axis=1, keepdims=True)
+                        v_r = np.divide(mat_t, r_sums, out=np.zeros_like(mat_t, dtype=float), where=r_sums!=0)
+                    else:
+                        v_r = stats_suite.calc_rate(mat_t, mat_s, mode)
+                        
+                    fig_indiv, ax_indiv = plt.subplots(figsize=(6, 6))
+                    im_indiv = ax_indiv.imshow(v_r, origin='upper', cmap=cmap_base, vmin=0, vmax=1.0)
+                    ax_indiv.set_xticks(range(5)); ax_indiv.set_yticks(range(5))
+                    ax_indiv.set_xticklabels([l.replace(' ', '\n') for l in config.LEANING_ORDER])
+                    ax_indiv.set_yticklabels([config.POS_LABELS[p] for p in [5, 4, 3, 2, 1]])
+                    ax_indiv.set_title(f"{chamber} Chamber | {'All Rounds' if not r_target else f'Round {r_target}'}")
+                    fig_indiv.colorbar(im_indiv, ax=ax_indiv, fraction=0.046, pad=0.04, label="Rate")
+                    
+                    r_str = f"Round_{r_target}" if r_target else "AllRounds"
+                    fig_indiv.savefig(os.path.join(indiv_dir, f"Plot_{name}_{prefix}_{chamber}Chamber_{r_str}.pdf"), dpi=300, bbox_inches='tight')
+                    plt.close(fig_indiv)
 
-def generate_correlation_heatmaps(phase2_csv, output_dir, topics=['climate'], phase1_csv=None):
+        if 'im' in locals():
+            fig_main.colorbar(im, ax=axes_main.tolist(), fraction=0.015, pad=0.04, label="Rate")
+        plt.suptitle(f"{name.replace('_', ' ')} (Aggregate)\n{prefix}", fontsize=14, y=1.05)
+        plt.savefig(os.path.join(output_dir, f"Plot_{name}_{prefix}_SideBySide.pdf"), dpi=300, bbox_inches='tight')
+        plt.close(fig_main)
+
+def plot_contrary_neighbors_effect(df, output_dir, prefix):
+    if df.empty or 'contrary_neighbors' not in df.columns: return
+    
+    # Calculate share rate per user
+    user_stats = df.groupby(['user_id', 'contrary_neighbors', 'action']).size().unstack(fill_value=0).reset_index()
+    for col in ['seen', 'shared']: 
+        if col not in user_stats.columns: user_stats[col] = 0
+    
+    user_stats['share_rate'] = np.where(user_stats['seen'] > 0, user_stats['shared'] / user_stats['seen'], np.nan)
+    user_stats = user_stats.dropna(subset=['share_rate'])
+    if user_stats.empty: return
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+    
+    sns.pointplot(data=user_stats, x='contrary_neighbors', y='share_rate', errorbar=('ci', 95), capsize=.1, color='#2c3e50', ax=ax, markers='o', zorder=5)
+    sns.stripplot(data=user_stats, x='contrary_neighbors', y='share_rate', color='#3498db', alpha=0.4, jitter=True, ax=ax, zorder=1)
+    
+    ax.set_title(f"Effect of Contrary Neighbors on Share Rate\n({prefix})", fontweight='bold')
+    ax.set_xlabel("Number of Contrary Neighbors")
+    ax.set_ylabel("Individual Share Rate")
+    ax.set_ylim(0, 1.05)
+    ax.grid(axis='y', alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, f"Plot_09_Contrary_Neighbors_{prefix}.pdf"), dpi=300, bbox_inches='tight')
+    plt.close(fig)
+
+def plot_cross_pressured_profiles(df, output_dir, prefix):
+    """Specifically plots behavior of the 4 2D quadrants (LL, LR, RL, RR) on the secondary topic."""
+    if df.empty or 'chamber' not in df.columns: return
+    
+    # Identify the exact 2D quadrant based on Chamber (Base Topic) + User_Cat (Secondary Topic)
+    def map_quadrant(row):
+        base_lean = 'L' if row['chamber'] == 'Left' else 'R'
+        side_lean = 'L' if 'Left' in row['user_cat'] else ('R' if 'Right' in row['user_cat'] else 'C')
+        return f"{base_lean}{side_lean}"
+        
+    df['quadrant'] = df.apply(map_quadrant, axis=1)
+    
+    # We only want to plot the strict dual-profiles (ignore Center users here for clarity)
+    target_quads = ['LL', 'LR', 'RL', 'RR']
+    quad_df = df[df['quadrant'].isin(target_quads)]
+    if quad_df.empty: return
+    
+    user_stats = quad_df.groupby(['user_id', 'quadrant', 'action']).size().unstack(fill_value=0).reset_index()
+    for col in ['seen', 'shared']: 
+        if col not in user_stats.columns: user_stats[col] = 0
+    user_stats['share_rate'] = np.where(user_stats['seen'] > 0, user_stats['shared'] / user_stats['seen'], np.nan)
+    user_stats = user_stats.dropna(subset=['share_rate'])
+    
+    fig, ax = plt.subplots(figsize=(8, 6))
+    order = ['LL', 'LR', 'RL', 'RR']
+    
+    sns.barplot(data=user_stats, x='quadrant', y='share_rate', order=order, color='#bdc3c7', edgecolor='black', errorbar=None, ax=ax, alpha=0.7)
+    sns.stripplot(data=user_stats, x='quadrant', y='share_rate', order=order, color='#c0392b', alpha=0.6, jitter=True, ax=ax)
+    
+    ax.set_title(f"Secondary Topic Sharing by Cross-Pressured Profiles\n({prefix})", fontweight='bold')
+    ax.set_xlabel("Profile (Base Topic | Secondary Topic)")
+    ax.set_ylabel("Individual Share Rate")
+    ax.set_ylim(0, 1.05)
+    ax.grid(axis='y', alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, f"Plot_10_Cross_Pressured_{prefix}.pdf"), dpi=300, bbox_inches='tight')
+    plt.close(fig)
+
+def generate_correlation_heatmaps(phase2_csv, output_dir, topics=['climate'], empirical=False, phase1_csv=None):
     if phase1_csv is None:
         base_dir = os.path.dirname(phase2_csv)
         phase1_csv = os.path.join(base_dir, 'all_apps_wide_1.csv')
     
-    df2 = pd.read_csv(phase2_csv)
+    df2 = pd.read_csv(phase2_csv, low_memory=False)
     
     if os.path.exists(phase1_csv):
-        df1 = pd.read_csv(phase1_csv)
+        df1 = pd.read_csv(phase1_csv, low_memory=False)
         if 'participant.label' in df1.columns and 'participant.label' in df2.columns:
             df = pd.merge(df2, df1, on='participant.label', how='left', suffixes=('', '_p1'))
         elif 'participant.code' in df1.columns and 'participant.code' in df2.columns:
@@ -302,13 +433,11 @@ def generate_correlation_heatmaps(phase2_csv, output_dir, topics=['climate'], ph
     is_dual = len(topics) > 1
     
     for topic in topics:
-        # STRICT PHASE 1 ANCHORING: Only grab opinions established before Phase 2 began
+        # STRICT PHASE 1 ANCHORING
         op_cols = [c for c in df.columns if topic in c and ('phase_1' in c or 'baseline' in c)]
         op_cols = sorted(list(set(op_cols)))
         
-        if not op_cols: 
-            print(f"\n[!] ALERT: Skipping Plot 07 for '{topic}'. No Phase 1 baseline opinion columns found.")
-            continue
+        if not op_cols: continue
         
         data_rows = []
         leanings_5 = ['Left', 'Lean Left', 'Center', 'Lean Right', 'Right']
@@ -380,4 +509,7 @@ def generate_correlation_heatmaps(phase2_csv, output_dir, topics=['climate'], ph
 
         safe_suffix = f"_{topic}" if is_dual else ""
         _plot_hm(['Left', 'Center', 'Right'], '3', '3-Bucket Correlation', f'Plot_07A_Corr{safe_suffix}.pdf')
-        _plot_hm(leanings_5, '5', '5-Bucket Correlation', f'Plot_07C_Corr{safe_suffix}.pdf')
+        
+        # Only output the noisy 5-Bucket correlation if Empirical
+        if empirical:
+            _plot_hm(leanings_5, '5', '5-Bucket Correlation', f'Plot_07C_Corr{safe_suffix}.pdf')
