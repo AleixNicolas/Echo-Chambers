@@ -1,0 +1,757 @@
+==========================================
+ SIMULATION SWEEP SUMMARY
+ Regime: Hide_Shared | Priority: TRUE | K: 6
+==========================================
+
+=== INTEGRATED TOPOLOGY ===
+
+[ N = 20 ]
+
+  -- ROUND 1 --
+       Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Expected Maximums : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Left         Seen  :  20.0% L |  20.0% C-L |  15.0% C |  25.0% C-R |  20.0% R
+       Left         Share :  78.3% L |  59.2% C-L |  46.6% C |  27.2% C-R |   2.4% R
+       Center-Left  Seen  :  10.0% L |  20.0% C-L |  25.0% C |  20.0% C-R |  25.0% R
+       Center-Left  Share :  54.8% L |  65.3% C-L |  47.5% C |  34.8% C-R |  29.5% R
+       Center-Right Seen  :  15.0% L |  20.0% C-L |  25.0% C |  20.0% C-R |  20.0% R
+       Center-Right Share :  19.7% L |  21.0% C-L |  20.3% C |  25.5% C-R |  20.9% R
+       Right        Seen  :  20.0% L |  10.0% C-L |  20.0% C |  25.0% C-R |  25.0% R
+       Right        Share :  33.7% L |  26.4% C-L |  37.0% C |  27.5% C-R |  77.1% R
+
+  -- ROUND 2 --
+       Sourcing Averages : 0.00 Repeats | 0.00 Pool | 0.00 Backlog
+       Expected Maximums : 0.00 Repeats | 0.05 Pool | 0.00 Backlog
+       Left         Seen  :  16.2% L |  20.9% C-L |  20.5% C |  16.5% C-R |  25.9% R
+       Left         Share :  79.0% L |  60.1% C-L |  46.8% C |  26.5% C-R |   2.6% R
+       Center-Left  Seen  :  25.0% L |  18.6% C-L |  19.9% C |  16.5% C-R |  20.0% R
+       Center-Left  Share :  55.2% L |  64.1% C-L |  47.9% C |  33.1% C-R |  31.3% R
+       Center-Right Seen  :  18.9% L |  23.9% C-L |  20.6% C |  17.3% C-R |  19.3% R
+       Center-Right Share :  20.2% L |  21.8% C-L |  21.9% C |  26.1% C-R |  20.5% R
+       Right        Seen  :  22.2% L |  21.1% C-L |  21.2% C |  17.4% C-R |  18.0% R
+       Right        Share :  34.0% L |  25.8% C-L |  35.4% C |  25.8% C-R |  77.7% R
+
+  -- ROUND 3 --
+       Sourcing Averages : 0.47 Repeats | 0.01 Pool | 0.13 Backlog
+       Expected Maximums : 1.81 Repeats | 0.17 Pool | 1.30 Backlog
+       Left         Seen  :  19.6% L |  20.6% C-L |  20.8% C |  13.8% C-R |  25.2% R
+       Left         Share :  78.6% L |  59.6% C-L |  46.8% C |  26.6% C-R |   2.3% R
+       Center-Left  Seen  :  24.9% L |  19.8% C-L |  21.0% C |  14.4% C-R |  20.0% R
+       Center-Left  Share :  56.2% L |  64.1% C-L |  48.4% C |  34.9% C-R |  29.9% R
+       Center-Right Seen  :  26.0% L |  25.2% C-L |  20.6% C |  12.2% C-R |  16.0% R
+       Center-Right Share :  21.2% L |  20.6% C-L |  21.0% C |  25.5% C-R |  19.7% R
+       Right        Seen  :  27.7% L |  27.5% C-L |  20.9% C |  12.9% C-R |  11.1% R
+       Right        Share :  34.4% L |  24.9% C-L |  35.6% C |  26.0% C-R |  77.0% R
+
+  -- ROUND 4 --
+       Sourcing Averages : 1.64 Repeats | 0.05 Pool | 0.52 Backlog
+       Expected Maximums : 3.81 Repeats | 0.72 Pool | 2.65 Backlog
+       Left         Seen  :  21.7% L |  21.5% C-L |  21.0% C |  12.9% C-R |  22.9% R
+       Left         Share :  78.8% L |  59.3% C-L |  46.4% C |  26.0% C-R |   2.6% R
+       Center-Left  Seen  :  26.5% L |  20.5% C-L |  21.2% C |  13.3% C-R |  18.4% R
+       Center-Left  Share :  56.8% L |  65.2% C-L |  48.1% C |  33.2% C-R |  30.6% R
+       Center-Right Seen  :  30.3% L |  25.5% C-L |  21.4% C |   9.8% C-R |  13.0% R
+       Center-Right Share :  21.0% L |  22.1% C-L |  21.3% C |  24.1% C-R |  20.5% R
+       Right        Seen  :  30.6% L |  28.0% C-L |  21.6% C |  11.4% C-R |   8.3% R
+       Right        Share :  34.2% L |  25.6% C-L |  37.5% C |  26.7% C-R |  77.8% R
+
+  -- ROUND 5 --
+       Sourcing Averages : 3.08 Repeats | 0.18 Pool | 1.01 Backlog
+       Expected Maximums : 5.92 Repeats | 1.97 Pool | 3.80 Backlog
+       Left         Seen  :  21.8% L |  21.4% C-L |  21.8% C |  12.7% C-R |  22.3% R
+       Left         Share :  78.6% L |  58.8% C-L |  47.8% C |  26.0% C-R |   2.4% R
+       Center-Left  Seen  :  28.2% L |  20.5% C-L |  21.4% C |  12.9% C-R |  17.1% R
+       Center-Left  Share :  56.4% L |  65.2% C-L |  48.7% C |  34.3% C-R |  30.3% R
+       Center-Right Seen  :  32.1% L |  26.2% C-L |  21.6% C |   9.0% C-R |  11.0% R
+       Center-Right Share :  20.7% L |  21.9% C-L |  20.8% C |  26.2% C-R |  20.6% R
+       Right        Seen  :  30.7% L |  28.8% C-L |  21.5% C |  10.9% C-R |   8.0% R
+       Right        Share :  35.2% L |  27.0% C-L |  37.2% C |  25.8% C-R |  77.0% R
+
+  -- ROUND 6 --
+       Sourcing Averages : 4.57 Repeats | 0.38 Pool | 1.45 Backlog
+       Expected Maximums : 7.97 Repeats | 3.54 Pool | 4.69 Backlog
+       Left         Seen  :  20.5% L |  22.1% C-L |  21.6% C |  13.5% C-R |  22.3% R
+       Left         Share :  78.5% L |  59.8% C-L |  46.5% C |  26.6% C-R |   2.7% R
+       Center-Left  Seen  :  27.3% L |  20.7% C-L |  22.0% C |  13.4% C-R |  16.5% R
+       Center-Left  Share :  55.3% L |  65.6% C-L |  46.3% C |  34.5% C-R |  29.5% R
+       Center-Right Seen  :  32.7% L |  26.1% C-L |  22.3% C |   8.4% C-R |  10.5% R
+       Center-Right Share :  20.9% L |  22.4% C-L |  20.3% C |  26.0% C-R |  20.9% R
+       Right        Seen  :  30.8% L |  29.4% C-L |  21.1% C |  11.0% C-R |   7.6% R
+       Right        Share :  34.9% L |  26.1% C-L |  35.0% C |  25.1% C-R |  75.3% R
+------------------------------------------------------------
+
+[ N = 40 ]
+
+  -- ROUND 1 --
+       Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Expected Maximums : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Left         Seen  :  20.0% L |  22.5% C-L |  15.0% C |  22.5% C-R |  20.0% R
+       Left         Share :  77.9% L |  59.6% C-L |  46.4% C |  26.4% C-R |   2.3% R
+       Center-Left  Seen  :  22.5% L |  12.5% C-L |  22.5% C |  20.0% C-R |  22.5% R
+       Center-Left  Share :  56.0% L |  66.4% C-L |  48.2% C |  33.2% C-R |  31.1% R
+       Center-Right Seen  :  25.0% L |  22.5% C-L |  17.5% C |  12.5% C-R |  22.5% R
+       Center-Right Share :  20.4% L |  21.2% C-L |  21.3% C |  26.8% C-R |  21.3% R
+       Right        Seen  :  15.0% L |  20.0% C-L |  17.5% C |  25.0% C-R |  22.5% R
+       Right        Share :  34.8% L |  26.7% C-L |  35.9% C |  26.3% C-R |  76.8% R
+
+  -- ROUND 2 --
+       Sourcing Averages : 0.00 Repeats | 0.01 Pool | 0.00 Backlog
+       Expected Maximums : 0.01 Repeats | 0.24 Pool | 0.00 Backlog
+       Left         Seen  :  27.0% L |  21.0% C-L |  18.9% C |  13.4% C-R |  19.7% R
+       Left         Share :  79.1% L |  58.9% C-L |  46.2% C |  25.9% C-R |   2.9% R
+       Center-Left  Seen  :  23.4% L |  23.3% C-L |  20.1% C |  16.4% C-R |  16.8% R
+       Center-Left  Share :  56.0% L |  65.6% C-L |  48.0% C |  34.3% C-R |  30.2% R
+       Center-Right Seen  :  23.4% L |  20.3% C-L |  18.8% C |  14.7% C-R |  22.8% R
+       Center-Right Share :  20.2% L |  21.8% C-L |  20.3% C |  26.0% C-R |  20.8% R
+       Right        Seen  :  28.8% L |  20.0% C-L |  16.0% C |  14.9% C-R |  20.3% R
+       Right        Share :  33.9% L |  25.9% C-L |  35.9% C |  25.5% C-R |  75.5% R
+
+  -- ROUND 3 --
+       Sourcing Averages : 0.24 Repeats | 0.01 Pool | 0.06 Backlog
+       Expected Maximums : 1.55 Repeats | 0.39 Pool | 1.31 Backlog
+       Left         Seen  :  29.1% L |  24.9% C-L |  19.3% C |  11.2% C-R |  15.4% R
+       Left         Share :  78.7% L |  59.2% C-L |  46.3% C |  26.3% C-R |   2.5% R
+       Center-Left  Seen  :  33.8% L |  22.5% C-L |  16.9% C |  10.6% C-R |  16.3% R
+       Center-Left  Share :  56.0% L |  64.6% C-L |  47.5% C |  34.2% C-R |  30.0% R
+       Center-Right Seen  :  30.0% L |  22.6% C-L |  17.7% C |  11.0% C-R |  18.7% R
+       Center-Right Share :  20.2% L |  21.8% C-L |  21.2% C |  26.7% C-R |  21.2% R
+       Right        Seen  :  30.2% L |  24.2% C-L |  17.8% C |  11.5% C-R |  16.3% R
+       Right        Share :  33.4% L |  26.2% C-L |  34.7% C |  25.9% C-R |  77.7% R
+
+  -- ROUND 4 --
+       Sourcing Averages : 0.78 Repeats | 0.02 Pool | 0.20 Backlog
+       Expected Maximums : 2.89 Repeats | 0.53 Pool | 2.22 Backlog
+       Left         Seen  :  33.2% L |  24.5% C-L |  18.0% C |   8.9% C-R |  15.4% R
+       Left         Share :  78.1% L |  59.8% C-L |  48.0% C |  26.3% C-R |   2.7% R
+       Center-Left  Seen  :  35.4% L |  24.5% C-L |  16.9% C |   9.0% C-R |  14.2% R
+       Center-Left  Share :  56.1% L |  64.9% C-L |  47.0% C |  34.1% C-R |  29.7% R
+       Center-Right Seen  :  34.8% L |  24.2% C-L |  16.9% C |   7.9% C-R |  16.2% R
+       Center-Right Share :  20.9% L |  21.7% C-L |  20.4% C |  26.7% C-R |  21.5% R
+       Right        Seen  :  35.6% L |  26.2% C-L |  17.1% C |   8.9% C-R |  12.1% R
+       Right        Share :  34.9% L |  27.0% C-L |  36.2% C |  25.2% C-R |  76.6% R
+
+  -- ROUND 5 --
+       Sourcing Averages : 1.66 Repeats | 0.03 Pool | 0.41 Backlog
+       Expected Maximums : 4.50 Repeats | 0.76 Pool | 3.04 Backlog
+       Left         Seen  :  33.9% L |  25.7% C-L |  17.4% C |   7.9% C-R |  15.1% R
+       Left         Share :  78.5% L |  59.1% C-L |  46.9% C |  27.9% C-R |   2.3% R
+       Center-Left  Seen  :  38.8% L |  23.5% C-L |  17.1% C |   7.7% C-R |  13.0% R
+       Center-Left  Share :  55.6% L |  65.2% C-L |  48.5% C |  33.7% C-R |  30.5% R
+       Center-Right Seen  :  39.0% L |  25.7% C-L |  16.3% C |   6.3% C-R |  12.7% R
+       Center-Right Share :  20.7% L |  21.6% C-L |  21.2% C |  26.0% C-R |  20.9% R
+       Right        Seen  :  39.1% L |  27.9% C-L |  16.7% C |   7.1% C-R |   9.3% R
+       Right        Share :  34.2% L |  26.3% C-L |  36.8% C |  26.6% C-R |  77.0% R
+
+  -- ROUND 6 --
+       Sourcing Averages : 2.80 Repeats | 0.05 Pool | 0.70 Backlog
+       Expected Maximums : 6.25 Repeats | 1.19 Pool | 3.99 Backlog
+       Left         Seen  :  33.6% L |  25.7% C-L |  18.0% C |   7.6% C-R |  15.0% R
+       Left         Share :  78.6% L |  59.0% C-L |  47.3% C |  26.4% C-R |   2.7% R
+       Center-Left  Seen  :  39.5% L |  23.9% C-L |  17.2% C |   7.7% C-R |  11.7% R
+       Center-Left  Share :  55.6% L |  64.3% C-L |  48.0% C |  33.9% C-R |  30.6% R
+       Center-Right Seen  :  41.3% L |  26.7% C-L |  16.3% C |   5.3% C-R |  10.4% R
+       Center-Right Share :  20.3% L |  21.4% C-L |  21.3% C |  26.4% C-R |  21.6% R
+       Right        Seen  :  41.8% L |  28.1% C-L |  16.5% C |   6.2% C-R |   7.4% R
+       Right        Share :  33.7% L |  26.4% C-L |  36.8% C |  25.6% C-R |  77.3% R
+------------------------------------------------------------
+
+[ N = 60 ]
+
+  -- ROUND 1 --
+       Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Expected Maximums : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Left         Seen  :  18.3% L |  15.0% C-L |  21.7% C |  21.7% C-R |  23.3% R
+       Left         Share :  78.8% L |  60.3% C-L |  46.7% C |  26.0% C-R |   2.4% R
+       Center-Left  Seen  :  18.3% L |  18.3% C-L |  20.0% C |  23.3% C-R |  20.0% R
+       Center-Left  Share :  55.6% L |  64.7% C-L |  48.3% C |  34.4% C-R |  31.0% R
+       Center-Right Seen  :  20.0% L |  21.7% C-L |  18.3% C |  20.0% C-R |  20.0% R
+       Center-Right Share :  19.9% L |  21.7% C-L |  20.8% C |  26.1% C-R |  20.5% R
+       Right        Seen  :  21.7% L |  20.0% C-L |  18.3% C |  21.7% C-R |  18.3% R
+       Right        Share :  34.8% L |  26.3% C-L |  36.5% C |  27.2% C-R |  77.2% R
+
+  -- ROUND 2 --
+       Sourcing Averages : 0.00 Repeats | 0.01 Pool | 0.00 Backlog
+       Expected Maximums : 0.01 Repeats | 0.50 Pool | 0.00 Backlog
+       Left         Seen  :  22.4% L |  22.7% C-L |  21.7% C |  16.6% C-R |  16.7% R
+       Left         Share :  78.3% L |  58.9% C-L |  47.5% C |  27.0% C-R |   2.6% R
+       Center-Left  Seen  :  26.8% L |  19.3% C-L |  18.7% C |  16.7% C-R |  18.5% R
+       Center-Left  Share :  57.0% L |  65.5% C-L |  47.4% C |  34.0% C-R |  30.9% R
+       Center-Right Seen  :  24.0% L |  21.4% C-L |  21.1% C |  14.8% C-R |  18.7% R
+       Center-Right Share :  21.0% L |  21.4% C-L |  21.2% C |  25.1% C-R |  21.4% R
+       Right        Seen  :  26.1% L |  20.8% C-L |  19.6% C |  18.4% C-R |  15.1% R
+       Right        Share :  34.1% L |  25.6% C-L |  35.8% C |  26.4% C-R |  77.5% R
+
+  -- ROUND 3 --
+       Sourcing Averages : 0.17 Repeats | 0.02 Pool | 0.07 Backlog
+       Expected Maximums : 1.47 Repeats | 0.77 Pool | 1.57 Backlog
+       Left         Seen  :  28.0% L |  23.2% C-L |  20.3% C |  13.2% C-R |  15.2% R
+       Left         Share :  78.8% L |  59.6% C-L |  47.2% C |  26.3% C-R |   2.3% R
+       Center-Left  Seen  :  31.0% L |  22.5% C-L |  19.1% C |  12.5% C-R |  15.0% R
+       Center-Left  Share :  55.8% L |  64.9% C-L |  47.7% C |  33.9% C-R |  30.5% R
+       Center-Right Seen  :  30.4% L |  22.2% C-L |  20.0% C |  12.3% C-R |  15.0% R
+       Center-Right Share :  20.5% L |  21.3% C-L |  21.1% C |  26.5% C-R |  20.7% R
+       Right        Seen  :  29.4% L |  24.4% C-L |  20.6% C |  12.6% C-R |  13.0% R
+       Right        Share :  33.6% L |  26.2% C-L |  36.1% C |  26.0% C-R |  77.3% R
+
+  -- ROUND 4 --
+       Sourcing Averages : 0.58 Repeats | 0.02 Pool | 0.17 Backlog
+       Expected Maximums : 2.67 Repeats | 1.00 Pool | 2.32 Backlog
+       Left         Seen  :  32.7% L |  23.8% C-L |  19.4% C |  10.4% C-R |  13.6% R
+       Left         Share :  78.4% L |  59.3% C-L |  47.8% C |  25.9% C-R |   2.2% R
+       Center-Left  Seen  :  33.0% L |  24.3% C-L |  19.9% C |   9.7% C-R |  13.2% R
+       Center-Left  Share :  54.7% L |  64.8% C-L |  47.7% C |  34.6% C-R |  31.4% R
+       Center-Right Seen  :  35.2% L |  24.3% C-L |  19.4% C |   9.1% C-R |  12.0% R
+       Center-Right Share :  20.3% L |  22.0% C-L |  21.1% C |  25.6% C-R |  21.4% R
+       Right        Seen  :  34.4% L |  26.3% C-L |  19.2% C |   9.8% C-R |  10.4% R
+       Right        Share :  33.9% L |  26.1% C-L |  36.2% C |  26.3% C-R |  77.8% R
+
+  -- ROUND 5 --
+       Sourcing Averages : 1.26 Repeats | 0.03 Pool | 0.32 Backlog
+       Expected Maximums : 4.07 Repeats | 1.26 Pool | 3.06 Backlog
+       Left         Seen  :  33.6% L |  25.4% C-L |  19.6% C |   8.6% C-R |  12.8% R
+       Left         Share :  78.7% L |  59.6% C-L |  46.5% C |  26.6% C-R |   2.2% R
+       Center-Left  Seen  :  36.6% L |  24.8% C-L |  19.3% C |   7.9% C-R |  11.4% R
+       Center-Left  Share :  55.4% L |  65.0% C-L |  46.7% C |  33.6% C-R |  29.1% R
+       Center-Right Seen  :  38.3% L |  25.7% C-L |  19.2% C |   7.0% C-R |   9.8% R
+       Center-Right Share :  20.1% L |  21.2% C-L |  21.0% C |  26.5% C-R |  21.5% R
+       Right        Seen  :  37.7% L |  27.4% C-L |  18.6% C |   7.7% C-R |   8.6% R
+       Right        Share :  33.9% L |  26.3% C-L |  36.2% C |  26.8% C-R |  76.7% R
+
+  -- ROUND 6 --
+       Sourcing Averages : 2.20 Repeats | 0.04 Pool | 0.54 Backlog
+       Expected Maximums : 5.67 Repeats | 1.58 Pool | 3.91 Backlog
+       Left         Seen  :  34.3% L |  26.6% C-L |  19.6% C |   7.7% C-R |  11.8% R
+       Left         Share :  78.1% L |  59.6% C-L |  46.5% C |  25.6% C-R |   2.5% R
+       Center-Left  Seen  :  38.6% L |  24.9% C-L |  19.1% C |   7.0% C-R |  10.4% R
+       Center-Left  Share :  55.7% L |  64.8% C-L |  47.6% C |  33.4% C-R |  30.3% R
+       Center-Right Seen  :  41.1% L |  26.8% C-L |  18.3% C |   5.7% C-R |   8.2% R
+       Center-Right Share :  20.7% L |  21.3% C-L |  20.6% C |  26.7% C-R |  21.1% R
+       Right        Seen  :  40.2% L |  28.6% C-L |  17.9% C |   6.4% C-R |   6.9% R
+       Right        Share :  34.2% L |  26.7% C-L |  35.8% C |  26.1% C-R |  77.3% R
+------------------------------------------------------------
+
+[ N = 80 ]
+
+  -- ROUND 1 --
+       Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Expected Maximums : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Left         Seen  :  18.8% L |  21.2% C-L |  21.2% C |  20.0% C-R |  18.8% R
+       Left         Share :  78.4% L |  59.4% C-L |  46.9% C |  26.4% C-R |   2.6% R
+       Center-Left  Seen  :  20.0% L |  18.8% C-L |  21.2% C |  22.5% C-R |  17.5% R
+       Center-Left  Share :  55.7% L |  64.1% C-L |  47.8% C |  34.5% C-R |  30.3% R
+       Center-Right Seen  :  20.0% L |  21.2% C-L |  20.0% C |  16.2% C-R |  22.5% R
+       Center-Right Share :  20.6% L |  21.4% C-L |  20.5% C |  26.6% C-R |  21.4% R
+       Right        Seen  :  20.0% L |  23.8% C-L |  18.8% C |  17.5% C-R |  20.0% R
+       Right        Share :  33.9% L |  26.2% C-L |  36.4% C |  26.2% C-R |  76.9% R
+
+  -- ROUND 2 --
+       Sourcing Averages : 0.01 Repeats | 0.01 Pool | 0.00 Backlog
+       Expected Maximums : 0.64 Repeats | 0.49 Pool | 0.00 Backlog
+       Left         Seen  :  23.7% L |  21.4% C-L |  21.3% C |  14.5% C-R |  19.1% R
+       Left         Share :  78.8% L |  59.8% C-L |  46.6% C |  26.2% C-R |   2.5% R
+       Center-Left  Seen  :  26.7% L |  22.6% C-L |  20.3% C |  14.6% C-R |  15.7% R
+       Center-Left  Share :  55.8% L |  64.5% C-L |  47.9% C |  34.7% C-R |  30.4% R
+       Center-Right Seen  :  23.6% L |  25.4% C-L |  20.7% C |  14.1% C-R |  16.2% R
+       Center-Right Share :  20.9% L |  21.4% C-L |  20.3% C |  26.0% C-R |  21.2% R
+       Right        Seen  :  24.3% L |  23.8% C-L |  18.5% C |  14.5% C-R |  18.9% R
+       Right        Share :  33.6% L |  26.0% C-L |  36.0% C |  25.5% C-R |  76.8% R
+
+  -- ROUND 3 --
+       Sourcing Averages : 0.11 Repeats | 0.01 Pool | 0.06 Backlog
+       Expected Maximums : 1.30 Repeats | 0.77 Pool | 1.69 Backlog
+       Left         Seen  :  27.6% L |  24.9% C-L |  19.8% C |  10.9% C-R |  16.8% R
+       Left         Share :  78.7% L |  60.5% C-L |  46.1% C |  26.3% C-R |   2.5% R
+       Center-Left  Seen  :  29.0% L |  25.1% C-L |  19.5% C |  10.8% C-R |  15.6% R
+       Center-Left  Share :  56.2% L |  64.3% C-L |  48.0% C |  34.2% C-R |  30.2% R
+       Center-Right Seen  :  31.6% L |  24.4% C-L |  19.6% C |  10.3% C-R |  14.1% R
+       Center-Right Share :  20.5% L |  21.3% C-L |  20.4% C |  26.3% C-R |  21.5% R
+       Right        Seen  :  30.4% L |  25.3% C-L |  19.5% C |  10.8% C-R |  14.1% R
+       Right        Share :  34.6% L |  26.0% C-L |  35.6% C |  26.3% C-R |  77.0% R
+
+  -- ROUND 4 --
+       Sourcing Averages : 0.42 Repeats | 0.02 Pool | 0.14 Backlog
+       Expected Maximums : 2.38 Repeats | 1.01 Pool | 2.40 Backlog
+       Left         Seen  :  31.5% L |  26.5% C-L |  18.8% C |   8.5% C-R |  14.7% R
+       Left         Share :  78.7% L |  59.6% C-L |  47.0% C |  26.3% C-R |   2.5% R
+       Center-Left  Seen  :  33.6% L |  26.5% C-L |  18.7% C |   8.3% C-R |  12.8% R
+       Center-Left  Share :  55.4% L |  64.7% C-L |  48.0% C |  34.4% C-R |  30.3% R
+       Center-Right Seen  :  35.4% L |  27.5% C-L |  18.6% C |   7.4% C-R |  11.2% R
+       Center-Right Share :  20.6% L |  21.7% C-L |  20.6% C |  25.4% C-R |  20.8% R
+       Right        Seen  :  35.0% L |  26.9% C-L |  18.8% C |   8.1% C-R |  11.1% R
+       Right        Share :  34.1% L |  26.4% C-L |  36.5% C |  27.4% C-R |  78.1% R
+
+  -- ROUND 5 --
+       Sourcing Averages : 0.94 Repeats | 0.02 Pool | 0.25 Backlog
+       Expected Maximums : 3.65 Repeats | 1.26 Pool | 3.03 Backlog
+       Left         Seen  :  34.3% L |  27.4% C-L |  18.3% C |   7.0% C-R |  13.0% R
+       Left         Share :  78.4% L |  59.2% C-L |  46.7% C |  26.5% C-R |   2.4% R
+       Center-Left  Seen  :  37.5% L |  27.0% C-L |  18.2% C |   6.7% C-R |  10.6% R
+       Center-Left  Share :  56.2% L |  64.7% C-L |  47.2% C |  34.2% C-R |  30.3% R
+       Center-Right Seen  :  38.8% L |  28.9% C-L |  17.7% C |   5.7% C-R |   8.9% R
+       Center-Right Share :  20.3% L |  21.5% C-L |  21.1% C |  25.6% C-R |  20.3% R
+       Right        Seen  :  38.8% L |  29.0% C-L |  17.7% C |   6.1% C-R |   8.4% R
+       Right        Share :  34.5% L |  26.2% C-L |  36.0% C |  26.1% C-R |  76.8% R
+
+  -- ROUND 6 --
+       Sourcing Averages : 1.70 Repeats | 0.03 Pool | 0.40 Backlog
+       Expected Maximums : 5.11 Repeats | 1.62 Pool | 3.73 Backlog
+       Left         Seen  :  36.3% L |  28.3% C-L |  18.1% C |   5.9% C-R |  11.4% R
+       Left         Share :  78.6% L |  59.6% C-L |  46.9% C |  25.4% C-R |   2.4% R
+       Center-Left  Seen  :  40.6% L |  27.2% C-L |  17.9% C |   5.4% C-R |   8.9% R
+       Center-Left  Share :  55.7% L |  64.8% C-L |  47.8% C |  34.6% C-R |  30.1% R
+       Center-Right Seen  :  42.2% L |  29.6% C-L |  16.7% C |   4.5% C-R |   7.0% R
+       Center-Right Share :  20.4% L |  21.0% C-L |  20.9% C |  27.0% C-R |  21.2% R
+       Right        Seen  :  41.8% L |  30.0% C-L |  17.0% C |   4.9% C-R |   6.4% R
+       Right        Share :  34.0% L |  26.0% C-L |  36.3% C |  26.6% C-R |  76.9% R
+------------------------------------------------------------
+
+[ N = 100 ]
+
+  -- ROUND 1 --
+       Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Expected Maximums : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Left         Seen  :  18.0% L |  19.0% C-L |  19.0% C |  24.0% C-R |  20.0% R
+       Left         Share :  79.2% L |  59.4% C-L |  46.7% C |  26.6% C-R |   2.5% R
+       Center-Left  Seen  :  18.0% L |  19.0% C-L |  19.0% C |  20.0% C-R |  24.0% R
+       Center-Left  Share :  55.6% L |  63.9% C-L |  48.2% C |  33.7% C-R |  30.6% R
+       Center-Right Seen  :  19.0% L |  23.0% C-L |  20.0% C |  17.0% C-R |  21.0% R
+       Center-Right Share :  20.4% L |  21.6% C-L |  20.8% C |  26.6% C-R |  20.8% R
+       Right        Seen  :  18.0% L |  20.0% C-L |  22.0% C |  18.0% C-R |  22.0% R
+       Right        Share :  34.1% L |  26.4% C-L |  36.0% C |  26.1% C-R |  77.1% R
+
+  -- ROUND 2 --
+       Sourcing Averages : 0.02 Repeats | 0.01 Pool | 0.00 Backlog
+       Expected Maximums : 0.87 Repeats | 0.61 Pool | 0.00 Backlog
+       Left         Seen  :  21.8% L |  22.1% C-L |  20.2% C |  14.1% C-R |  21.8% R
+       Left         Share :  78.9% L |  59.9% C-L |  46.7% C |  26.0% C-R |   2.4% R
+       Center-Left  Seen  :  21.3% L |  22.0% C-L |  19.3% C |  14.4% C-R |  22.9% R
+       Center-Left  Share :  55.9% L |  64.8% C-L |  47.8% C |  34.0% C-R |  30.1% R
+       Center-Right Seen  :  23.5% L |  22.8% C-L |  20.2% C |  14.1% C-R |  19.4% R
+       Center-Right Share :  20.1% L |  21.4% C-L |  20.5% C |  25.9% C-R |  21.1% R
+       Right        Seen  :  24.7% L |  23.8% C-L |  20.2% C |  17.0% C-R |  14.4% R
+       Right        Share :  34.4% L |  26.5% C-L |  35.1% C |  25.9% C-R |  76.9% R
+
+  -- ROUND 3 --
+       Sourcing Averages : 0.15 Repeats | 0.01 Pool | 0.07 Backlog
+       Expected Maximums : 1.60 Repeats | 0.90 Pool | 1.97 Backlog
+       Left         Seen  :  26.7% L |  23.3% C-L |  19.8% C |  12.1% C-R |  18.0% R
+       Left         Share :  78.6% L |  59.5% C-L |  46.9% C |  25.9% C-R |   2.6% R
+       Center-Left  Seen  :  27.0% L |  24.1% C-L |  20.3% C |  11.3% C-R |  17.3% R
+       Center-Left  Share :  55.6% L |  65.2% C-L |  47.7% C |  34.2% C-R |  30.5% R
+       Center-Right Seen  :  27.4% L |  26.2% C-L |  20.3% C |  11.0% C-R |  15.1% R
+       Center-Right Share :  20.5% L |  21.4% C-L |  20.5% C |  27.0% C-R |  21.4% R
+       Right        Seen  :  29.7% L |  28.1% C-L |  19.6% C |  11.1% C-R |  11.4% R
+       Right        Share :  34.6% L |  26.6% C-L |  36.1% C |  26.3% C-R |  76.7% R
+
+  -- ROUND 4 --
+       Sourcing Averages : 0.43 Repeats | 0.02 Pool | 0.15 Backlog
+       Expected Maximums : 2.58 Repeats | 1.04 Pool | 2.64 Backlog
+       Left         Seen  :  29.6% L |  26.3% C-L |  19.8% C |   9.2% C-R |  15.2% R
+       Left         Share :  78.5% L |  59.5% C-L |  46.7% C |  26.3% C-R |   2.5% R
+       Center-Left  Seen  :  32.6% L |  25.7% C-L |  19.2% C |   8.8% C-R |  13.7% R
+       Center-Left  Share :  55.7% L |  65.1% C-L |  47.8% C |  34.9% C-R |  30.2% R
+       Center-Right Seen  :  33.9% L |  27.2% C-L |  19.4% C |   8.3% C-R |  11.1% R
+       Center-Right Share :  20.7% L |  21.7% C-L |  20.1% C |  26.8% C-R |  20.7% R
+       Right        Seen  :  34.0% L |  29.2% C-L |  19.7% C |   8.7% C-R |   8.5% R
+       Right        Share :  34.4% L |  26.4% C-L |  35.9% C |  26.9% C-R |  78.0% R
+
+  -- ROUND 5 --
+       Sourcing Averages : 0.92 Repeats | 0.02 Pool | 0.26 Backlog
+       Expected Maximums : 3.73 Repeats | 1.19 Pool | 3.25 Backlog
+       Left         Seen  :  33.7% L |  27.4% C-L |  19.4% C |   7.5% C-R |  12.1% R
+       Left         Share :  78.6% L |  59.6% C-L |  46.3% C |  26.1% C-R |   2.6% R
+       Center-Left  Seen  :  35.9% L |  26.7% C-L |  19.1% C |   7.3% C-R |  11.0% R
+       Center-Left  Share :  55.6% L |  64.8% C-L |  47.6% C |  34.1% C-R |  30.7% R
+       Center-Right Seen  :  37.8% L |  28.8% C-L |  18.6% C |   6.2% C-R |   8.7% R
+       Center-Right Share :  20.1% L |  21.5% C-L |  20.9% C |  25.2% C-R |  20.6% R
+       Right        Seen  :  38.2% L |  30.6% C-L |  18.4% C |   6.6% C-R |   6.1% R
+       Right        Share :  33.6% L |  25.9% C-L |  35.8% C |  25.8% C-R |  77.1% R
+
+  -- ROUND 6 --
+       Sourcing Averages : 1.63 Repeats | 0.02 Pool | 0.40 Backlog
+       Expected Maximums : 5.12 Repeats | 1.41 Pool | 3.95 Backlog
+       Left         Seen  :  35.8% L |  28.6% C-L |  19.2% C |   6.3% C-R |  10.1% R
+       Left         Share :  78.6% L |  59.6% C-L |  46.9% C |  27.2% C-R |   2.5% R
+       Center-Left  Seen  :  39.4% L |  26.9% C-L |  18.7% C |   6.0% C-R |   8.9% R
+       Center-Left  Share :  55.9% L |  64.7% C-L |  48.3% C |  34.3% C-R |  30.3% R
+       Center-Right Seen  :  41.3% L |  29.4% C-L |  18.0% C |   4.9% C-R |   6.5% R
+       Center-Right Share :  20.4% L |  21.6% C-L |  21.6% C |  26.1% C-R |  21.3% R
+       Right        Seen  :  41.1% L |  31.4% C-L |  17.6% C |   5.1% C-R |   4.8% R
+       Right        Share :  34.1% L |  26.3% C-L |  36.0% C |  25.8% C-R |  77.4% R
+------------------------------------------------------------
+=== SEGREGATED TOPOLOGY ===
+
+[ N = 20 ]
+
+  -- ROUND 1 --
+       Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Expected Maximums : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Left         Seen  :  15.0% L |  15.0% C-L |  25.0% C |  25.0% C-R |  20.0% R
+       Left         Share :  78.7% L |  59.3% C-L |  48.5% C |  26.7% C-R |   2.7% R
+       Center-Left  Seen  :  15.0% L |  25.0% C-L |  20.0% C |  20.0% C-R |  20.0% R
+       Center-Left  Share :  55.8% L |  65.2% C-L |  47.3% C |  34.4% C-R |  29.8% R
+       Center-Right Seen  :  10.0% L |  15.0% C-L |  25.0% C |  25.0% C-R |  25.0% R
+       Center-Right Share :  19.1% L |  21.6% C-L |  19.8% C |  26.6% C-R |  21.3% R
+       Right        Seen  :  25.0% L |  15.0% C-L |  15.0% C |  20.0% C-R |  25.0% R
+       Right        Share :  32.9% L |  26.2% C-L |  37.0% C |  27.1% C-R |  77.3% R
+
+  -- ROUND 2 --
+       Sourcing Averages : 0.00 Repeats | 0.01 Pool | 0.00 Backlog
+       Expected Maximums : 0.01 Repeats | 0.17 Pool | 0.00 Backlog
+       Left         Seen  :  23.4% L |  28.0% C-L |  22.1% C |  15.9% C-R |  10.5% R
+       Left         Share :  78.5% L |  59.8% C-L |  47.6% C |  25.4% C-R |   2.9% R
+       Center-Left  Seen  :  22.5% L |  29.1% C-L |  25.0% C |  14.8% C-R |   8.5% R
+       Center-Left  Share :  56.4% L |  65.0% C-L |  48.2% C |  33.7% C-R |  33.5% R
+       Center-Right Seen  :  15.8% L |  11.8% C-L |  17.8% C |  18.3% C-R |  36.3% R
+       Center-Right Share :  20.8% L |  23.1% C-L |  20.0% C |  27.1% C-R |  21.1% R
+       Right        Seen  :  16.8% L |  12.2% C-L |  16.9% C |  18.7% C-R |  35.5% R
+       Right        Share :  34.2% L |  26.0% C-L |  36.0% C |  26.4% C-R |  78.3% R
+
+  -- ROUND 3 --
+       Sourcing Averages : 0.43 Repeats | 0.03 Pool | 0.09 Backlog
+       Expected Maximums : 1.78 Repeats | 0.40 Pool | 1.01 Backlog
+       Left         Seen  :  25.1% L |  33.6% C-L |  21.8% C |  10.2% C-R |   9.4% R
+       Left         Share :  78.3% L |  59.6% C-L |  46.3% C |  24.6% C-R |   3.3% R
+       Center-Left  Seen  :  30.5% L |  30.6% C-L |  22.7% C |  10.7% C-R |   5.5% R
+       Center-Left  Share :  55.5% L |  64.3% C-L |  48.2% C |  34.2% C-R |  31.4% R
+       Center-Right Seen  :  15.5% L |  10.1% C-L |  14.9% C |  13.7% C-R |  45.8% R
+       Center-Right Share :  19.5% L |  20.7% C-L |  19.9% C |  27.5% C-R |  21.3% R
+       Right        Seen  :  18.2% L |  14.5% C-L |  17.4% C |  15.6% C-R |  34.3% R
+       Right        Share :  33.4% L |  27.0% C-L |  36.0% C |  26.9% C-R |  76.8% R
+
+  -- ROUND 4 --
+       Sourcing Averages : 1.53 Repeats | 0.10 Pool | 0.42 Backlog
+       Expected Maximums : 3.85 Repeats | 1.16 Pool | 2.37 Backlog
+       Left         Seen  :  24.5% L |  32.0% C-L |  21.9% C |   9.7% C-R |  11.9% R
+       Left         Share :  78.4% L |  60.2% C-L |  47.0% C |  27.2% C-R |   2.6% R
+       Center-Left  Seen  :  32.3% L |  30.1% C-L |  22.4% C |   8.8% C-R |   6.3% R
+       Center-Left  Share :  55.9% L |  64.7% C-L |  45.7% C |  33.4% C-R |  30.6% R
+       Center-Right Seen  :  17.2% L |  12.0% C-L |  14.8% C |  10.8% C-R |  45.2% R
+       Center-Right Share :  21.0% L |  21.2% C-L |  20.6% C |  27.2% C-R |  21.1% R
+       Right        Seen  :  22.1% L |  20.2% C-L |  18.6% C |  15.1% C-R |  24.0% R
+       Right        Share :  34.7% L |  27.7% C-L |  36.1% C |  27.2% C-R |  78.1% R
+
+  -- ROUND 5 --
+       Sourcing Averages : 2.89 Repeats | 0.25 Pool | 0.96 Backlog
+       Expected Maximums : 5.97 Repeats | 2.51 Pool | 3.64 Backlog
+       Left         Seen  :  20.6% L |  28.5% C-L |  23.3% C |  12.5% C-R |  15.1% R
+       Left         Share :  78.3% L |  61.4% C-L |  47.8% C |  27.6% C-R |   2.9% R
+       Center-Left  Seen  :  29.2% L |  25.4% C-L |  24.1% C |  11.7% C-R |   9.5% R
+       Center-Left  Share :  56.1% L |  65.7% C-L |  48.1% C |  34.0% C-R |  30.7% R
+       Center-Right Seen  :  20.6% L |  16.2% C-L |  16.3% C |  10.3% C-R |  36.5% R
+       Center-Right Share :  20.0% L |  20.5% C-L |  20.3% C |  27.3% C-R |  21.2% R
+       Right        Seen  :  26.2% L |  23.9% C-L |  20.0% C |  13.7% C-R |  16.2% R
+       Right        Share :  34.9% L |  26.6% C-L |  36.3% C |  25.6% C-R |  76.9% R
+
+  -- ROUND 6 --
+       Sourcing Averages : 4.27 Repeats | 0.51 Pool | 1.45 Backlog
+       Expected Maximums : 7.91 Repeats | 4.21 Pool | 4.58 Backlog
+       Left         Seen  :  18.2% L |  25.0% C-L |  25.0% C |  15.1% C-R |  16.6% R
+       Left         Share :  76.5% L |  60.1% C-L |  46.7% C |  26.2% C-R |   2.3% R
+       Center-Left  Seen  :  25.2% L |  22.5% C-L |  26.1% C |  14.8% C-R |  11.4% R
+       Center-Left  Share :  55.1% L |  66.3% C-L |  48.7% C |  33.7% C-R |  30.6% R
+       Center-Right Seen  :  23.7% L |  19.3% C-L |  18.4% C |  10.1% C-R |  28.5% R
+       Center-Right Share :  20.5% L |  20.5% C-L |  19.4% C |  25.7% C-R |  20.6% R
+       Right        Seen  :  26.4% L |  25.2% C-L |  21.0% C |  13.3% C-R |  14.1% R
+       Right        Share :  34.4% L |  25.8% C-L |  36.4% C |  27.1% C-R |  75.9% R
+------------------------------------------------------------
+
+[ N = 40 ]
+
+  -- ROUND 1 --
+       Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Expected Maximums : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Left         Seen  :  20.0% L |  20.0% C-L |  17.5% C |  17.5% C-R |  25.0% R
+       Left         Share :  78.7% L |  59.1% C-L |  47.1% C |  25.8% C-R |   2.4% R
+       Center-Left  Seen  :  20.0% L |  17.5% C-L |  20.0% C |  25.0% C-R |  17.5% R
+       Center-Left  Share :  56.7% L |  64.3% C-L |  47.6% C |  34.2% C-R |  31.0% R
+       Center-Right Seen  :  20.0% L |  15.0% C-L |  17.5% C |  22.5% C-R |  25.0% R
+       Center-Right Share :  21.2% L |  21.1% C-L |  21.0% C |  26.5% C-R |  21.2% R
+       Right        Seen  :  22.5% L |  25.0% C-L |  17.5% C |  15.0% C-R |  20.0% R
+       Right        Share :  33.5% L |  26.7% C-L |  35.8% C |  27.6% C-R |  77.5% R
+
+  -- ROUND 2 --
+       Sourcing Averages : 0.00 Repeats | 0.02 Pool | 0.00 Backlog
+       Expected Maximums : 0.01 Repeats | 0.57 Pool | 0.00 Backlog
+       Left         Seen  :  30.7% L |  25.8% C-L |  20.2% C |  15.4% C-R |   7.9% R
+       Left         Share :  78.3% L |  59.1% C-L |  46.6% C |  25.5% C-R |   2.3% R
+       Center-Left  Seen  :  31.2% L |  26.5% C-L |  19.1% C |  14.0% C-R |   9.1% R
+       Center-Left  Share :  56.1% L |  65.2% C-L |  47.8% C |  35.4% C-R |  30.0% R
+       Center-Right Seen  :  20.1% L |  16.4% C-L |  17.2% C |  13.9% C-R |  32.3% R
+       Center-Right Share :  20.2% L |  22.4% C-L |  20.5% C |  24.9% C-R |  21.4% R
+       Right        Seen  :  19.7% L |  16.9% C-L |  15.7% C |  18.8% C-R |  28.9% R
+       Right        Share :  34.6% L |  26.4% C-L |  36.5% C |  25.4% C-R |  76.8% R
+
+  -- ROUND 3 --
+       Sourcing Averages : 0.23 Repeats | 0.04 Pool | 0.07 Backlog
+       Expected Maximums : 1.55 Repeats | 1.11 Pool | 1.39 Backlog
+       Left         Seen  :  37.6% L |  30.2% C-L |  17.4% C |   9.5% C-R |   5.2% R
+       Left         Share :  78.0% L |  59.6% C-L |  46.5% C |  25.4% C-R |   2.8% R
+       Center-Left  Seen  :  38.2% L |  30.0% C-L |  18.7% C |   8.8% C-R |   4.3% R
+       Center-Left  Share :  55.1% L |  64.7% C-L |  46.9% C |  33.7% C-R |  30.7% R
+       Center-Right Seen  :  19.5% L |  14.1% C-L |  14.2% C |  11.5% C-R |  40.7% R
+       Center-Right Share :  20.0% L |  21.1% C-L |  21.2% C |  25.2% C-R |  21.4% R
+       Right        Seen  :  21.2% L |  15.9% C-L |  15.2% C |  14.2% C-R |  33.5% R
+       Right        Share :  33.9% L |  25.6% C-L |  35.6% C |  26.7% C-R |  76.8% R
+
+  -- ROUND 4 --
+       Sourcing Averages : 0.75 Repeats | 0.07 Pool | 0.19 Backlog
+       Expected Maximums : 2.96 Repeats | 1.78 Pool | 2.37 Backlog
+       Left         Seen  :  39.2% L |  33.4% C-L |  16.6% C |   6.6% C-R |   4.3% R
+       Left         Share :  78.6% L |  59.7% C-L |  46.9% C |  25.2% C-R |   2.2% R
+       Center-Left  Seen  :  43.7% L |  30.9% C-L |  15.6% C |   5.4% C-R |   4.4% R
+       Center-Left  Share :  55.2% L |  65.1% C-L |  48.2% C |  35.7% C-R |  30.8% R
+       Center-Right Seen  :  21.7% L |  13.1% C-L |  13.0% C |   8.7% C-R |  43.5% R
+       Center-Right Share :  20.2% L |  21.6% C-L |  20.9% C |  24.5% C-R |  21.5% R
+       Right        Seen  :  22.7% L |  17.0% C-L |  14.9% C |  12.3% C-R |  33.1% R
+       Right        Share :  34.1% L |  25.1% C-L |  36.0% C |  26.1% C-R |  77.6% R
+
+  -- ROUND 5 --
+       Sourcing Averages : 1.58 Repeats | 0.13 Pool | 0.37 Backlog
+       Expected Maximums : 4.62 Repeats | 2.76 Pool | 3.20 Backlog
+       Left         Seen  :  39.7% L |  34.0% C-L |  16.0% C |   5.2% C-R |   5.1% R
+       Left         Share :  77.9% L |  59.3% C-L |  47.0% C |  25.3% C-R |   2.9% R
+       Center-Left  Seen  :  45.5% L |  30.6% C-L |  14.5% C |   4.1% C-R |   5.2% R
+       Center-Left  Share :  55.5% L |  64.1% C-L |  47.7% C |  34.4% C-R |  29.6% R
+       Center-Right Seen  :  23.0% L |  14.4% C-L |  12.6% C |   7.1% C-R |  42.9% R
+       Center-Right Share :  20.6% L |  22.4% C-L |  20.0% C |  26.5% C-R |  20.9% R
+       Right        Seen  :  26.5% L |  18.7% C-L |  15.1% C |  10.9% C-R |  28.8% R
+       Right        Share :  33.5% L |  26.5% C-L |  34.8% C |  26.7% C-R |  77.0% R
+
+  -- ROUND 6 --
+       Sourcing Averages : 2.67 Repeats | 0.20 Pool | 0.65 Backlog
+       Expected Maximums : 6.47 Repeats | 4.06 Pool | 4.11 Backlog
+       Left         Seen  :  37.2% L |  33.5% C-L |  16.8% C |   5.4% C-R |   7.1% R
+       Left         Share :  78.8% L |  58.8% C-L |  46.3% C |  27.1% C-R |   2.6% R
+       Center-Left  Seen  :  45.3% L |  29.2% C-L |  15.0% C |   4.2% C-R |   6.4% R
+       Center-Left  Share :  56.0% L |  65.0% C-L |  47.9% C |  33.6% C-R |  29.1% R
+       Center-Right Seen  :  25.8% L |  15.8% C-L |  12.9% C |   6.6% C-R |  38.9% R
+       Center-Right Share :  20.1% L |  20.4% C-L |  20.6% C |  26.6% C-R |  20.8% R
+       Right        Seen  :  29.5% L |  21.7% C-L |  15.1% C |  10.6% C-R |  23.1% R
+       Right        Share :  34.0% L |  26.6% C-L |  36.4% C |  27.0% C-R |  76.5% R
+------------------------------------------------------------
+
+[ N = 60 ]
+
+  -- ROUND 1 --
+       Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Expected Maximums : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Left         Seen  :  18.3% L |  18.3% C-L |  20.0% C |  20.0% C-R |  23.3% R
+       Left         Share :  79.2% L |  58.8% C-L |  47.2% C |  25.8% C-R |   2.5% R
+       Center-Left  Seen  :  18.3% L |  20.0% C-L |  16.7% C |  23.3% C-R |  21.7% R
+       Center-Left  Share :  56.1% L |  64.8% C-L |  48.0% C |  33.9% C-R |  30.2% R
+       Center-Right Seen  :  20.0% L |  18.3% C-L |  23.3% C |  23.3% C-R |  15.0% R
+       Center-Right Share :  20.3% L |  21.4% C-L |  21.4% C |  27.1% C-R |  21.5% R
+       Right        Seen  :  21.7% L |  18.3% C-L |  18.3% C |  20.0% C-R |  21.7% R
+       Right        Share :  33.9% L |  26.4% C-L |  35.4% C |  26.7% C-R |  77.2% R
+
+  -- ROUND 2 --
+       Sourcing Averages : 0.00 Repeats | 0.02 Pool | 0.00 Backlog
+       Expected Maximums : 0.02 Repeats | 0.71 Pool | 0.00 Backlog
+       Left         Seen  :  29.7% L |  27.0% C-L |  18.9% C |  15.0% C-R |   9.3% R
+       Left         Share :  78.5% L |  59.3% C-L |  46.4% C |  26.3% C-R |   2.7% R
+       Center-Left  Seen  :  28.0% L |  26.9% C-L |  20.4% C |  15.4% C-R |   9.4% R
+       Center-Left  Share :  55.9% L |  65.2% C-L |  47.8% C |  34.3% C-R |  31.2% R
+       Center-Right Seen  :  17.7% L |  13.5% C-L |  18.5% C |  18.3% C-R |  32.1% R
+       Center-Right Share :  20.6% L |  22.1% C-L |  20.7% C |  26.1% C-R |  21.2% R
+       Right        Seen  :  19.4% L |  16.8% C-L |  18.9% C |  17.7% C-R |  27.3% R
+       Right        Share :  34.4% L |  26.8% C-L |  35.9% C |  25.9% C-R |  77.2% R
+
+  -- ROUND 3 --
+       Sourcing Averages : 0.15 Repeats | 0.04 Pool | 0.07 Backlog
+       Expected Maximums : 1.44 Repeats | 1.18 Pool | 1.54 Backlog
+       Left         Seen  :  35.6% L |  32.0% C-L |  18.3% C |   9.5% C-R |   4.6% R
+       Left         Share :  78.5% L |  59.4% C-L |  47.3% C |  26.1% C-R |   2.7% R
+       Center-Left  Seen  :  35.8% L |  30.5% C-L |  18.1% C |   9.3% C-R |   6.3% R
+       Center-Left  Share :  55.7% L |  66.0% C-L |  46.9% C |  34.1% C-R |  31.2% R
+       Center-Right Seen  :  18.2% L |  13.9% C-L |  16.2% C |  14.3% C-R |  37.4% R
+       Center-Right Share :  21.0% L |  22.0% C-L |  20.8% C |  26.0% C-R |  21.1% R
+       Right        Seen  :  19.0% L |  14.8% C-L |  16.4% C |  14.4% C-R |  35.4% R
+       Right        Share :  34.0% L |  25.4% C-L |  35.4% C |  26.4% C-R |  77.2% R
+
+  -- ROUND 4 --
+       Sourcing Averages : 0.51 Repeats | 0.05 Pool | 0.14 Backlog
+       Expected Maximums : 2.61 Repeats | 1.54 Pool | 2.31 Backlog
+       Left         Seen  :  39.0% L |  34.2% C-L |  16.4% C |   6.2% C-R |   4.2% R
+       Left         Share :  78.4% L |  59.1% C-L |  47.4% C |  25.8% C-R |   2.0% R
+       Center-Left  Seen  :  40.9% L |  32.1% C-L |  15.7% C |   5.6% C-R |   5.7% R
+       Center-Left  Share :  56.3% L |  65.2% C-L |  48.2% C |  35.3% C-R |  29.9% R
+       Center-Right Seen  :  18.2% L |  13.0% C-L |  13.6% C |  10.7% C-R |  44.5% R
+       Center-Right Share :  20.3% L |  20.5% C-L |  20.6% C |  26.4% C-R |  21.2% R
+       Right        Seen  :  20.0% L |  15.1% C-L |  14.9% C |  11.7% C-R |  38.2% R
+       Right        Share :  33.8% L |  26.2% C-L |  35.4% C |  26.0% C-R |  77.3% R
+
+  -- ROUND 5 --
+       Sourcing Averages : 1.11 Repeats | 0.06 Pool | 0.26 Backlog
+       Expected Maximums : 4.05 Repeats | 2.05 Pool | 3.07 Backlog
+       Left         Seen  :  40.9% L |  35.0% C-L |  15.2% C |   4.3% C-R |   4.7% R
+       Left         Share :  78.6% L |  59.4% C-L |  46.9% C |  27.6% C-R |   2.4% R
+       Center-Left  Seen  :  43.6% L |  32.2% C-L |  14.1% C |   3.8% C-R |   6.3% R
+       Center-Left  Share :  55.6% L |  64.2% C-L |  47.2% C |  33.3% C-R |  31.1% R
+       Center-Right Seen  :  19.4% L |  12.6% C-L |  12.2% C |   8.0% C-R |  47.8% R
+       Center-Right Share :  20.3% L |  21.5% C-L |  20.8% C |  25.7% C-R |  21.3% R
+       Right        Seen  :  22.5% L |  17.0% C-L |  14.0% C |   9.9% C-R |  36.6% R
+       Right        Share :  34.0% L |  26.1% C-L |  36.7% C |  26.6% C-R |  76.8% R
+
+  -- ROUND 6 --
+       Sourcing Averages : 1.96 Repeats | 0.09 Pool | 0.43 Backlog
+       Expected Maximums : 5.70 Repeats | 2.80 Pool | 3.94 Backlog
+       Left         Seen  :  40.7% L |  35.6% C-L |  14.5% C |   3.5% C-R |   5.7% R
+       Left         Share :  78.6% L |  59.2% C-L |  47.6% C |  26.3% C-R |   2.4% R
+       Center-Left  Seen  :  45.1% L |  31.3% C-L |  13.3% C |   3.1% C-R |   7.1% R
+       Center-Left  Share :  55.7% L |  65.3% C-L |  47.8% C |  35.5% C-R |  30.1% R
+       Center-Right Seen  :  21.6% L |  13.4% C-L |  11.7% C |   6.6% C-R |  46.7% R
+       Center-Right Share :  20.3% L |  21.4% C-L |  21.1% C |  25.6% C-R |  21.1% R
+       Right        Seen  :  26.1% L |  18.6% C-L |  14.1% C |   8.9% C-R |  32.3% R
+       Right        Share :  34.4% L |  25.7% C-L |  36.4% C |  24.8% C-R |  77.3% R
+------------------------------------------------------------
+
+[ N = 80 ]
+
+  -- ROUND 1 --
+       Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Expected Maximums : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Left         Seen  :  20.0% L |  21.2% C-L |  17.5% C |  23.8% C-R |  17.5% R
+       Left         Share :  78.2% L |  59.9% C-L |  47.1% C |  26.5% C-R |   2.4% R
+       Center-Left  Seen  :  20.0% L |  17.5% C-L |  21.2% C |  20.0% C-R |  21.2% R
+       Center-Left  Share :  54.7% L |  65.1% C-L |  47.4% C |  34.1% C-R |  30.6% R
+       Center-Right Seen  :  20.0% L |  25.0% C-L |  20.0% C |  16.2% C-R |  18.8% R
+       Center-Right Share :  20.7% L |  21.1% C-L |  21.1% C |  26.6% C-R |  21.9% R
+       Right        Seen  :  18.8% L |  21.2% C-L |  22.5% C |  16.2% C-R |  21.2% R
+       Right        Share :  34.3% L |  26.3% C-L |  36.0% C |  25.8% C-R |  77.5% R
+
+  -- ROUND 2 --
+       Sourcing Averages : 0.01 Repeats | 0.02 Pool | 0.00 Backlog
+       Expected Maximums : 0.58 Repeats | 0.92 Pool | 0.00 Backlog
+       Left         Seen  :  29.8% L |  26.8% C-L |  20.6% C |  13.9% C-R |   9.0% R
+       Left         Share :  78.5% L |  59.7% C-L |  45.9% C |  26.5% C-R |   2.5% R
+       Center-Left  Seen  :  29.6% L |  27.0% C-L |  20.2% C |  14.4% C-R |   8.9% R
+       Center-Left  Share :  55.8% L |  65.1% C-L |  47.5% C |  34.2% C-R |  30.9% R
+       Center-Right Seen  :  17.3% L |  17.2% C-L |  19.3% C |  14.6% C-R |  31.6% R
+       Center-Right Share :  20.5% L |  21.9% C-L |  21.2% C |  25.8% C-R |  20.8% R
+       Right        Seen  :  17.8% L |  18.8% C-L |  20.0% C |  13.3% C-R |  30.0% R
+       Right        Share :  33.9% L |  26.1% C-L |  36.0% C |  26.0% C-R |  77.5% R
+
+  -- ROUND 3 --
+       Sourcing Averages : 0.10 Repeats | 0.03 Pool | 0.05 Backlog
+       Expected Maximums : 1.27 Repeats | 1.48 Pool | 1.63 Backlog
+       Left         Seen  :  35.6% L |  32.1% C-L |  18.7% C |   8.7% C-R |   5.0% R
+       Left         Share :  78.2% L |  59.5% C-L |  47.1% C |  25.6% C-R |   2.5% R
+       Center-Left  Seen  :  37.6% L |  30.4% C-L |  18.3% C |   8.6% C-R |   5.1% R
+       Center-Left  Share :  56.1% L |  65.2% C-L |  47.0% C |  33.8% C-R |  29.6% R
+       Center-Right Seen  :  17.1% L |  14.8% C-L |  16.8% C |  10.7% C-R |  40.7% R
+       Center-Right Share :  20.2% L |  21.0% C-L |  21.1% C |  25.7% C-R |  21.9% R
+       Right        Seen  :  18.0% L |  15.5% C-L |  17.4% C |  11.5% C-R |  37.6% R
+       Right        Share :  34.2% L |  26.4% C-L |  36.6% C |  26.0% C-R |  77.2% R
+
+  -- ROUND 4 --
+       Sourcing Averages : 0.37 Repeats | 0.05 Pool | 0.11 Backlog
+       Expected Maximums : 2.36 Repeats | 1.93 Pool | 2.27 Backlog
+       Left         Seen  :  41.0% L |  33.5% C-L |  16.2% C |   5.2% C-R |   4.1% R
+       Left         Share :  78.6% L |  59.4% C-L |  47.4% C |  26.5% C-R |   1.9% R
+       Center-Left  Seen  :  41.7% L |  32.8% C-L |  15.8% C |   5.0% C-R |   4.7% R
+       Center-Left  Share :  56.1% L |  65.0% C-L |  47.3% C |  34.9% C-R |  30.9% R
+       Center-Right Seen  :  17.1% L |  13.0% C-L |  14.4% C |   8.1% C-R |  47.4% R
+       Center-Right Share :  20.1% L |  22.0% C-L |  20.6% C |  26.8% C-R |  21.0% R
+       Right        Seen  :  18.2% L |  14.4% C-L |  15.3% C |   8.9% C-R |  43.2% R
+       Right        Share :  33.9% L |  25.9% C-L |  36.5% C |  26.9% C-R |  77.0% R
+
+  -- ROUND 5 --
+       Sourcing Averages : 0.82 Repeats | 0.06 Pool | 0.20 Backlog
+       Expected Maximums : 3.61 Repeats | 2.46 Pool | 2.98 Backlog
+       Left         Seen  :  43.1% L |  34.8% C-L |  14.1% C |   3.4% C-R |   4.6% R
+       Left         Share :  78.1% L |  59.4% C-L |  46.3% C |  24.6% C-R |   2.4% R
+       Center-Left  Seen  :  45.4% L |  32.9% C-L |  13.5% C |   3.0% C-R |   5.1% R
+       Center-Left  Share :  55.5% L |  64.3% C-L |  47.5% C |  35.5% C-R |  31.5% R
+       Center-Right Seen  :  17.6% L |  12.2% C-L |  12.3% C |   6.3% C-R |  51.5% R
+       Center-Right Share :  20.5% L |  21.7% C-L |  20.8% C |  26.6% C-R |  21.1% R
+       Right        Seen  :  20.2% L |  14.8% C-L |  13.9% C |   7.5% C-R |  43.6% R
+       Right        Share :  34.3% L |  26.8% C-L |  35.8% C |  26.7% C-R |  77.1% R
+
+  -- ROUND 6 --
+       Sourcing Averages : 1.49 Repeats | 0.08 Pool | 0.31 Backlog
+       Expected Maximums : 5.17 Repeats | 3.22 Pool | 3.80 Backlog
+       Left         Seen  :  44.2% L |  35.0% C-L |  13.1% C |   2.4% C-R |   5.4% R
+       Left         Share :  78.6% L |  59.5% C-L |  45.9% C |  25.4% C-R |   2.4% R
+       Center-Left  Seen  :  47.3% L |  32.9% C-L |  11.9% C |   2.0% C-R |   5.9% R
+       Center-Left  Share :  55.7% L |  64.8% C-L |  47.5% C |  33.0% C-R |  29.9% R
+       Center-Right Seen  :  19.2% L |  12.4% C-L |  10.9% C |   4.9% C-R |  52.5% R
+       Center-Right Share :  20.0% L |  21.7% C-L |  20.3% C |  27.2% C-R |  21.1% R
+       Right        Seen  :  23.3% L |  16.5% C-L |  13.0% C |   6.5% C-R |  40.6% R
+       Right        Share :  33.8% L |  25.5% C-L |  36.4% C |  26.1% C-R |  76.9% R
+------------------------------------------------------------
+
+[ N = 100 ]
+
+  -- ROUND 1 --
+       Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Expected Maximums : 0.00 Repeats | N/A  Pool | N/A  Backlog
+       Left         Seen  :  18.0% L |  22.0% C-L |  19.0% C |  21.0% C-R |  20.0% R
+       Left         Share :  78.3% L |  59.7% C-L |  46.6% C |  25.9% C-R |   2.6% R
+       Center-Left  Seen  :  17.0% L |  17.0% C-L |  23.0% C |  20.0% C-R |  23.0% R
+       Center-Left  Share :  56.0% L |  64.7% C-L |  47.8% C |  34.0% C-R |  30.2% R
+       Center-Right Seen  :  19.0% L |  23.0% C-L |  17.0% C |  20.0% C-R |  21.0% R
+       Center-Right Share :  19.9% L |  21.8% C-L |  20.6% C |  26.8% C-R |  21.0% R
+       Right        Seen  :  19.0% L |  19.0% C-L |  21.0% C |  18.0% C-R |  23.0% R
+       Right        Share :  34.1% L |  26.1% C-L |  36.1% C |  26.5% C-R |  76.8% R
+
+  -- ROUND 2 --
+       Sourcing Averages : 0.02 Repeats | 0.02 Pool | 0.00 Backlog
+       Expected Maximums : 0.91 Repeats | 1.02 Pool | 0.00 Backlog
+       Left         Seen  :  28.0% L |  26.8% C-L |  22.3% C |  14.1% C-R |   8.9% R
+       Left         Share :  78.7% L |  59.5% C-L |  46.8% C |  26.3% C-R |   2.6% R
+       Center-Left  Seen  :  26.3% L |  27.8% C-L |  21.6% C |  13.6% C-R |  10.7% R
+       Center-Left  Share :  56.1% L |  64.7% C-L |  47.9% C |  34.2% C-R |  30.5% R
+       Center-Right Seen  :  16.5% L |  16.5% C-L |  18.1% C |  16.8% C-R |  32.2% R
+       Center-Right Share :  20.5% L |  21.5% C-L |  20.4% C |  26.3% C-R |  20.6% R
+       Right        Seen  :  16.9% L |  16.9% C-L |  18.1% C |  14.9% C-R |  33.1% R
+       Right        Share :  34.8% L |  25.8% C-L |  36.4% C |  26.0% C-R |  77.4% R
+
+  -- ROUND 3 --
+       Sourcing Averages : 0.14 Repeats | 0.03 Pool | 0.05 Backlog
+       Expected Maximums : 1.55 Repeats | 1.48 Pool | 1.73 Backlog
+       Left         Seen  :  35.5% L |  31.4% C-L |  20.3% C |   8.2% C-R |   4.5% R
+       Left         Share :  78.5% L |  59.3% C-L |  46.8% C |  26.1% C-R |   2.6% R
+       Center-Left  Seen  :  32.5% L |  32.1% C-L |  19.9% C |   8.3% C-R |   7.1% R
+       Center-Left  Share :  55.6% L |  64.9% C-L |  47.7% C |  34.1% C-R |  30.4% R
+       Center-Right Seen  :  16.1% L |  13.5% C-L |  15.7% C |  12.1% C-R |  42.6% R
+       Center-Right Share :  20.2% L |  21.9% C-L |  20.5% C |  26.1% C-R |  21.3% R
+       Right        Seen  :  16.3% L |  14.9% C-L |  16.0% C |  12.5% C-R |  40.3% R
+       Right        Share :  34.2% L |  26.2% C-L |  36.0% C |  26.6% C-R |  77.3% R
+
+  -- ROUND 4 --
+       Sourcing Averages : 0.38 Repeats | 0.04 Pool | 0.10 Backlog
+       Expected Maximums : 2.43 Repeats | 1.79 Pool | 2.34 Backlog
+       Left         Seen  :  38.6% L |  35.0% C-L |  17.2% C |   5.1% C-R |   4.1% R
+       Left         Share :  78.4% L |  59.3% C-L |  46.8% C |  26.2% C-R |   2.6% R
+       Center-Left  Seen  :  38.7% L |  32.6% C-L |  17.3% C |   5.0% C-R |   6.4% R
+       Center-Left  Share :  55.6% L |  65.1% C-L |  48.0% C |  34.4% C-R |  29.2% R
+       Center-Right Seen  :  15.3% L |  12.0% C-L |  13.4% C |   8.8% C-R |  50.5% R
+       Center-Right Share :  20.7% L |  21.3% C-L |  21.1% C |  26.2% C-R |  21.0% R
+       Right        Seen  :  17.4% L |  14.7% C-L |  14.0% C |   9.4% C-R |  44.5% R
+       Right        Share :  33.4% L |  25.4% C-L |  36.3% C |  26.3% C-R |  77.2% R
+
+  -- ROUND 5 --
+       Sourcing Averages : 0.80 Repeats | 0.04 Pool | 0.17 Backlog
+       Expected Maximums : 3.58 Repeats | 2.10 Pool | 2.94 Backlog
+       Left         Seen  :  41.4% L |  35.9% C-L |  15.2% C |   3.2% C-R |   4.3% R
+       Left         Share :  78.9% L |  59.5% C-L |  46.9% C |  26.9% C-R |   2.2% R
+       Center-Left  Seen  :  42.4% L |  33.5% C-L |  14.4% C |   3.1% C-R |   6.7% R
+       Center-Left  Share :  55.8% L |  65.2% C-L |  47.9% C |  35.0% C-R |  29.8% R
+       Center-Right Seen  :  15.8% L |  11.6% C-L |  11.7% C |   6.5% C-R |  54.4% R
+       Center-Right Share :  20.8% L |  22.3% C-L |  20.3% C |  25.7% C-R |  21.1% R
+       Right        Seen  :  18.3% L |  14.7% C-L |  13.0% C |   7.5% C-R |  46.5% R
+       Right        Share :  34.5% L |  26.3% C-L |  36.6% C |  26.2% C-R |  77.4% R
+
+  -- ROUND 6 --
+       Sourcing Averages : 1.40 Repeats | 0.05 Pool | 0.26 Backlog
+       Expected Maximums : 5.01 Repeats | 2.49 Pool | 3.64 Backlog
+       Left         Seen  :  42.9% L |  36.4% C-L |  13.5% C |   2.3% C-R |   4.9% R
+       Left         Share :  78.2% L |  59.6% C-L |  47.0% C |  27.1% C-R |   2.4% R
+       Center-Left  Seen  :  45.1% L |  33.2% C-L |  12.2% C |   2.0% C-R |   7.6% R
+       Center-Left  Share :  55.8% L |  65.1% C-L |  47.5% C |  33.8% C-R |  29.3% R
+       Center-Right Seen  :  17.0% L |  11.7% C-L |  10.2% C |   4.9% C-R |  56.3% R
+       Center-Right Share :  20.4% L |  21.9% C-L |  20.2% C |  25.8% C-R |  20.9% R
+       Right        Seen  :  20.5% L |  15.9% C-L |  12.2% C |   6.2% C-R |  45.3% R
+       Right        Share :  34.3% L |  26.0% C-L |  36.0% C |  25.7% C-R |  77.1% R
+------------------------------------------------------------

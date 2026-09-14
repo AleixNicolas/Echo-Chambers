@@ -1,0 +1,242 @@
+=== STATISTICAL POWER ANALYSIS SUMMARY (MANN-WHITNEY U) ===
+Note: Standard trials output based on first 10 trials of the Monte Carlo pool.
+
+################################################################################
+# METRIC: TARGET_GT_2
+################################################################################
+
+TARGET CATEGORY: LEFT USERS
+==================================================
+
+  Nominal Network Size (N) = 20
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 3.3789e-01      | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 40
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.3804e-02 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 60
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.2280e-02 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 80
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 2.7654e-03 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 100
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.7364e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+TARGET CATEGORY: RIGHT USERS
+==================================================
+
+  Nominal Network Size (N) = 20
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 6.9219e-03 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 40
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.6486e-03 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 60
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.0788e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 80
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.5205e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 100
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.2698e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+################################################################################
+# METRIC: OPPOSITE_EQ_0
+################################################################################
+
+TARGET CATEGORY: LEFT USERS
+==================================================
+
+  Nominal Network Size (N) = 20
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 5.3681e-01      | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 40
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 3.4607e-03 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 60
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 3.4917e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 80
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.7861e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 100
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.7962e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+TARGET CATEGORY: RIGHT USERS
+==================================================
+
+  Nominal Network Size (N) = 20
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.9862e-03 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 40
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 7.7466e-02      | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 60
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.0099e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 80
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 2.9692e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 100
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.5748e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+################################################################################
+# METRIC: CONGENIAL_COUNT
+################################################################################
+
+TARGET CATEGORY: LEFT USERS
+==================================================
+
+  Nominal Network Size (N) = 20
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 8.7865e-01      | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 40
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.0080e-02 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 60
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.3911e-02 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 80
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 4.0165e-03 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 100
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 3.2643e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+TARGET CATEGORY: RIGHT USERS
+==================================================
+
+  Nominal Network Size (N) = 20
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 3.6580e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 40
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 2.1351e-03 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 60
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.8063e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 80
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.8063e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 100
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.8063e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+################################################################################
+# METRIC: CONTRARY_COUNT
+################################################################################
+
+TARGET CATEGORY: LEFT USERS
+==================================================
+
+  Nominal Network Size (N) = 20
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.0000e+00      | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 40
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 4.4951e-03 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 60
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.0372e-03 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 80
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.7761e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 100
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.7661e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+TARGET CATEGORY: RIGHT USERS
+==================================================
+
+  Nominal Network Size (N) = 20
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 8.0554e-03 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 40
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 8.0792e-03 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 60
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.8165e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 80
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.7962e-04 *    | 0.0000     | 10 Independent Trials/Trt
+
+  Nominal Network Size (N) = 100
+  Method                              | p-value (Mean)  | Std Dev    | Effective Sample Size
+  ------------------------------------+-----------------+------------+--------------------------
+  Macro (Network Level)               | 1.8165e-04 *    | 0.0000     | 10 Independent Trials/Trt
