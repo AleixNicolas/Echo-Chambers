@@ -1,7 +1,19 @@
 import os
 
 # ==========================================
-# 1. PATH CONFIGURATION & FOLDER STRUCTURE
+# 1. PIPELINE MODE & MASTER SWITCHES
+# ==========================================
+# Determines which topic forms the structural backbone of the network.
+# Used by the data wrangler to map 2D profiles into physical Left/Right chambers.
+EMPIRICAL_BASE_TOPIC = "imm"  
+EMPIRICAL_SIDE_TOPIC = "climate"
+
+# Topics that require their 1-5 scale to be inverted (e.g. 5 becomes 1) 
+# so that 5 ALWAYS means "Left" and 1 ALWAYS means "Right".
+INVERT_OPINIONS_FOR = ['imm', 'immigration']
+
+# ==========================================
+# 2. PATH CONFIGURATION & FOLDER STRUCTURE
 # ==========================================
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -26,54 +38,41 @@ def get_baseline_path(n, k):
     return os.path.join(BASELINES_DIR, f"baseline_N{n}_K{k}.json")
 
 # ==========================================
-# 2. SYSTEM PARAMETER SWEEPS
+# 3. CORE EXPERIMENT MECHANICS
 # ==========================================
-N_VALUES = [20, 40, 60, 80, 100]           
-K_VALUES = [4,5]                 
+ROUNDS = 5                     
 NUM_UNIQUE_ITEMS = 160         
 MIN_ITEMS_ROUND_N = 4          
 MAX_REFILL_LIMIT = 4           
 MAX_VISIBLE_ITEMS = 4          
 
-ROUNDS = 5                     
+# ==========================================
+# 4. SIMULATION SPECIFIC SETTINGS
+# ==========================================
+N_VALUES = [20, 40, 60, 80, 100]           
+K_VALUES = [4, 5]                 
 NUM_TRIALS = 100
-
-# Simulation Topics
 SIM_TOPICS = ['base_topic', 'side_topic']
 
-# ==========================================
-# 3. EXPERIMENT MECHANICS & TOPIC ASSIGNMENT
-# ==========================================
 PPM_CROSS_EDGE_FRACTIONS = [0.067] 
 PRIORITY_QUEUING = True            
 LAST_ROUND_PRIORITY = [True]         
-SEED_R1 = 4                        
 USE_EPISTEMIC_NOISE = True 
 USE_ALEATORIC_NOISE = True
 ALEATORIC_ERROR_RATE = 0.05 
-DIST_TYPES = ['discrete_4']        
 
 SIDE_TOPIC_ASSIGNMENT_METHOD = 'probabilistic'
-
-# Side-topic proportions among Left-base and Right-base nodes (5 categories)
 SIDE_TOPIC_SPLIT_LEFT_BASE = {'Left': 0.35, 'Center-Left': 0.35, 'Center': 0.23, 'Center-Right': 0.03, 'Right': 0.04}
 SIDE_TOPIC_SPLIT_RIGHT_BASE = {'Left': 0.12, 'Center-Left': 0.12, 'Center': 0.12, 'Center-Right': 0.32, 'Right': 0.32}
-
-# Standard opinion points for side topic assignments (5 categories)
 SIDE_OPINION_VALUES = {'Left': 0.1, 'Center-Left': 0.3, 'Center': 0.5, 'Center-Right': 0.7, 'Right': 0.9}
-# ==========================================
-# 4. FILTER REGIMES (Behavioral Interventions)
-# ==========================================
+
 FILTER_REGIMES = {
     'Hide_Shared': {'hide_shared': True, 'hide_ignored': False}
 }
 
 # ==========================================
-# 5. SHARING MATRICES PER TOPIC
+# 5. BOT SHARING MATRICES PER TOPIC
 # ==========================================
-
-
-# Base Topic Matrix 
 SHARE_PROB_MATRIX_BASE = [
     [0.697, 0.600, 0.579, 0.500, 0.176],
     [0.688, 0.938, 0.273, 0.500, 0.286],
@@ -82,11 +81,10 @@ SHARE_PROB_MATRIX_BASE = [
     [0.188, 0.417, 0.490, 0.5553, 0.490]
 ]
 
-# Side Topic Matrix 
 SHARE_PROB_MATRIX_SIDE = [
     [0.647, 0.516, 0.548, 0.333, 0.188],
     [0.750, 0.619, 0.519, 0.571, 0.111],
-    [0.49, 0.45, 0.40, 0.47, 0.31],
+    [0.490, 0.450, 0.400, 0.470, 0.310],
     [0.429, 0.600, 0.444, 0.500, 0.667],
     [0.148, 0.071, 0.095, 0.462, 0.260]
 ]
@@ -96,8 +94,6 @@ SHARE_PROB_MATRICES = {
     'side_topic': SHARE_PROB_MATRIX_SIDE
 }
 
-SHARE_PROB_MATRIX = SHARE_PROB_MATRIX_BASE
-
 # ==========================================
 # 6. CENTRALIZED CATEGORIZATION MAPPINGS
 # ==========================================
@@ -106,13 +102,11 @@ ITEM_CATS = ['Left', 'Center-Left', 'Center', 'Center-Right', 'Right']
 LEANING_ORDER = ['Left', 'Center Left', 'Center', 'Center Right', 'Right']
 
 def get_bucket(val, is_item=False):
-    """Maps a 0.0 - 1.0 float to a strict category bucket."""
     idx = min(4, max(0, int(val * 5)))
     cats = ITEM_CATS if is_item else USER_CATS
     return cats[idx]
 
 def get_emp_item_bucket(lean_str):
-    """Maps oTree string leans to standardized buckets."""
     clean_str = str(lean_str).strip().title()
     if clean_str in ['Left']: return 'Left'
     if clean_str in ['Lean Left', 'Center Left', 'Center-Left']: return 'Center-Left'
@@ -122,7 +116,6 @@ def get_emp_item_bucket(lean_str):
     return 'Center'
 
 def get_emp_user_bucket(val):
-    """Maps oTree 1-5 baseline opinion to standardized buckets."""
     val = int(val)
     if val == 5: return 'Left'
     if val == 4: return 'Center-Left'
