@@ -27,23 +27,23 @@ def run_simulation_batch():
                         
                     with open(baseline_path, 'r') as f: baseline_data = json.load(f)
                     global_pool = baseline_data["global_item_pool"]
-                    plots_dir = os.path.join(sweep_dir, f"N{n}")
-                    os.makedirs(plots_dir, exist_ok=True)
-
-                    print(f"   Running Segregated Treatment ({config.NUM_TRIALS} trials)...")
-                    seg_results = core_engine.run_batch(baseline_data["segregated_baseline"], global_pool, regime_rules, config.NUM_TRIALS, priority_flag)
                     
-                    print(f"   Running Integrated Treatment ({config.NUM_TRIALS} trials)...")
+                    seg_results = core_engine.run_batch(baseline_data["segregated_baseline"], global_pool, regime_rules, config.NUM_TRIALS, priority_flag)
                     int_results = core_engine.run_batch(baseline_data["integrated_baseline"], global_pool, regime_rules, config.NUM_TRIALS, priority_flag)
                     
-                    print("   Formatting Data and Generating Multi-Topic Plots...")
-                    results_store = {'segregated': seg_res, 'integrated': int_results}
+                    results_store = {'segregated': seg_results, 'integrated': int_results}
                     sweep_aggregator[n] = results_store
                     
-                    event_log_df = data_wrangle.build_simulation_event_log(results_store)
-                    
-                    plotting_engine.generate_suite(event_log_df, plots_dir, prefix=f"Sim_N{n}_K{k}", topics=config.SIM_TOPICS)
-                    plotting_engine.generate_share_distributions(event_log_df, plots_dir, prefix=f"Sim_N{n}_K{k}", topics=config.SIM_TOPICS)
+                    # Prevent bloat by only visualizing specific N values
+                    if n in config.DETAILED_SIM_N:
+                        print("   Formatting Data and Generating Multi-Topic Plots...")
+                        plots_dir = os.path.join(sweep_dir, f"N{n}")
+                        os.makedirs(plots_dir, exist_ok=True)
+                        event_log_df = data_wrangle.build_simulation_event_log(results_store)
+                        plotting_engine.generate_suite(event_log_df, plots_dir, prefix=f"Sim_N{n}_K{k}", topics=config.SIM_TOPICS)
+                        plotting_engine.generate_share_distributions(event_log_df, plots_dir, prefix=f"Sim_N{n}_K{k}", topics=config.SIM_TOPICS)
+                    else:
+                        print("   (Data simulated and passed to sweep aggregator. Plotting skipped for speed).")
                 
                 if sweep_aggregator:
                     reporting_engine.export_sweep_summary(sweep_aggregator, sweep_dir, k, regime_name, priority_str)

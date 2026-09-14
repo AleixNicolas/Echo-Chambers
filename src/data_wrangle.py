@@ -113,10 +113,10 @@ def get_user_opinion(row, network_data, topic, is_dual):
     return 3.0
 
 def append_final_hidden_feed(phase1_csv_path, phase2_csv_path, network_map_path, global_item_pool, topics=['climate']):
-    df = pd.read_csv(phase2_csv_path)
+    df = pd.read_csv(phase2_csv_path, low_memory=False)
     
     if phase1_csv_path and os.path.exists(phase1_csv_path):
-        df1 = pd.read_csv(phase1_csv_path)
+        df1 = pd.read_csv(phase1_csv_path, low_memory=False)
         if 'participant.label' in df1.columns and 'participant.label' in df.columns:
             cols_to_add = [c for c in df1.columns if c not in df.columns]
             if cols_to_add:
@@ -219,10 +219,10 @@ def append_final_hidden_feed(phase1_csv_path, phase2_csv_path, network_map_path,
     return extended_csv_path, next_round
 
 def build_empirical_event_log(phase1_csv_path, phase2_csv_path, network_map_path, topics=['climate']):
-    df = pd.read_csv(phase2_csv_path)
+    df = pd.read_csv(phase2_csv_path, low_memory=False)
     
     if phase1_csv_path and os.path.exists(phase1_csv_path):
-        df1 = pd.read_csv(phase1_csv_path)
+        df1 = pd.read_csv(phase1_csv_path, low_memory=False)
         if 'participant.label' in df1.columns and 'participant.label' in df.columns:
             cols_to_add = [c for c in df1.columns if c not in df.columns]
             if cols_to_add:
@@ -353,7 +353,6 @@ def build_simulation_event_log(results_store):
         for t_idx, trial_data in enumerate(results_store[struct]['trials']):
             trial_id = f"{struct}_{t_idx}"
             
-            # Determine halfway point for chamber assignment
             if not trial_data['node_opinions']: continue
             max_node = max([int(n) for n in trial_data['node_opinions'].keys()])
             half_point = (max_node + 1) / 2

@@ -49,7 +49,7 @@ def run_empirical_analysis():
     print(f"\n--- 4. GENERATING PLOTS (1 to {config.ROUNDS}) ---")
     plotting_engine.generate_suite(event_log_df, config.EMPIRICAL_RESULTS_DIR, prefix="Empirical", topics=topics)
     plotting_engine.generate_share_distributions(event_log_df, config.EMPIRICAL_RESULTS_DIR, prefix="Empirical", topics=topics)
-    plotting_engine.generate_correlation_heatmaps(extended_csv_path, config.EMPIRICAL_RESULTS_DIR, topics=topics)
+    plotting_engine.generate_correlation_heatmaps(extended_csv_path, config.EMPIRICAL_RESULTS_DIR, topics=topics, empirical=True)
     
     print("\n--- 5. EXPORTING REPORTS ---")
     reporting_engine.export_screening_combinations(phase1_csv_path, config.EMPIRICAL_RESULTS_DIR)
