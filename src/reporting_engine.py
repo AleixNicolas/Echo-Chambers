@@ -9,10 +9,9 @@ def export_screening_combinations(phase1_csv_path, output_dir):
         print(f"[!] Warning: Phase 1 CSV {phase1_csv_path} not found. Skipping screening combinations report.")
         return
     
-    df = pd.read_csv(phase1_csv_path)
+    df = pd.read_csv(phase1_csv_path, low_memory=False)
     
     def get_screening_opinion(row, topic):
-        # Look for Phase 1 opinion indicators using the correct oTree column prefixes
         cols = [
             f'phase_1.1.player.{topic}_opinion_4', 
             f'phase_1.1.player.{topic}_opinion_2',
@@ -27,28 +26,22 @@ def export_screening_combinations(phase1_csv_path, output_dir):
                 try:
                     val = float(row[c])
                     val = max(1.0, min(5.0, val))
-                    if topic in ['imm', 'immigration']:
+                    if topic in config.INVERT_OPINIONS_FOR:
                         return 6.0 - val
                     return val
                 except:
                     pass
-        return None # Return None instead of defaulting to 3.0 to skip empty rows
-    
-    def bucket_val(val):
-        if val > 3.0: return 'Left'
-        elif val < 3.0: return 'Right'
-        else: return 'Neutral'
+        return None 
         
     results = []
     for _, row in df.iterrows():
-        c_val = get_screening_opinion(row, 'climate')
-        i_val = get_screening_opinion(row, 'imm')
+        c_val = get_screening_opinion(row, config.EMPIRICAL_SIDE_TOPIC)
+        i_val = get_screening_opinion(row, config.EMPIRICAL_BASE_TOPIC)
         
-        # Only process rows that have valid data for both topics (filters out dropouts)
         if c_val is not None and i_val is not None:
             results.append({
-                'Climate': bucket_val(c_val),
-                'Immigration': bucket_val(i_val)
+                'Secondary_Topic': config.get_emp_user_bucket(c_val),
+                'Base_Topic': config.get_emp_user_bucket(i_val)
             })
         
     res_df = pd.DataFrame(results)
@@ -57,22 +50,19 @@ def export_screening_combinations(phase1_csv_path, output_dir):
         print("[!] Warning: No valid screening data found to generate combinations.")
         return
         
-    cross_tab = pd.crosstab(res_df['Climate'], res_df['Immigration'])
+    cross_tab = pd.crosstab(res_df['Base_Topic'], res_df['Secondary_Topic'])
+    cross_tab = cross_tab.reindex(index=config.USER_CATS, columns=config.USER_CATS, fill_value=0)
     
-    # Ensure all categories appear in the matrix even if the count is 0
-    order = ['Left', 'Neutral', 'Right']
-    cross_tab = cross_tab.reindex(index=order, columns=order, fill_value=0)
-    
-    lines = ["==========================================", " PHASE 1 SCREENING COMBINATIONS", "==========================================\n"]
-    lines.append("Counts of participants by their leaning across both topics:")
+    lines = ["==========================================", " PHASE 1 SCREENING COMBINATIONS (5x5)", "==========================================\n"]
     lines.append(f"Total Phase 1 Participants Analyzed: {len(res_df)}\n")
+    lines.append(f"Rows: Base Topic ({config.EMPIRICAL_BASE_TOPIC}) | Columns: Secondary Topic ({config.EMPIRICAL_SIDE_TOPIC})\n")
     lines.append(cross_tab.to_string())
-    lines.append("\nNote: 'Neutral' strictly represents an opinion score of 3.0.")
     
     file_path = os.path.join(output_dir, "Phase1_Screening_Combinations.txt")
     with open(file_path, 'w') as f:
         f.write("\n".join(lines))
     print(f" -> Exported Phase1_Screening_Combinations.txt")
+
 
 def export_comprehensive_empirical_summary(event_log_df, output_dir, phase2_csv_path, topics=['climate'], global_exclusions=None, round_exclusions=None):
     if event_log_df.empty:
@@ -80,11 +70,9 @@ def export_comprehensive_empirical_summary(event_log_df, output_dir, phase2_csv_
         return
 
     is_dual = len(topics) > 1
-    df2 = pd.read_csv(phase2_csv_path)
+    df2 = pd.read_csv(phase2_csv_path, low_memory=False)
     
-    # ---------------------------------------------------------
-    # 1. ALIAS MAPPING & PHASE 1 MERGE FOR OPINIONS
-    # ---------------------------------------------------------
+    # 1. ALIAS MAPPING (To link participant.code to Prolific IDs for exclusions)
     user_aliases = {}
     for _, row in df2.iterrows():
         aliases = []
@@ -92,25 +80,21 @@ def export_comprehensive_empirical_summary(event_log_df, output_dir, phase2_csv_
             aliases.append(str(row['participant.label']).strip().lower())
         if 'participant.code' in df2.columns and pd.notna(row['participant.code']):
             aliases.append(str(row['participant.code']).strip().lower())
-            
         for alias in aliases:
             user_aliases[alias] = aliases
 
     clean_globals = [str(x).strip().lower() for x in global_exclusions] if global_exclusions else []
     
-    # ---------------------------------------------------------
-    # 2. FILTER: True Participation based on oTree Phase 2 Data
-    # ---------------------------------------------------------
-    id_col = 'participant.label' if 'participant.label' in df2.columns else 'participant.code'
+    # 2. STRICT PARTICIPATION FILTERING (Fixed ID matching)
     valid_rows = []
-    
     max_interactive_round = min(config.ROUNDS, 5)
     
     for r in range(1, max_interactive_round + 1):
-        check_col = f'network.{r}.player.id_in_group'
-        
-        if check_col in df2.columns:
-            active_users = df2[df2[check_col].notna()][id_col].dropna().unique()
+        part_col = f'phase_2.{r}.player.participated_this_round'
+        if part_col in df2.columns and 'participant.code' in df2.columns:
+            # Safely check for any truthy value (1, 1.0, True, true)
+            is_active = df2[part_col].apply(lambda x: str(x).strip().lower() in ['1', '1.0', 'true', 'yes'])
+            active_users = df2[is_active]['participant.code'].dropna().unique()
         else:
             active_users = event_log_df[event_log_df['round'] == r]['user_id'].unique()
             
@@ -121,209 +105,170 @@ def export_comprehensive_empirical_summary(event_log_df, output_dir, phase2_csv_
             clean_uid = str(uid).strip().lower()
             my_aliases = user_aliases.get(clean_uid, [clean_uid])
             
-            is_global_excluded = any(alias in clean_globals for alias in my_aliases)
-            is_round_excluded = any(alias in clean_round_excl for alias in my_aliases)
-            
-            if is_global_excluded:
-                continue
-            elif is_round_excluded:
+            # Scrub out any excluded participants (like the returned study)
+            if any(alias in clean_globals for alias in my_aliases) or any(alias in clean_round_excl for alias in my_aliases):
                 continue
             else:
-                cleaned_active_users.append(uid)
+                # MUST append as uppercase to match the event_log_df user_ids
+                cleaned_active_users.append(str(uid).upper())
                 
         for uid in cleaned_active_users:
             valid_rows.append({'user_id': uid, 'round': r})
             
     valid_user_rounds = pd.DataFrame(valid_rows).drop_duplicates()
+    
+    # Merge will now perfectly align participant codes (e.g. 0GMW279V == 0GMW279V)
     active_event_log_df = pd.merge(event_log_df, valid_user_rounds, on=['user_id', 'round'], how='inner')
     active_event_log_df = active_event_log_df[active_event_log_df['round'] <= 5]
+
+    if is_dual:
+        base_t = config.EMPIRICAL_BASE_TOPIC
+        side_t = config.EMPIRICAL_SIDE_TOPIC
+        
+        user_topic_cats = active_event_log_df[['user_id', 'topic', 'user_cat']].drop_duplicates()
+        pivot_cats = user_topic_cats.pivot(index='user_id', columns='topic', values='user_cat')
+        
+        if base_t in pivot_cats.columns and side_t in pivot_cats.columns:
+            cross_tab = pd.crosstab(pivot_cats[base_t], pivot_cats[side_t])
+            cross_tab = cross_tab.reindex(index=config.USER_CATS, columns=config.USER_CATS, fill_value=0)
+            
+            cohort_lines = ["==========================================", " ACTUAL PHASE 2 COHORT COMBINATIONS (5x5)", "==========================================\n"]
+            cohort_lines.append(f"Total Active Phase 2 In-Network Participants: {len(pivot_cats)}\n")
+            cohort_lines.append(f"Rows: Base Topic ({base_t}) | Columns: Secondary Topic ({side_t})\n")
+            cohort_lines.append(cross_tab.to_string())
+            
+            with open(os.path.join(output_dir, "Phase2_Cohort_Combinations.txt"), 'w') as f:
+                f.write("\n".join(cohort_lines))
+            print(" -> Exported Phase2_Cohort_Combinations.txt")
+
+    def get_2d_profile(row):
+        base = 'L' if row.get('chamber') == 'Left' else 'R'
+        ucat = row.get('user_cat', 'Center')
+        side = 'L' if 'Left' in ucat else ('R' if 'Right' in ucat else 'C')
+        return f"{base}{side}"
     
     for topic in topics:
         base_topic_df = event_log_df[event_log_df['topic'] == topic] if 'topic' in event_log_df.columns else event_log_df
         base_topic_df = base_topic_df[base_topic_df['round'] <= 5] 
+        
+        # Determine the definitive list of real network users (ignoring dropouts/ghosts)
         all_topic_users = base_topic_df['user_id'].unique()
         
         topic_df = active_event_log_df[active_event_log_df['topic'] == topic] if 'topic' in event_log_df.columns else active_event_log_df
         
-        lines = ["==========================================", f" EMPIRICAL COMPREHENSIVE SUMMARY: {topic.upper()} ", "==========================================\n"]
+        lines = ["==========================================", f" EMPIRICAL SUMMARY: {topic.upper()} ", "==========================================\n"]
         
-        # ---------------------------------------------------------
-        # 3. ATTRITION & DEMOGRAPHICS (PHASE 2 FOCUSED)
-        # ---------------------------------------------------------
+        # 3. ATTRITION BY 2D PROFILE (IN-NETWORK ONLY)
         user_round_counts = valid_user_rounds[valid_user_rounds['user_id'].isin(all_topic_users)].groupby('user_id').size()
         
-        completers = user_round_counts[user_round_counts >= 4].index.tolist()
+        # A participant MUST have completed at least 4 rounds (missed <= 1) to be a completer
+        completers = user_round_counts[user_round_counts >= (config.ROUNDS - 1)].index.tolist()
         dropouts = list(set(all_topic_users) - set(completers))
         
-        lines.append("--- ATTRITION & DEMOGRAPHICS ---")
-        lines.append(f"Total Phase 2 Participants : {len(all_topic_users)}")
+        lines.append("--- IN-NETWORK ATTRITION BY 2D PROFILE ---")
+        lines.append(f"Total In-Network Participants : {len(all_topic_users)}")
+        lines.append(f"\nCompleted Valid Session (>= 4 Rounds): {len(completers)}")
         
-        lines.append(f"\nCompleted >= 4 Rounds      : {len(completers)}")
-        lines.append("Leaning of Completers:")
-        comp_df = base_topic_df[base_topic_df['user_id'].isin(completers)].drop_duplicates(subset=['user_id'])
-        c_counts = comp_df['user_cat'].value_counts()
-        for cat in config.USER_CATS:
-            lines.append(f"  {cat.ljust(15)}: {c_counts.get(cat, 0)}")
+        comp_df = base_topic_df[base_topic_df['user_id'].isin(completers)].drop_duplicates(subset=['user_id']).copy()
+        
+        if not comp_df.empty:
+            comp_df['2D_Profile'] = comp_df.apply(get_2d_profile, axis=1)
+            c_counts = comp_df['2D_Profile'].value_counts()
+        else:
+            c_counts = {}
             
-        lines.append(f"\nDrop-outs (< 4 Rounds)     : {len(dropouts)}")
+        for quad in ['LL', 'LC', 'LR', 'RL', 'RC', 'RR']:
+            lines.append(f"  {quad.ljust(15)}: {c_counts.get(quad, 0)}")
+            
+        lines.append(f"\nDropped Out (Missed >= 2 Rounds): {len(dropouts)}")
         if len(dropouts) > 0:
-            lines.append("Leaning of Drop-outs:")
-            dropout_df = base_topic_df[base_topic_df['user_id'].isin(dropouts)].drop_duplicates(subset=['user_id'])
-            d_counts = dropout_df['user_cat'].value_counts()
-            for cat in config.USER_CATS:
-                lines.append(f"  {cat.ljust(15)}: {d_counts.get(cat, 0)}")
-                
-        # ---------------------------------------------------------
-        # ZERO-SHARE PARTICIPANTS TRACKING
-        # ---------------------------------------------------------
-        user_action_counts = topic_df.groupby('user_id')['action'].value_counts().unstack(fill_value=0)
-        if 'shared' not in user_action_counts.columns:
-            user_action_counts['shared'] = 0
+            dropout_df = base_topic_df[base_topic_df['user_id'].isin(dropouts)].drop_duplicates(subset=['user_id']).copy()
             
+            if not dropout_df.empty:
+                dropout_df['2D_Profile'] = dropout_df.apply(get_2d_profile, axis=1)
+                d_counts = dropout_df['2D_Profile'].value_counts()
+            else:
+                d_counts = {}
+                
+            for quad in ['LL', 'LC', 'LR', 'RL', 'RC', 'RR']:
+                lines.append(f"  {quad.ljust(15)}: {d_counts.get(quad, 0)}")
+                
+        # 4. ZERO-SHARE TRACKING
+        user_action_counts = topic_df.groupby('user_id')['action'].value_counts().unstack(fill_value=0)
+        if 'shared' not in user_action_counts.columns: user_action_counts['shared'] = 0
         zero_share_users = user_action_counts[user_action_counts['shared'] == 0].index.tolist()
         
         lines.append(f"\nZero-Share Participants    : {len(zero_share_users)}")
         if len(zero_share_users) > 0:
-            lines.append("Details of Zero-Share Participants:")
             for uid in zero_share_users:
                 u_row = topic_df[topic_df['user_id'] == uid].iloc[0]
-                op_raw = u_row.get('op_raw', 'N/A')
-                cat = u_row.get('user_cat', 'N/A')
-                lines.append(f"  - User ID: {uid} | Leaning: {cat} | Baseline Opinion Score: {op_raw}")
+                lines.append(f"  - User ID: {uid} | 2D Profile: {get_2d_profile(u_row)}")
         lines.append("")
         
-        # ---------------------------------------------------------
-        # 4. GLOBAL SHARE RATES
-        # ---------------------------------------------------------
-        lines.append("--- GLOBAL SHARE RATES ---")
-        tot_seen = len(topic_df[topic_df['action'] == 'seen'])
-        tot_shared = len(topic_df[topic_df['action'] == 'shared'])
-        gen_rate = (tot_shared / tot_seen * 100) if tot_seen > 0 else 0.0
-        
-        lines.append(f"Overall Share Rate: {gen_rate:.1f}% ({tot_shared} total items shared / {tot_seen} total items seen)")
-        
-        lines.append("\nShare Rate by Participant Leaning (Any News):")
-        for cat in config.USER_CATS:
-            cat_seen = len(topic_df[(topic_df['user_cat'] == cat) & (topic_df['action'] == 'seen')])
-            cat_shared = len(topic_df[(topic_df['user_cat'] == cat) & (topic_df['action'] == 'shared')])
-            cat_rate = (cat_shared / cat_seen * 100) if cat_seen > 0 else 0.0
-            lines.append(f"  {cat.ljust(15)}: {cat_rate:>5.1f}% ({cat_shared} shared / {cat_seen} seen)")
-        lines.append("")
-
-        # ---------------------------------------------------------
-        # 4B. SHARE RATES BY CONTRARY NEIGHBORS
-        # ---------------------------------------------------------
-        lines.append("--- SHARE RATES BY CONTRARY NEIGHBORS ---")
-        cat_mapping_broad = {
-            'Left': 'Left (L / CL)',
-            'Center-Left': 'Left (L / CL)',
-            'Center': 'Neutral',
-            'Center-Right': 'Right (R / CR)',
-            'Right': 'Right (R / CR)'
-        }
-        
-        df_cn = topic_df.copy()
-        df_cn['broad_cat'] = df_cn['user_cat'].map(cat_mapping_broad)
-        
-        if 'contrary_neighbors' in df_cn.columns:
-            cn_grouped = df_cn.groupby(['broad_cat', 'contrary_neighbors', 'action']).size().unstack(fill_value=0).reset_index()
-            for col in ['seen', 'shared']:
-                if col not in cn_grouped.columns: cn_grouped[col] = 0
-            
-            cn_grouped['share_rate'] = np.where(cn_grouped['seen'] > 0, cn_grouped['shared'] / cn_grouped['seen'] * 100, 0.0)
-            
-            for broad_c in ['Left (L / CL)', 'Neutral', 'Right (R / CR)']:
-                cat_cn_df = cn_grouped[cn_grouped['broad_cat'] == broad_c].sort_values('contrary_neighbors')
-                if not cat_cn_df.empty:
-                    lines.append(f"\n{broad_c} Participants:")
-                    for _, row in cat_cn_df.iterrows():
-                        cn_count = int(row['contrary_neighbors'])
-                        cn_rate = row['share_rate']
-                        cn_seen = int(row['seen'])
-                        cn_shared = int(row['shared'])
-                        lines.append(f"  {cn_count} Contrary Neighbors: {cn_rate:>5.1f}% ({cn_shared} shared / {cn_seen} seen)")
-        else:
-            lines.append("  [!] 'contrary_neighbors' metric was not found in the event log.")
-        lines.append("")
-
-        # ---------------------------------------------------------
-        # 5. ROUND-BY-ROUND BREAKDOWN
-        # ---------------------------------------------------------
+        # 5. ROUND-BY-ROUND BREAKDOWN BY CHAMBER
         src_metrics = stats_suite.calculate_sourcing_metrics(topic_df)
         def fmt(val): return f"{val:.2f}" if not np.isnan(val) else "N/A "
 
         for r in range(1, max_interactive_round + 1):
             lines.append(f"\n--- ROUND {r} ---")
-            r_seen = topic_df[(topic_df['round'] == r) & (topic_df['action'] == 'seen')]
-            r_share = topic_df[(topic_df['round'] == r) & (topic_df['action'] == 'shared')]
-            
-            lines.append(f"  Active Participants: {r_seen['user_id'].nunique()}")
+            r_df = topic_df[topic_df['round'] == r]
+            lines.append(f"  Active Participants: {r_df['user_id'].nunique()}")
             
             if src_metrics and r <= len(src_metrics['rounds']):
                 r_idx = r - 1
                 lines.append(f"  Sourcing Averages : {fmt(src_metrics['rep_avg'][r_idx])} Repeats | {fmt(src_metrics['pool_avg'][r_idx])} Pool | {fmt(src_metrics['back_avg'][r_idx])} Backlog")
-                lines.append(f"  Expected Maximums : {fmt(src_metrics['rep_max'][r_idx])} Repeats | {fmt(src_metrics['pool_max'][r_idx])} Pool | {fmt(src_metrics['back_max'][r_idx])} Backlog")
 
-            for uc in config.USER_CATS:
-                u_seen = r_seen[r_seen['user_cat'] == uc]
-                u_share = r_share[r_share['user_cat'] == uc]
-                tot_cat_seen = len(u_seen)
-                if tot_cat_seen > 0:
-                    dist = [len(u_seen[u_seen['item_cat'] == ic]) / tot_cat_seen * 100 for ic in config.ITEM_CATS]
-                    lines.append(f"  {uc:<12} Seen  : {dist[0]:>5.1f}% L | {dist[1]:>5.1f}% C-L | {dist[2]:>5.1f}% C | {dist[3]:>5.1f}% C-R | {dist[4]:>5.1f}% R")
-                    rates = [(len(u_share[u_share['item_cat'] == ic]) / len(u_seen[u_seen['item_cat'] == ic]) * 100) if len(u_seen[u_seen['item_cat'] == ic]) > 0 else 0 for ic in config.ITEM_CATS]
-                    lines.append(f"  {uc:<12} Share : {rates[0]:>5.1f}% L | {rates[1]:>5.1f}% C-L | {rates[2]:>5.1f}% C | {rates[3]:>5.1f}% C-R | {rates[4]:>5.1f}% R")
-
-        # ---------------------------------------------------------
-        # 6. CONSOLIDATED SHARE RATE MATRIX (ROUNDS 1-5)
-        # ---------------------------------------------------------
-        lines.append("\n" + "="*40)
-        lines.append(f" SHARE RATE MATRIX (ROUNDS 1 TO {max_interactive_round})")
-        lines.append("="*40)
-        
-        grouped = topic_df.groupby(['user_cat', 'item_cat', 'action']).size().unstack(fill_value=0).reset_index()
-        
-        for col in ['seen', 'shared']:
-            if col not in grouped.columns:
-                grouped[col] = 0
+            for chamber in ['Left', 'Right']:
+                c_df = r_df[r_df['chamber'] == chamber]
+                if c_df.empty: continue
+                lines.append(f"\n  [{chamber} Chamber]")
+                c_seen = c_df[c_df['action'] == 'seen']
+                c_share = c_df[c_df['action'] == 'shared']
                 
-        grouped['share_rate'] = np.where(grouped['seen'] > 0, grouped['shared'] / grouped['seen'], 0.0)
+                for uc in config.USER_CATS:
+                    u_seen = c_seen[c_seen['user_cat'] == uc]
+                    u_share = c_share[c_share['user_cat'] == uc]
+                    tot_cat_seen = len(u_seen)
+                    if tot_cat_seen > 0:
+                        dist = [len(u_seen[u_seen['item_cat'] == ic]) / tot_cat_seen * 100 for ic in config.ITEM_CATS]
+                        rates = [(len(u_share[u_share['item_cat'] == ic]) / len(u_seen[u_seen['item_cat'] == ic]) * 100) if len(u_seen[u_seen['item_cat'] == ic]) > 0 else 0 for ic in config.ITEM_CATS]
+                        lines.append(f"    {uc:<12} Seen  : {dist[0]:>5.1f}% L | {dist[1]:>5.1f}% C-L | {dist[2]:>5.1f}% C | {dist[3]:>5.1f}% C-R | {dist[4]:>5.1f}% R")
+                        lines.append(f"    {uc:<12} Share : {rates[0]:>5.1f}% L | {rates[1]:>5.1f}% C-L | {rates[2]:>5.1f}% C | {rates[3]:>5.1f}% C-R | {rates[4]:>5.1f}% R")
+
+        # 6. GLOBAL SHARE RATE MATRIX (ALL ROUNDS, BOTH CHAMBERS)
+        lines.append("\n" + "="*40)
+        lines.append(f" GLOBAL SHARE RATE MATRIX (ALL ROUNDS, BOTH CHAMBERS)")
+        lines.append("="*40)
         
-        matrix = grouped.pivot(index='user_cat', columns='item_cat', values='share_rate').fillna(0)
-        matrix = matrix.reindex(index=config.USER_CATS, columns=config.ITEM_CATS).fillna(0)
-        
-        lines.append("\n" + matrix.to_string(float_format=lambda x: f"{x:.1%}"))
+        glob_grouped = topic_df.groupby(['user_cat', 'item_cat', 'action']).size().unstack(fill_value=0).reset_index()
+        for col in ['seen', 'shared']:
+            if col not in glob_grouped.columns: glob_grouped[col] = 0
+                
+        glob_grouped['share_rate'] = np.where(glob_grouped['seen'] > 0, glob_grouped['shared'] / glob_grouped['seen'], 0.0)
+        glob_matrix = glob_grouped.pivot(index='user_cat', columns='item_cat', values='share_rate').fillna(0)
+        glob_matrix = glob_matrix.reindex(index=config.USER_CATS, columns=config.ITEM_CATS).fillna(0)
+        lines.append("\n" + glob_matrix.to_string(float_format=lambda x: f"{x:.1%}"))
         lines.append("\n")
 
-        # ---------------------------------------------------------
-        # 7. AGGREGATED SHARE RATE MATRIX (3 PARTICIPANT CATS)
-        # ---------------------------------------------------------
-        lines.append("="*40)
-        lines.append(f" AGGREGATED PARTICIPANT MATRIX (3 CATEGORIES)")
-        lines.append("="*40)
-        
-        cat_mapping = {
-            'Left': 'Comb. Left',
-            'Center-Left': 'Comb. Left',
-            'Center': 'Center',
-            'Center-Right': 'Comb. Right',
-            'Right': 'Comb. Right'
-        }
-        
-        agg_grouped = grouped.copy()
-        agg_grouped['agg_user_cat'] = agg_grouped['user_cat'].map(cat_mapping)
-        
-        agg_counts = agg_grouped.groupby(['agg_user_cat', 'item_cat'])[['seen', 'shared']].sum().reset_index()
-        agg_counts['share_rate'] = np.where(agg_counts['seen'] > 0, agg_counts['shared'] / agg_counts['seen'], 0.0)
-        
-        agg_matrix = agg_counts.pivot(index='agg_user_cat', columns='item_cat', values='share_rate').fillna(0)
-        agg_matrix = agg_matrix.reindex(
-            index=['Comb. Left', 'Center', 'Comb. Right'], 
-            columns=config.ITEM_CATS
-        ).fillna(0)
-        
-        lines.append("\n" + agg_matrix.to_string(float_format=lambda x: f"{x:.1%}"))
-        lines.append("\n")
+        # 7. CHAMBER-ISOLATED SHARE MATRICES
+        for chamber in ['Left', 'Right']:
+            chamber_df = topic_df[topic_df['chamber'] == chamber]
+            if chamber_df.empty: continue
+            
+            lines.append("\n" + "="*40)
+            lines.append(f" {chamber.upper()} CHAMBER: SHARE RATE MATRIX")
+            lines.append("="*40)
+            
+            grouped = chamber_df.groupby(['user_cat', 'item_cat', 'action']).size().unstack(fill_value=0).reset_index()
+            for col in ['seen', 'shared']:
+                if col not in grouped.columns: grouped[col] = 0
+                    
+            grouped['share_rate'] = np.where(grouped['seen'] > 0, grouped['shared'] / grouped['seen'], 0.0)
+            
+            matrix = grouped.pivot(index='user_cat', columns='item_cat', values='share_rate').fillna(0)
+            matrix = matrix.reindex(index=config.USER_CATS, columns=config.ITEM_CATS).fillna(0)
+            lines.append("\n" + matrix.to_string(float_format=lambda x: f"{x:.1%}"))
+            lines.append("\n")
 
         safe_suffix = f"_{topic}" if is_dual else ""
         file_path = os.path.join(output_dir, f"Empirical_Comprehensive_Summary{safe_suffix}.txt")
@@ -331,8 +276,8 @@ def export_comprehensive_empirical_summary(event_log_df, output_dir, phase2_csv_
             f.write("\n".join(lines))
         print(f" -> Exported full details to Empirical_Comprehensive_Summary{safe_suffix}.txt")
 
+
 def export_sweep_summary(sweep_aggregator, sweep_dir, k_val, regime_name, priority_str):
-    """(Maintained to ensure simulation capabilities do not break)"""
     lines = ["==========================================", f" SIMULATION SWEEP SUMMARY", f" Regime: {regime_name} | Priority: {priority_str} | K: {k_val}", "==========================================\n"]
     
     for struct in ['integrated', 'segregated']:
@@ -342,30 +287,34 @@ def export_sweep_summary(sweep_aggregator, sweep_dir, k_val, regime_name, priori
             data = sweep_aggregator[n_val][struct]
             
             t_df = data_wrangle.build_simulation_event_log({struct: data})
+            
             src_metrics = stats_suite.calculate_sourcing_metrics(t_df)
             def fmt(val): return f"{val:.2f}" if not np.isnan(val) else "N/A "
             
             for rnd in range(1, config.ROUNDS + 1):
                 lines.append(f"\n  -- ROUND {rnd} --")
-                rnd_seen = [e for e in data['seen_events'] if e[3] == rnd]
-                rnd_share = [e for e in data['share_events'] if e[3] == rnd]
-                
                 if src_metrics and rnd <= len(src_metrics['rounds']):
                     r_idx = rnd - 1
                     lines.append(f"       Sourcing Averages : {fmt(src_metrics['rep_avg'][r_idx])} Repeats | {fmt(src_metrics['pool_avg'][r_idx])} Pool | {fmt(src_metrics['back_avg'][r_idx])} Backlog")
-                    lines.append(f"       Expected Maximums : {fmt(src_metrics['rep_max'][r_idx])} Repeats | {fmt(src_metrics['pool_max'][r_idx])} Pool | {fmt(src_metrics['back_max'][r_idx])} Backlog")
                 
-                user_stats = {uc: {'seen': {ic: 0 for ic in config.ITEM_CATS}, 'shared': {ic: 0 for ic in config.ITEM_CATS}} for uc in config.USER_CATS}
-                for ev in rnd_seen: user_stats[config.get_bucket(ev[1], False)]['seen'][config.get_bucket(ev[2], True)] += 1
-                for ev in rnd_share: user_stats[config.get_bucket(ev[1], False)]['shared'][config.get_bucket(ev[2], True)] += 1
+                rnd_df = t_df[t_df['round'] == rnd]
+                
+                for chamber in ['Left', 'Right']:
+                    c_df = rnd_df[rnd_df['chamber'] == chamber]
+                    if c_df.empty: continue
+                    lines.append(f"\n       [{chamber} Chamber]")
                     
-                for uc in config.USER_CATS:
-                    tot_seen = sum(user_stats[uc]['seen'].values())
-                    if tot_seen > 0:
-                        dist = [user_stats[uc]['seen'][ic] / tot_seen * 100 for ic in config.ITEM_CATS]
-                        rates = [(user_stats[uc]['shared'][ic] / user_stats[uc]['seen'][ic] * 100) if user_stats[uc]['seen'][ic] > 0 else 0.0 for ic in config.ITEM_CATS]
-                        lines.append(f"       {uc:<12} Seen  : {dist[0]:>5.1f}% L | {dist[1]:>5.1f}% C-L | {dist[2]:>5.1f}% C | {dist[3]:>5.1f}% C-R | {dist[4]:>5.1f}% R")
-                        lines.append(f"       {uc:<12} Share : {rates[0]:>5.1f}% L | {rates[1]:>5.1f}% C-L | {rates[2]:>5.1f}% C | {rates[3]:>5.1f}% C-R | {rates[4]:>5.1f}% R")
+                    for uc in config.USER_CATS:
+                        u_df = c_df[c_df['user_cat'] == uc]
+                        u_seen = u_df[u_df['action'] == 'seen']
+                        u_share = u_df[u_df['action'] == 'shared']
+                        
+                        tot_seen = len(u_seen)
+                        if tot_seen > 0:
+                            dist = [len(u_seen[u_seen['item_cat'] == ic]) / tot_seen * 100 for ic in config.ITEM_CATS]
+                            rates = [(len(u_share[u_share['item_cat'] == ic]) / len(u_seen[u_seen['item_cat'] == ic]) * 100) if len(u_seen[u_seen['item_cat'] == ic]) > 0 else 0.0 for ic in config.ITEM_CATS]
+                            lines.append(f"         {uc:<12} Seen  : {dist[0]:>5.1f}% L | {dist[1]:>5.1f}% C-L | {dist[2]:>5.1f}% C | {dist[3]:>5.1f}% C-R | {dist[4]:>5.1f}% R")
+                            lines.append(f"         {uc:<12} Share : {rates[0]:>5.1f}% L | {rates[1]:>5.1f}% C-L | {rates[2]:>5.1f}% C | {rates[3]:>5.1f}% C-R | {rates[4]:>5.1f}% R")
             lines.append("-" * 60)
 
     with open(os.path.join(sweep_dir, "Sweep_Summary.txt"), 'w') as f: f.write("\n".join(lines))
