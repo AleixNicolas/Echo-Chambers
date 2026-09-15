@@ -279,7 +279,6 @@ def build_empirical_event_log(phase1_csv_path, phase2_csv_path, network_map_path
             treatment = get_treatment(row)
             trial_id = f"empirical_{treatment}"
             
-            # Extract actual structural Chamber based on their Base Topic leaning
             chamber = 'Right'
             raw_cat_str = str(row.get('participant.assigned_category', row.get('phase_2.1.player.category', ''))).strip().upper()
             if len(raw_cat_str) >= 2:
@@ -295,6 +294,15 @@ def build_empirical_event_log(phase1_csv_path, phase2_csv_path, network_map_path
             user_history, user_shared_history, parser_backlogs = set(), set(), set()
             
             for r in range(1, config.ROUNDS + 1):
+                # --- NEW AFK CHECK ---
+                # Stop parsing events for this round if the user timed out / dropped out
+                part_col = f'phase_2.{r}.player.participated_this_round'
+                if part_col in df.columns:
+                    part_val = row.get(part_col)
+                    if pd.notna(part_val) and float(part_val) == 0.0:
+                        continue 
+                # ---------------------
+
                 if r > 1:
                     s_col_prev = get_col('outgoing_shares', r-1, topic, is_dual)
                     user_shared_history.update([str(s) for s in _safe_parse_list(row.get(s_col_prev, '[]'))])
@@ -366,7 +374,6 @@ def build_simulation_event_log(results_store):
                         node, u, i, rnd, itm_id, src, is_b = ev
                         topic = 'base_topic'
                         
-                    # Structural chamber logic based on node position
                     chamber = 'Left' if int(node) < half_point else 'Right'
                         
                     logs.append({

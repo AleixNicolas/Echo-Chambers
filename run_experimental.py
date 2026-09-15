@@ -3,14 +3,20 @@ import json
 import config
 from src import admin_checks, data_wrangle, plotting_engine, reporting_engine
 
-GLOBAL_EXCLUSIONS = [] 
+# =====================================================================
+# INSERT THE PROLIFIC ID OF THE PERSON WHO RETURNED THE STUDY HERE:
+# =====================================================================
+GLOBAL_EXCLUSIONS = [
+    'INSERT_THE_RETURNED_PROLIFIC_ID_HERE' 
+] 
+
 ROUND_EXCLUSIONS = {
     1: [],
-    2: ['69e980c89da1ccaa91f5672a'],
-    3: ['69e980c89da1ccaa91f5672a'],
-    4: ['69e980c89da1ccaa91f5672a'],
-    5: ['69e980c89da1ccaa91f5672a'],
-    6: ['69e980c89da1ccaa91f5672a'] 
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [] 
 }
 
 def run_empirical_analysis():
@@ -30,7 +36,7 @@ def run_empirical_analysis():
     print(f"Secondary Topic  : {topics[1]}")
 
     print("\n--- 1. ADMIN & ATTRITION CHECKS ---")
-    admin_checks.process_admin(raw_csv_path)
+    admin_checks.process_admin(raw_csv_path, global_exclusions=GLOBAL_EXCLUSIONS)
     
     with open(network_map_path, 'r') as f:
         network_data = json.load(f)

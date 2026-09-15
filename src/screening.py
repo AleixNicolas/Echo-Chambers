@@ -9,7 +9,7 @@ def analyze_and_rank_participants(csv_path):
     if not os.path.exists(csv_path):
         return pd.DataFrame()
         
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv(csv_path, low_memory=False)
     
     # Prefix mapping
     p = 'phase_1.1.player'
@@ -98,17 +98,18 @@ def analyze_and_rank_participants(csv_path):
     
     df[['trust_score', 'score_breakdown']] = df.apply(lambda r: calculate_trust_score(r), axis=1, result_type='expand')
     
-    # Calculate initial opinion concern groupings
+    # Calculate Straight-Lining / Extreme Variance for Bot Screening
     op_cols = [f'{p}.opinion_{i}' for i in range(1, 5)]
     avail_op_cols = [c for c in op_cols if c in df.columns]
     
     if avail_op_cols:
-        df['total_op'] = df[avail_op_cols].apply(pd.to_numeric, errors='coerce').sum(axis=1)
-        df['category'] = df['total_op'].apply(lambda x: 'High_Concern' if x >= 16 else 'Low_Concern')
+        df['op_std'] = df[avail_op_cols].apply(pd.to_numeric, errors='coerce').std(axis=1)
+        # If standard deviation is 0.0, the user clicked the exact same number for every Phase 1 question
+        df['category'] = df['op_std'].apply(lambda x: 'Straight_Liner (High Concern)' if pd.notna(x) and x == 0.0 else 'Normal_Variance')
     else:
         df['category'] = 'Unknown'
 
-    ranked = df[[f'{p}.prolific_id', 'category', 'trust_score', 'score_breakdown']].sort_values(by=['category', 'trust_score'], ascending=[True, False])
+    ranked = df[[f'{p}.prolific_id', 'category', 'trust_score', 'score_breakdown']].sort_values(by=['category', 'trust_score'], ascending=[False, False])
     
     out_path = os.path.join(config.EMPIRICAL_PROCESSED_DIR, 'ranked_results.csv')
     ranked.to_csv(out_path, index=False)
