@@ -1,0 +1,15 @@
+==========================================
+ ACTUAL PHASE 2 COHORT COMBINATIONS (5x5)
+==========================================
+
+Total Active Phase 2 In-Network Participants: 20
+
+Rows: Base Topic (imm) | Columns: Secondary Topic (climate)
+
+climate       Left  Center-Left  Center  Center-Right  Right
+imm                                                         
+Left             4            1       1             0      3
+Center-Left      0            1       0             0      0
+Center           0            0       0             0      0
+Center-Right     1            1       2             0      0
+Right            1            0       0             0      5

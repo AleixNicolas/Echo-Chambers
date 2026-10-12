@@ -1,0 +1,194 @@
+==========================================
+ EMPIRICAL SUMMARY: IMM | SEGREGATED
+==========================================
+
+--- IN-NETWORK ATTRITION BY PROFILE ---
+Total In-Network Participants : 20
+
+Completed Valid Session (>= 4 Rounds): 17
+  LL             : 6
+  LC             : 1
+  LR             : 1
+  CL             : 0
+  CC             : 0
+  CR             : 0
+  RL             : 3
+  RC             : 2
+  RR             : 4
+
+Dropped Out (Missed >= 2 Rounds): 3
+  LL             : 0
+  LC             : 0
+  LR             : 2
+  CL             : 0
+  CC             : 0
+  CR             : 0
+  RL             : 0
+  RC             : 0
+  RR             : 1
+
+Zero-Share Participants : 3
+  - User ID: 0GMW279V
+  - User ID: 7OPZ4P8J
+  - User ID: DGVBO5U3
+
+
+--- ROUND 1 ---
+  Active Participants: 20
+  Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+
+  [Left Chamber] (Feed Slant: 0.07 | Variance: 1.92)
+    Left         Seen  :  19.4% L |  19.4% C-L |  19.4% C |  22.2% C-R |  19.4% R
+    Left         Share :  85.7% L |  85.7% C-L |  57.1% C |  12.5% C-R |  42.9% R
+    Center-Left  Seen  :   0.0% L |  25.0% C-L |  25.0% C |  25.0% C-R |  25.0% R
+    Center-Left  Share :   0.0% L |   0.0% C-L |   0.0% C |   0.0% C-R |   0.0% R
+
+  [Right Chamber] (Feed Slant: -0.03 | Variance: 2.12)
+    Center-Right Seen  :  25.0% L |  18.8% C-L |  12.5% C |  25.0% C-R |  18.8% R
+    Center-Right Share :  75.0% L |  33.3% C-L | 100.0% C |  50.0% C-R |  33.3% R
+    Right        Seen  :  20.8% L |  20.8% C-L |  16.7% C |  20.8% C-R |  20.8% R
+    Right        Share :  20.0% L |  40.0% C-L |  25.0% C |  60.0% C-R |  80.0% R
+
+--- ROUND 2 ---
+  Active Participants: 20
+  Sourcing Averages : 0.00 Repeats | 0.00 Pool | 0.00 Backlog
+
+  [Left Chamber] (Feed Slant: -0.45 | Variance: 2.05)
+    Left         Seen  :  27.8% L |  33.3% C-L |  11.1% C |  11.1% C-R |  16.7% R
+    Left         Share :  70.0% L |  91.7% C-L |  50.0% C |   0.0% C-R |  33.3% R
+    Center-Left  Seen  :  25.0% L |  50.0% C-L |   0.0% C |   0.0% C-R |  25.0% R
+    Center-Left  Share :   0.0% L |   0.0% C-L |   0.0% C |   0.0% C-R |   0.0% R
+
+  [Right Chamber] (Feed Slant: -0.15 | Variance: 2.08)
+    Center-Right Seen  :  18.8% L |  25.0% C-L |  18.8% C |  12.5% C-R |  25.0% R
+    Center-Right Share :  66.7% L |  25.0% C-L |  66.7% C | 100.0% C-R |  75.0% R
+    Right        Seen  :  33.3% L |   8.3% C-L |  16.7% C |  33.3% C-R |   8.3% R
+    Right        Share :  25.0% L |  50.0% C-L |  25.0% C |  62.5% C-R |   0.0% R
+
+--- ROUND 3 ---
+  Active Participants: 19
+  Sourcing Averages : 0.25 Repeats | 0.00 Pool | 0.15 Backlog
+
+  [Left Chamber] (Feed Slant: -0.94 | Variance: 1.22)
+    Left         Seen  :  34.4% L |  43.8% C-L |  12.5% C |   0.0% C-R |   9.4% R
+    Left         Share : 100.0% L |  78.6% C-L |  25.0% C |   0.0% C-R |   0.0% R
+    Center-Left  Seen  :  25.0% L |  50.0% C-L |  25.0% C |   0.0% C-R |   0.0% R
+    Center-Left  Share :   0.0% L |   0.0% C-L |   0.0% C |   0.0% C-R |   0.0% R
+
+  [Right Chamber] (Feed Slant: 0.20 | Variance: 1.76)
+    Center-Right Seen  :  12.5% L |  18.8% C-L |  18.8% C |  31.2% C-R |  18.8% R
+    Center-Right Share :  50.0% L |  33.3% C-L |  66.7% C |  60.0% C-R |  33.3% R
+    Right        Seen  :  20.8% L |   4.2% C-L |  29.2% C |  29.2% C-R |  16.7% R
+    Right        Share :   0.0% L |   0.0% C-L |  71.4% C |  14.3% C-R | 100.0% R
+
+--- ROUND 4 ---
+  Active Participants: 17
+  Sourcing Averages : 0.90 Repeats | 0.00 Pool | 0.45 Backlog
+
+  [Left Chamber] (Feed Slant: -1.28 | Variance: 0.83)
+    Left         Seen  :  50.0% L |  32.1% C-L |  14.3% C |   0.0% C-R |   3.6% R
+    Left         Share :  64.3% L |  33.3% C-L |  50.0% C |   0.0% C-R |   0.0% R
+    Center-Left  Seen  :  50.0% L |  50.0% C-L |   0.0% C |   0.0% C-R |   0.0% R
+    Center-Left  Share :   0.0% L |   0.0% C-L |   0.0% C |   0.0% C-R |   0.0% R
+
+  [Right Chamber] (Feed Slant: 0.28 | Variance: 1.98)
+    Center-Right Seen  :  12.5% L |  12.5% C-L |  31.2% C |  25.0% C-R |  18.8% R
+    Center-Right Share : 100.0% L |  50.0% C-L |  60.0% C |  75.0% C-R |  33.3% R
+    Right        Seen  :  20.0% L |  15.0% C-L |  10.0% C |  25.0% C-R |  30.0% R
+    Right        Share :  50.0% L |  66.7% C-L |  50.0% C |  60.0% C-R |  33.3% R
+
+--- ROUND 5 ---
+  Active Participants: 19
+  Sourcing Averages : 1.60 Repeats | 0.50 Pool | 1.35 Backlog
+
+  [Left Chamber] (Feed Slant: -0.89 | Variance: 1.49)
+    Left         Seen  :  34.4% L |  28.1% C-L |  25.0% C |   3.1% C-R |   9.4% R
+    Left         Share :  72.7% L |  33.3% C-L |  75.0% C | 100.0% C-R |  33.3% R
+    Center-Left  Seen  : 100.0% L |   0.0% C-L |   0.0% C |   0.0% C-R |   0.0% R
+    Center-Left  Share :   0.0% L |   0.0% C-L |   0.0% C |   0.0% C-R |   0.0% R
+
+  [Right Chamber] (Feed Slant: 0.25 | Variance: 2.04)
+    Center-Right Seen  :  12.5% L |  18.8% C-L |   0.0% C |  25.0% C-R |  43.8% R
+    Center-Right Share :  50.0% L |  66.7% C-L |   0.0% C |  25.0% C-R |  42.9% R
+    Right        Seen  :  16.7% L |  20.8% C-L |  29.2% C |  16.7% C-R |  16.7% R
+    Right        Share :  75.0% L |  40.0% C-L |  42.9% C |  25.0% C-R |  50.0% R
+
+========================================
+ OVERALL SHARE RATE BY USER CATEGORY
+========================================
+  Left          :  59.8%  (98 shared / 164 seen)
+  Center-Left   :   0.0%  (0 shared / 20 seen)
+  Center        :   0.0%  (0 shared / 0 seen)
+  Center-Right  :  55.0%  (44 shared / 80 seen)
+  Right         :  44.0%  (51 shared / 116 seen)
+
+========================================
+ GLOBAL SHARE RATE MATRIX (5x5, ALL ROUNDS, BOTH CHAMBERS)
+========================================
+
+item_cat      Left  Center-Left  Center  Center-Right  Right
+user_cat                                                    
+Left         77.4%        66.7%   55.6%         15.4%  30.0%
+Center-Left   0.0%         0.0%    0.0%          0.0%   0.0%
+Center        0.0%         0.0%    0.0%          0.0%   0.0%
+Center-Right 69.2%        40.0%   69.2%         57.9%  45.0%
+Right        30.8%        43.8%   45.8%         44.8%  57.1%
+
+
+========================================
+ GLOBAL SHARE RATE MATRIX (3x5 COLLAPSED, ALL ROUNDS)
+========================================
+
+item_cat    Left  Center-Left  Center  Center-Right  Right
+user_cat_3                                                
+Left       67.2%        58.6%   51.7%         14.3%  27.3%
+Center      0.0%         0.0%    0.0%          0.0%   0.0%
+Right      43.6%        41.9%   54.1%         50.0%  51.2%
+
+
+========================================
+ LEFT CHAMBER: SHARE RATE MATRIX (5x5)
+========================================
+
+item_cat      Left  Center-Left  Center  Center-Right  Right
+user_cat                                                    
+Left         77.4%        66.7%   55.6%         15.4%  30.0%
+Center-Left   0.0%         0.0%    0.0%          0.0%   0.0%
+Center        0.0%         0.0%    0.0%          0.0%   0.0%
+Center-Right  0.0%         0.0%    0.0%          0.0%   0.0%
+Right         0.0%         0.0%    0.0%          0.0%   0.0%
+
+
+========================================
+ LEFT CHAMBER: SHARE RATE MATRIX (3x5 COLLAPSED)
+========================================
+
+item_cat    Left  Center-Left  Center  Center-Right  Right
+user_cat_3                                                
+Left       67.2%        58.6%   51.7%         14.3%  27.3%
+Center      0.0%         0.0%    0.0%          0.0%   0.0%
+Right       0.0%         0.0%    0.0%          0.0%   0.0%
+
+
+========================================
+ RIGHT CHAMBER: SHARE RATE MATRIX (5x5)
+========================================
+
+item_cat      Left  Center-Left  Center  Center-Right  Right
+user_cat                                                    
+Left          0.0%         0.0%    0.0%          0.0%   0.0%
+Center-Left   0.0%         0.0%    0.0%          0.0%   0.0%
+Center        0.0%         0.0%    0.0%          0.0%   0.0%
+Center-Right 69.2%        40.0%   69.2%         57.9%  45.0%
+Right        30.8%        43.8%   45.8%         44.8%  57.1%
+
+
+========================================
+ RIGHT CHAMBER: SHARE RATE MATRIX (3x5 COLLAPSED)
+========================================
+
+item_cat    Left  Center-Left  Center  Center-Right  Right
+user_cat_3                                                
+Left        0.0%         0.0%    0.0%          0.0%   0.0%
+Center      0.0%         0.0%    0.0%          0.0%   0.0%
+Right      43.6%        41.9%   54.1%         50.0%  51.2%

@@ -1,0 +1,33 @@
+==========================================
+  ADMINISTRATIVE SUMMARY - Trial_2026_09_07
+==========================================
+
+Total Actual In-Network Participants: 20
+(Overflow/waiting room users ignored)
+
+  Completed Round 1: 20
+  Completed Round 2: 20
+  Completed Round 3: 19
+  Completed Round 4: 17
+  Completed Round 5: 19
+
+Total Dropped Out (Missed >=2 Rounds): 2
+
+--- PAYOUT BREAKDOWN ---
+Earned Bonus + Lottery (Perfect Attendance) : 17
+Earned Bonus Only (Missed 1 round, did R5)  : 1
+Earned No Payout (Missed >=2 rounds or R5)  : 2
+
+
+==========================================
+ PROLIFIC ID LOGS (For copy-pasting)
+==========================================
+
+[ Earned Bonus + Lottery ]
+69e55cacef65d894746827c6, 662938ec62f9ac2aad645a17, 630a8feaa8eef385f72dc1a5, 650b03136ab3d4c832d98b71, 69fd20d07c7a3a4fcc67ab00, 6148f3d1074988c7852c1774, 6716f188b131fa30ab5365c2, 6a072f9723013639ba2e4a13, 67c869872204b85d6c4c0749, 69ff90adb0598b12932552ad, 6985cae61f4f48abdf956530, 66472a03650f9441b8f815d9, 611b8f8d34b5aed647a248e3, 63d6873b65a6170d64a652f6, 5eace152e25d6800091dd418, 6a11c023ec847ce1395368e1, 5865bdf7a3462300010673e3
+
+[ Earned Bonus Only ]
+6a20a623d2c8d8be649c4825
+
+[ Earned No Payout (Review for Rejection/Partial) ]
+69dd53fd54f9b38f6e4c5019, 6a0b725a3e1ce679fd30a9be
