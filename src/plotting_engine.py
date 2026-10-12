@@ -1,45 +1,213 @@
-import os
-import math
 import ast
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import seaborn as sns
+from pathlib import Path
 import config
 from src import stats_suite
 
-def generate_suite(event_log_df, output_dir, prefix="", topics=['climate']):
-    if event_log_df.empty or 'treatment' not in event_log_df.columns:
-        print(f"[!] Warning: Event log is empty or missing data. Skipping plots for {prefix}.")
+def plot_feed_slant_variance(event_log_df, output_dir, topic, prefix=""):
+    """
+    Plots the mean feed slant per round as grouped bar charts with variance (std) error bars.
+    Plots 4 columns per round: Segregated Left, Segregated Right, Integrated Left-Leaning, Integrated Right-Leaning.
+    """
+    df = event_log_df[(event_log_df['topic'] == topic) & (event_log_df['action'] == 'seen')].copy()
+    if df.empty:
         return
 
-    is_sim = "Sim" in prefix
-    is_dual = len(topics) > 1
+    mapping = {'Left': -2, 'Center-Left': -1, 'Center': 0, 'Center-Right': 1, 'Right': 2}
+    df['slant'] = df['item_cat'].map(mapping)
+    df = df.dropna(subset=['slant'])
+    
+    seg_left_df = df[(df['treatment'] == 'segregated') & (df['chamber'] == 'Left')]
+    seg_left_grp = seg_left_df.groupby('round')['slant'].agg(['mean', 'std'])
+    
+    seg_right_df = df[(df['treatment'] == 'segregated') & (df['chamber'] == 'Right')]
+    seg_right_grp = seg_right_df.groupby('round')['slant'].agg(['mean', 'std'])
+    
+    int_left_df = df[(df['treatment'] == 'integrated') & (df['user_cat'].isin(['Left', 'Center-Left']))]
+    int_left_grp = int_left_df.groupby('round')['slant'].agg(['mean', 'std'])
+    
+    int_right_df = df[(df['treatment'] == 'integrated') & (df['user_cat'].isin(['Right', 'Center-Right']))]
+    int_right_grp = int_right_df.groupby('round')['slant'].agg(['mean', 'std'])
+
+    rounds = sorted(df['round'].unique())
+    seg_left_grp = seg_left_grp.reindex(rounds).fillna(0)
+    seg_right_grp = seg_right_grp.reindex(rounds).fillna(0)
+    int_left_grp = int_left_grp.reindex(rounds).fillna(0)
+    int_right_grp = int_right_grp.reindex(rounds).fillna(0)
+
+    fig, ax = plt.subplots(figsize=(12, 7))
+    
+    x = np.arange(len(rounds))
+    width = 0.20
+    
+    c_seg_l = '#2980b9'
+    c_seg_r = '#c0392b'
+    c_int_l = '#7fb3d5'
+    c_int_r = '#d98880'
+
+    ax.bar(x - 1.5*width, seg_left_grp['mean'], width, yerr=seg_left_grp['std'], 
+           capsize=4, color=c_seg_l, edgecolor='black', zorder=3, label='Segregated (Left Chamber)')
+           
+    ax.bar(x - 0.5*width, seg_right_grp['mean'], width, yerr=seg_right_grp['std'], 
+           capsize=4, color=c_seg_r, edgecolor='black', zorder=3, label='Segregated (Right Chamber)')
+           
+    ax.bar(x + 0.5*width, int_left_grp['mean'], width, yerr=int_left_grp['std'], 
+           capsize=4, color=c_int_l, edgecolor='black', zorder=3, label='Integrated (Left-Leaning Users)')
+           
+    ax.bar(x + 1.5*width, int_right_grp['mean'], width, yerr=int_right_grp['std'], 
+           capsize=4, color=c_int_r, edgecolor='black', zorder=3, label='Integrated (Right-Leaning Users)')
+    
+    ax.axhline(0, color='black', linestyle='-', linewidth=1.5, zorder=2)
+    
+    #plt.title(f'Evolution of Feed Slant and Ideological Variance ({topic.upper()})', fontsize=15, pad=15, fontweight='bold')
+    plt.xlabel('Simulation Round', fontsize=12)
+    plt.ylabel('Mean Feed Slant (-2 to +2)', fontsize=12)
+    
+    plt.xticks(x, [f"Round {int(r)}" for r in rounds], fontsize=11)
+    plt.ylim(-2.5, 2.5)
+    
+    ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), framealpha=0.95, fontsize=10)
+    ax.grid(True, axis='y', alpha=0.3, linestyle='--', zorder=0)
+    plt.tight_layout()
+    
+    safe_prefix = f"{prefix}_" if prefix else ""
+    out_name = output_dir / f"Plot_00_{safe_prefix}Feed_Slant_Variance_{topic}.pdf"
+    plt.savefig(out_name, dpi=300, bbox_inches='tight')
+    plt.close()
+
+
+def generate_suite(event_log_df, output_dir, prefix="", topics=['climate']):
+    if event_log_df.empty or 'treatment' not in event_log_df.columns: return
+    output_dir = Path(output_dir)
+
+    is_sim = "Sim" in prefix or prefix == ""
     
     for topic in topics:
         topic_df = event_log_df[event_log_df['topic'] == topic] if 'topic' in event_log_df.columns else event_log_df
+        topic_out_dir = output_dir / topic
+        topic_out_dir.mkdir(parents=True, exist_ok=True)
+        
+        # PLOT 01 GENERATION: Passed the full topic_df (combined treatments) directly here
+        plot_chronological_feed_amp(topic_df, topic_out_dir, prefix)
         
         for treatment in topic_df['treatment'].unique():
             t_df = topic_df[topic_df['treatment'] == treatment]
-            safe_prefix = f"{prefix}_{treatment}_{topic}" if is_dual else f"{prefix}_{treatment}"
+            safe_prefix = f"{treatment}" if not prefix else f"{prefix}_{treatment}"
             
-            plot_chronological_feed_amp(t_df, output_dir, safe_prefix)
-            plot_temporal_heatmaps(t_df, output_dir, safe_prefix)
-            plot_feed_sources(t_df, output_dir, safe_prefix)
-            plot_exposure_distributions(t_df, output_dir, safe_prefix, is_sim)
+            plot_temporal_heatmaps(t_df, topic_out_dir, safe_prefix)
+            plot_feed_sources(t_df, topic_out_dir, safe_prefix)
+            plot_exposure_distributions(t_df, topic_out_dir, safe_prefix, is_sim)
+
+
+def plot_chronological_feed_amp(df, output_dir, prefix=""):
+    if df.empty: return
+    
+    if 'chamber' not in df.columns:
+        df = df.copy()
+        df['chamber'] = 'Unknown'
+        
+    cats = ['Left', 'Center-Left', 'Center', 'Center-Right', 'Right']
+    colors = {'Left': '#2980b9', 'Center-Left': '#7fb3d5', 'Center': '#bdc3c7', 'Center-Right': '#d98880', 'Right': '#c0392b'}
+    rounds = sorted(df['round'].unique())
+    x_indices = np.arange(len(rounds))
+    width = 0.20
+    
+    for action, plot_name, title in [('seen', '01A_Incoming_Diet', 'Incoming Feed (Diet)'), ('shared', '01B_Outgoing_Amp', 'Outgoing Shares (Amplification)')]:
+        act_df = df[df['action'] == action]
+        if act_df.empty: continue
+        
+        fig, ax = plt.subplots(figsize=(14, 7))
+        
+        data_sl = {c: [] for c in cats}
+        data_sr = {c: [] for c in cats}
+        data_il = {c: [] for c in cats}
+        data_ir = {c: [] for c in cats}
+        
+        for r in rounds:
+            r_df = act_df[act_df['round'] == r]
+            
+            sl_sub = r_df[(r_df['treatment'] == 'segregated') & (r_df['chamber'] == 'Left')]
+            sr_sub = r_df[(r_df['treatment'] == 'segregated') & (r_df['chamber'] == 'Right')]
+            il_sub = r_df[(r_df['treatment'] == 'integrated') & (r_df['user_cat'].isin(['Left', 'Center-Left']))]
+            ir_sub = r_df[(r_df['treatment'] == 'integrated') & (r_df['user_cat'].isin(['Right', 'Center-Right']))]
+            
+            def calc_props(sub):
+                tot = len(sub) if len(sub) > 0 else 1
+                return {c: len(sub[sub['item_cat'] == c]) / tot for c in cats}
+                
+            p_sl = calc_props(sl_sub)
+            p_sr = calc_props(sr_sub)
+            p_il = calc_props(il_sub)
+            p_ir = calc_props(ir_sub)
+            
+            for c in cats:
+                data_sl[c].append(p_sl[c])
+                data_sr[c].append(p_sr[c])
+                data_il[c].append(p_il[c])
+                data_ir[c].append(p_ir[c])
+                
+        bottom_sl, bottom_sr, bottom_il, bottom_ir = np.zeros(len(rounds)), np.zeros(len(rounds)), np.zeros(len(rounds)), np.zeros(len(rounds))
+        
+        for c in cats:
+            # S-L
+            ax.bar(x_indices - 1.5*width, data_sl[c], width, bottom=bottom_sl, color=colors[c], edgecolor='black', linewidth=1.2)
+            bottom_sl += np.array(data_sl[c])
+            # S-R
+            ax.bar(x_indices - 0.5*width, data_sr[c], width, bottom=bottom_sr, color=colors[c], edgecolor='black', linewidth=1.2)
+            bottom_sr += np.array(data_sr[c])
+            # I-L
+            ax.bar(x_indices + 0.5*width, data_il[c], width, bottom=bottom_il, color=colors[c], edgecolor='white', linewidth=0.5, alpha=0.9)
+            bottom_il += np.array(data_il[c])
+            # I-R
+            ax.bar(x_indices + 1.5*width, data_ir[c], width, bottom=bottom_ir, color=colors[c], edgecolor='white', linewidth=0.5, alpha=0.9)
+            bottom_ir += np.array(data_ir[c])
+            
+        ax.set_ylabel("Proportion of Volume")
+        ax.set_ylim(0, 1.05)
+        ax.set_xticks(x_indices)
+        ax.set_xticklabels([f"Round {int(r)}" for r in rounds], fontsize=11, fontweight='bold')
+        
+        legend_elements = [mpatches.Patch(color=colors[c], label=c) for c in cats]
+        legend_elements.append(mpatches.Patch(facecolor='none', edgecolor='black', linewidth=1.2, label='Segregated (S)'))
+        legend_elements.append(mpatches.Patch(facecolor='none', edgecolor='lightgray', linewidth=1, label='Integrated (I)'))
+        
+        ax.legend(handles=legend_elements, loc='upper center', bbox_to_anchor=(0.5, 1.15), ncol=4, fontsize=10)
+        
+        for i in x_indices:
+            ax.text(i - 1.5*width, -0.02, 'S-L', ha='center', va='top', fontsize=9, rotation=90)
+            ax.text(i - 0.5*width, -0.02, 'S-R', ha='center', va='top', fontsize=9, rotation=90)
+            ax.text(i + 0.5*width, -0.02, 'I-L', ha='center', va='top', fontsize=9, rotation=90)
+            ax.text(i + 1.5*width, -0.02, 'I-R', ha='center', va='top', fontsize=9, rotation=90)
+
+        plt.subplots_adjust(bottom=0.15)
+        
+        title_prefix = f"({prefix})" if prefix else ""
+        #plt.title(f"{title} by Configuration\n{title_prefix}", pad=30, fontweight='bold', fontsize=14)
+        
+        filename = f"Plot_{plot_name}_Combined_{prefix}.pdf" if prefix else f"Plot_{plot_name}_Combined.pdf"
+        plt.savefig(output_dir / filename, dpi=300)
+        plt.close(fig)
+
 
 def generate_share_distributions(event_log_df, output_dir, prefix="", topics=['climate']):
     if event_log_df.empty or 'treatment' not in event_log_df.columns: return
-    is_sim = "Sim" in prefix
-    is_dual = len(topics) > 1
+    output_dir = Path(output_dir)
+    is_sim = "Sim" in prefix or prefix == ""
     
     for topic in topics:
         topic_df = event_log_df[event_log_df['topic'] == topic] if 'topic' in event_log_df.columns else event_log_df
+        topic_out_dir = output_dir / topic
+        topic_out_dir.mkdir(parents=True, exist_ok=True)
+        
         for treatment in topic_df['treatment'].unique():
             t_df = topic_df[topic_df['treatment'] == treatment]
-            safe_prefix = f"{prefix}_{treatment}_{topic}" if is_dual else f"{prefix}_{treatment}"
-            plot_share_distributions(t_df, output_dir, safe_prefix, is_sim)
+            safe_prefix = f"{treatment}" if not prefix else f"{prefix}_{treatment}"
+            plot_share_distributions(t_df, topic_out_dir, safe_prefix, is_sim)
+
 
 def plot_share_distributions(df, output_dir, prefix, is_sim=False):
     if df.empty: return
@@ -92,8 +260,9 @@ def plot_share_distributions(df, output_dir, prefix, is_sim=False):
     ax.grid(True, axis='y', alpha=0.3, zorder=0)
     ax.legend(title="Participant Leaning", title_fontsize=11)
     plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, f"Plot_06_Share_Dist_{prefix}.pdf"), dpi=300, bbox_inches='tight')
+    plt.savefig(output_dir / f"Plot_06_Share_Dist_{prefix}.pdf", dpi=300, bbox_inches='tight')
     plt.close(fig)
+
 
 def plot_exposure_distributions(df, output_dir, prefix, is_sim=False):
     seen_df = df[df['action'] == 'seen'].copy()
@@ -106,7 +275,6 @@ def plot_exposure_distributions(df, output_dir, prefix, is_sim=False):
         if ic not in item_counts.columns: item_counts[ic] = 0
             
     merged = pd.merge(base, item_counts, on=['trial_id', 'round', 'user_id'], how='left').fillna(0)
-    
     fig, axes = plt.subplots(2, 3, figsize=(16, 10))
     axes = axes.flatten()
     
@@ -150,97 +318,63 @@ def plot_exposure_distributions(df, output_dir, prefix, is_sim=False):
     handles, labels = axes[0].get_legend_handles_labels()
     axes[5].legend(handles, labels, loc='center', fontsize=14, title="User Demographics", title_fontsize=14)
     plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, f"Plot_05_Exposure_Dist_{prefix}.pdf"), dpi=300, bbox_inches='tight')
+    plt.savefig(output_dir / f"Plot_05_Exposure_Dist_{prefix}.pdf", dpi=300, bbox_inches='tight')
     plt.close(fig)
 
-def plot_chronological_feed_amp(df, output_dir, prefix):
-    """
-    Replaces old Plot 01 & 08.
-    Creates two 5-category stacked bar charts: 01A (Incoming Diet) and 01B (Outgoing Amplification).
-    """
-    if df.empty or 'chamber' not in df.columns: return
-    
-    cats = ['Left', 'Center-Left', 'Center', 'Center-Right', 'Right']
-    colors = {'Left': '#2980b9', 'Center-Left': '#7fb3d5', 'Center': '#bdc3c7', 'Center-Right': '#d98880', 'Right': '#c0392b'}
-    x_indices = np.arange(config.ROUNDS)
-    width = 0.35
-    
-    for action, plot_name, title in [('seen', '01A_Incoming_Diet', 'Incoming Feed (Diet)'), ('shared', '01B_Outgoing_Amp', 'Outgoing Shares (Amplification)')]:
-        act_df = df[df['action'] == action]
-        if act_df.empty: continue
-        
-        fig, ax = plt.subplots(figsize=(10, 6))
-        
-        left_chamber_data = {c: [] for c in cats}
-        right_chamber_data = {c: [] for c in cats}
-        
-        for r in range(1, config.ROUNDS + 1):
-            r_df = act_df[act_df['round'] == r]
-            
-            def calc_props(chamber):
-                sub = r_df[r_df['chamber'] == chamber]
-                tot = len(sub) if len(sub) > 0 else 1
-                return {c: len(sub[sub['item_cat'] == c]) / tot for c in cats}
-                
-            l_props = calc_props('Left')
-            r_props = calc_props('Right')
-            
-            for c in cats:
-                left_chamber_data[c].append(l_props[c])
-                right_chamber_data[c].append(r_props[c])
-                
-        bottom_l = np.zeros(config.ROUNDS)
-        bottom_r = np.zeros(config.ROUNDS)
-        
-        for c in cats:
-            # Left Chamber Bar
-            ax.bar(x_indices - width/2, left_chamber_data[c], width, bottom=bottom_l, color=colors[c], edgecolor='white')
-            bottom_l += np.array(left_chamber_data[c])
-            
-            # Right Chamber Bar
-            ax.bar(x_indices + width/2, right_chamber_data[c], width, bottom=bottom_r, color=colors[c], edgecolor='black', hatch='//')
-            bottom_r += np.array(right_chamber_data[c])
-            
-        ax.set_ylabel("Proportion of Volume")
-        ax.set_ylim(0, 1.05)
-        ax.set_xticks(x_indices)
-        ax.set_xticklabels([f"Round {r}\n(L | R)" for r in range(1, config.ROUNDS + 1)])
-        
-        legend_elements = [mpatches.Patch(color=colors[c], label=c) for c in cats]
-        legend_elements.append(mpatches.Patch(facecolor='gray', edgecolor='white', label='Left Chamber'))
-        legend_elements.append(mpatches.Patch(facecolor='gray', edgecolor='black', hatch='//', label='Right Chamber'))
-        
-        ax.legend(handles=legend_elements, loc='upper center', bbox_to_anchor=(0.5, 1.15), ncol=4, fontsize='small')
-        plt.title(f"{title} by Structural Chamber\n({prefix})", pad=20, fontweight='bold')
-        plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, f"Plot_{plot_name}_{prefix}.pdf"), dpi=300)
-        plt.close(fig)
 
 def plot_feed_sources(df, output_dir, prefix):
-    metrics = stats_suite.calculate_sourcing_metrics(df)
-    if not metrics: return
+    multi_metrics = stats_suite.calculate_sourcing_metrics(df)
+    if not multi_metrics or 'Global' not in multi_metrics: return
     
+    metrics = multi_metrics['Global']
     rounds = metrics['rounds']
-    fig, ax = plt.subplots(figsize=(10, 6))
     
+    fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(rounds, metrics['rep_avg'], marker='o', lw=2, color='#e74c3c', label='Average Repeats')
     ax.plot(rounds, metrics['pool_avg'], marker='s', lw=2, color='#3498db', label='Average Pool')
     ax.plot(rounds, metrics['back_avg'], marker='^', lw=2, color='#27ae60', label='Average Backlog')
-    ax.plot(rounds, metrics['rep_max'], marker='x', lw=2, ls='--', color='#e74c3c', label='Expected Max Repeats')
-    ax.plot(rounds, metrics['pool_max'], marker='x', lw=2, ls='--', color='#3498db', label='Expected Max Pool')
-    ax.plot(rounds, metrics['back_max'], marker='x', lw=2, ls='--', color='#27ae60', label='Expected Max Backlog')
+    ax.plot(rounds, metrics['hid_avg'], marker='d', lw=2, color='#8e44ad', label='Average Hidden')
+    ax.plot(rounds, metrics['cross_avg'], marker='v', lw=2, color='#f39c12', label='Average Cross-Chamber')
     
-    ax.set_xlabel("Simulation Round"); ax.set_ylabel("Accumulated Items")
-    ax.set_xticks(rounds); ax.grid(True, alpha=0.3)
+    ax.plot(rounds, metrics['rep_max'], marker='x', lw=2, ls='--', color='#e74c3c')
+    ax.plot(rounds, metrics['pool_max'], marker='x', lw=2, ls='--', color='#3498db')
+    ax.plot(rounds, metrics['back_max'], marker='x', lw=2, ls='--', color='#27ae60')
+    ax.plot(rounds, metrics['hid_max'], marker='x', lw=2, ls='--', color='#8e44ad')
+    ax.plot(rounds, metrics['cross_max'], marker='x', lw=2, ls='--', color='#f39c12')
+    
+    ax.set_xlabel("Simulation Round")
+    ax.set_ylabel("Accumulated Items")
+    ax.set_xticks(rounds)
+    ax.grid(True, alpha=0.3)
     ax.legend(loc='upper left', ncol=2, fontsize=9)
     plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, f"Plot_04_Feed_Sources_{prefix}.pdf"), dpi=300)
+    plt.savefig(output_dir / f"Plot_04_Feed_Sources_{prefix}.pdf", dpi=300)
     plt.close(fig)
+    
+    report_lines = [f"=== FEED SOURCES REPORT: {prefix} ==="]
+    for scope in ['Global', 'Left', 'Right']:
+        if scope not in multi_metrics: continue
+        scope_met = multi_metrics[scope]
+        report_lines.append(f"\n--- {scope.upper()} CHAMBER / SCOPE ---")
+        
+        def fmt(avg, std, mx): return f"Avg: {avg:>5.2f} (±{std:>5.2f}) | Max: {mx:>5.2f}" if not np.isnan(avg) else "N/A"
+        
+        for i, r in enumerate(rounds):
+            report_lines.append(f"\n  Round {r}:")
+            report_lines.append(f"    Repeats       : {fmt(scope_met['rep_avg'][i], scope_met['rep_std'][i], scope_met['rep_max'][i])}")
+            report_lines.append(f"    Pool          : {fmt(scope_met['pool_avg'][i], scope_met['pool_std'][i], scope_met['pool_max'][i])}")
+            report_lines.append(f"    Backlog       : {fmt(scope_met['back_avg'][i], scope_met['back_std'][i], scope_met['back_max'][i])}")
+            report_lines.append(f"    Hidden        : {fmt(scope_met['hid_avg'][i], scope_met['hid_std'][i], scope_met['hid_max'][i])}")
+            report_lines.append(f"    Cross-Chamber : {fmt(scope_met['cross_avg'][i], scope_met['cross_std'][i], scope_met['cross_max'][i])}")
+            
+    with open(output_dir / f"Report_04_Feed_Sources_{prefix}.txt", 'w') as f: 
+        f.write("\n".join(report_lines))
+
 
 def plot_temporal_heatmaps(df, output_dir, prefix):
     cmap_base = plt.cm.Greens; cmap_base.set_bad(color='#d3d3d3')
-    indiv_dir = os.path.join(output_dir, "individual_plots")
-    os.makedirs(indiv_dir, exist_ok=True)
+    indiv_dir = output_dir / "individual_rounds"
+    indiv_dir.mkdir(parents=True, exist_ok=True)
     
     for name, mode in [("02_InFeed_Comp", 'row'), ("03_Share_Rate", 'element'), ("03B_Norm_Share_Volume", 'norm_vol')]:
         fig_main, axes_main = plt.subplots(1, 2, figsize=(14, 6), sharey=True)
@@ -250,7 +384,6 @@ def plot_temporal_heatmaps(df, output_dir, prefix):
             if 'chamber' not in df.columns: continue
             chamber_df = df[df['chamber'] == chamber]
             
-            # --- MAIN AGGREGATE DASHBOARD (ALL ROUNDS) ---
             if not chamber_df.empty:
                 mat_seen = stats_suite.build_matrix(chamber_df[chamber_df['action'] == 'seen'], None)
                 mat_share = stats_suite.build_matrix(chamber_df[chamber_df['action'] == 'shared'], None)
@@ -269,7 +402,6 @@ def plot_temporal_heatmaps(df, output_dir, prefix):
                 if idx == 0: ax_main.set_yticklabels([config.POS_LABELS[p] for p in [5, 4, 3, 2, 1]])
                 if idx == 0: ax_main.set_ylabel("User Baseline Opinion", fontsize=12)
             
-            # --- INDIVIDUAL ARCHIVE PLOTS (ROUND-BY-ROUND) ---
             if not chamber_df.empty:
                 for r_target in [None] + list(range(1, config.ROUNDS + 1)):
                     mat_s = stats_suite.build_matrix(chamber_df[chamber_df['action'] == 'seen'], r_target)
@@ -290,31 +422,33 @@ def plot_temporal_heatmaps(df, output_dir, prefix):
                     fig_indiv.colorbar(im_indiv, ax=ax_indiv, fraction=0.046, pad=0.04, label="Rate")
                     
                     r_str = f"Round_{r_target}" if r_target else "AllRounds"
-                    fig_indiv.savefig(os.path.join(indiv_dir, f"Plot_{name}_{prefix}_{chamber}Chamber_{r_str}.pdf"), dpi=300, bbox_inches='tight')
+                    fig_indiv.savefig(indiv_dir / f"Plot_{name}_{prefix}_{chamber}Chamber_{r_str}.pdf", dpi=300, bbox_inches='tight')
                     plt.close(fig_indiv)
 
-        if 'im' in locals():
+        if 'im' in locals(): 
             fig_main.colorbar(im, ax=axes_main.tolist(), fraction=0.015, pad=0.04, label="Rate")
-        plt.suptitle(f"{name.replace('_', ' ')} (Aggregate)\n{prefix}", fontsize=14, y=1.05)
-        plt.savefig(os.path.join(output_dir, f"Plot_{name}_{prefix}_SideBySide.pdf"), dpi=300, bbox_inches='tight')
+        #plt.suptitle(f"{name.replace('_', ' ')} (Aggregate)\n{prefix}", fontsize=14, y=1.05)
+        plt.savefig(output_dir / f"Plot_{name}_{prefix}_SideBySide.pdf", dpi=300, bbox_inches='tight')
         plt.close(fig_main)
 
+
 def generate_correlation_heatmaps(phase2_csv, output_dir, topics=['climate'], empirical=False, phase1_csv=None):
-    if phase1_csv is None:
-        base_dir = os.path.dirname(phase2_csv)
-        phase1_csv = os.path.join(base_dir, 'all_apps_wide_1.csv')
+    phase2_csv = Path(phase2_csv)
+    output_dir = Path(output_dir)
+    
+    if phase1_csv is None: phase1_csv = phase2_csv.parent / 'all_apps_wide_1.csv'
+    else: phase1_csv = Path(phase1_csv)
     
     df2 = pd.read_csv(phase2_csv, low_memory=False)
     
-    if os.path.exists(phase1_csv):
+    if phase1_csv.exists():
         df1 = pd.read_csv(phase1_csv, low_memory=False)
-        if 'participant.label' in df1.columns and 'participant.label' in df2.columns:
+        if 'participant.label' in df1.columns and 'participant.label' in df2.columns: 
             df = pd.merge(df2, df1, on='participant.label', how='left', suffixes=('', '_p1'))
-        elif 'participant.code' in df1.columns and 'participant.code' in df2.columns:
+        elif 'participant.code' in df1.columns and 'participant.code' in df2.columns: 
             df = pd.merge(df2, df1, on='participant.code', how='left', suffixes=('', '_p1'))
         else: df = df2
-    else:
-        df = df2
+    else: df = df2
         
     if 'participant._is_bot' in df.columns: 
         df = df[df['participant._is_bot'] == 0]
@@ -322,24 +456,20 @@ def generate_correlation_heatmaps(phase2_csv, output_dir, topics=['climate'], em
     is_dual = len(topics) > 1
     
     for topic in topics:
-        # STRICT PHASE 1 ANCHORING
+        topic_out_dir = output_dir / topic
+        topic_out_dir.mkdir(parents=True, exist_ok=True)
+        
         op_cols = []
-        if is_dual:
-            targets = [f'{topic}_opinion_1', f'{topic}_opinion_2']
-        else:
-            targets = [
-                f'{topic}_opinion_1', f'{topic}_opinion_2', f'{topic}_opinion_3', f'{topic}_opinion_4', 
-                'opinion_1', 'opinion_2', 'opinion_3', 'opinion_4', 
-                'baseline_opinion_1', 'baseline_opinion_2', 'baseline_opinion_3', 'baseline_opinion_4'
-            ]
+        if is_dual: targets = [f'{topic}_opinion_1', f'{topic}_opinion_2']
+        else: targets = [f'{topic}_opinion_1', f'{topic}_opinion_2', f'{topic}_opinion_3', f'{topic}_opinion_4', 
+                         'opinion_1', 'opinion_2', 'opinion_3', 'opinion_4', 
+                         'baseline_opinion_1', 'baseline_opinion_2', 'baseline_opinion_3', 'baseline_opinion_4']
             
         for t in targets:
             match = next((c for c in df.columns if t in c and ('phase_1' in c or 'participant' in c)), None)
-            if match and match not in op_cols:
-                op_cols.append(match)
+            if match and match not in op_cols: op_cols.append(match)
                 
         op_cols = sorted(list(set(op_cols)))
-        
         if not op_cols: continue
         
         data_rows = []
@@ -352,12 +482,8 @@ def generate_correlation_heatmaps(phase2_csv, output_dir, topics=['climate'], em
             
             for r in range(1, config.ROUNDS + 1):
                 r_cols = [c for c in df.columns if f'phase_2.{r}.player.' in c]
-                if is_dual:
-                    f_col = next((c for c in r_cols if 'incoming_feed' in c and topic in c), None)
-                    s_col = next((c for c in r_cols if 'outgoing_shares' in c and topic in c), None)
-                else:
-                    f_col = next((c for c in r_cols if 'incoming_feed' in c), None)
-                    s_col = next((c for c in r_cols if 'outgoing_shares' in c), None)
+                f_col = next((c for c in r_cols if 'incoming_feed' in c and (topic in c if is_dual else True)), None)
+                s_col = next((c for c in r_cols if 'outgoing_shares' in c and (topic in c if is_dual else True)), None)
                 if not f_col or not s_col: continue
                 
                 feed_raw, shares_raw = row.get(f_col, '[]'), row.get(s_col, '[]')
@@ -407,12 +533,9 @@ def generate_correlation_heatmaps(phase2_csv, output_dir, topics=['climate'], em
             
             fig, ax = plt.subplots(figsize=(10, 6))
             sns.heatmap(pd.DataFrame(corr_matrix, index=[f"{l} Items" for l in leanings], columns=col_labels), annot=True, cmap='RdBu', center=0, vmin=-1, vmax=1, ax=ax)
-            plt.savefig(os.path.join(output_dir, filename), dpi=300)
+            plt.savefig(topic_out_dir / filename, dpi=300)
             plt.close(fig)
 
-        safe_suffix = f"_{topic}" if is_dual else ""
-        _plot_hm(['Left', 'Center', 'Right'], '3', '3-Bucket Correlation', f'Plot_07A_Corr{safe_suffix}.pdf')
-        
-        # Only output the 5-Bucket correlation if Empirical data
-        if empirical:
-            _plot_hm(leanings_5, '5', '5-Bucket Correlation', f'Plot_07C_Corr{safe_suffix}.pdf')
+        _plot_hm(['Left', 'Center', 'Right'], '3', '3-Bucket Correlation', 'Plot_07A_Corr.pdf')
+        if empirical: 
+            _plot_hm(leanings_5, '5', '5-Bucket Correlation', 'Plot_07C_Corr.pdf')

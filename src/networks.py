@@ -1,13 +1,12 @@
 import networkx as nx
 import random
 import json
-import os
+from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import config
 
 def generate_ppm_topology(n_nodes, k, cross_edge_fraction):
-    """Generates the Planted Partition Model graph."""
     if n_nodes % 2 != 0: raise ValueError("N must be even.")
     half_n = n_nodes // 2
     nodes_b = list(range(half_n, n_nodes))
@@ -36,10 +35,24 @@ def generate_ppm_topology(n_nodes, k, cross_edge_fraction):
                 break
     return combined_graph
 
+def rewire_to_integrated(G_seg):
+    """
+    Takes the segregated graph and applies degree-preserving double edge swaps
+    to completely randomize the topology into a configuration model, 
+    destroying the community structure while keeping the exact same nodes and degree.
+    """
+    G_int = G_seg.copy()
+    n_edges = len(G_int.edges())
+    # Performing 10 * E swaps is the standard to ensure thorough randomization
+    nx.double_edge_swap(G_int, nswap=10 * n_edges, max_tries=100 * n_edges)
+    return G_int
+
 def plot_simulated_network(baseline_path, out_dir):
-    """Visualizes the Segregated vs Integrated architectures."""
-    if not os.path.exists(baseline_path): return
-    with open(baseline_path, 'r') as f: data = json.load(f)
+    baseline_path = Path(baseline_path)
+    out_dir = Path(out_dir)
+    if not baseline_path.exists(): return
+    with open(baseline_path, 'r') as f: 
+        data = json.load(f)
     
     fig, axes = plt.subplots(1, 2, figsize=(18, 8))
     val_to_pos = {v: k for k, v in config.POS_MIDPOINTS.items()}
@@ -73,6 +86,6 @@ def plot_simulated_network(baseline_path, out_dir):
     fig.legend(handles=legend_handles, loc='lower center', ncol=5, fontsize=14, bbox_to_anchor=(0.5, 0.02))
     plt.tight_layout(rect=[0, 0.08, 1, 1])
     
-    filename = os.path.basename(baseline_path).replace('.json', '.pdf')
-    plt.savefig(os.path.join(out_dir, f"Topology_{filename}"), dpi=300)
+    filename = baseline_path.name.replace('.json', '.pdf')
+    plt.savefig(out_dir / f"Topology_{filename}", dpi=300)
     plt.close(fig)

@@ -1,39 +1,53 @@
-import os
+from pathlib import Path
 
 # ==========================================
 # 1. PIPELINE MODE & MASTER SWITCHES
 # ==========================================
-# Determines which topic forms the structural backbone of the network.
+EMPIRICAL_TOPOLOGY_MODE = 'dual_cross_preasured' #'single_topic', 'dual_independent','dual_cross_preasured' 
 EMPIRICAL_BASE_TOPIC = "imm"  
 EMPIRICAL_SIDE_TOPIC = "climate"
-
-# Topics that require their 1-5 scale to be inverted (e.g. 5 becomes 1) 
-# so that 5 ALWAYS means "Left" and 1 ALWAYS means "Right".
 INVERT_OPINIONS_FOR = ['imm', 'immigration']
 
 # ==========================================
-# 2. PATH CONFIGURATION & FOLDER STRUCTURE
+# 2. RUN IDENTIFIERS & NAMING
 # ==========================================
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 CURRENT_EMPIRICAL_TRIAL_ID = "Trial_2026_09_07"
-
-DATA_DIR = os.path.join(SCRIPT_DIR, "data")
-BASELINES_DIR = os.path.join(DATA_DIR, "baselines")
-EMPIRICAL_DATA_DIR = os.path.join(DATA_DIR, "empirical", CURRENT_EMPIRICAL_TRIAL_ID)
-EMPIRICAL_RAW_DIR = os.path.join(EMPIRICAL_DATA_DIR, "raw")
-EMPIRICAL_PROCESSED_DIR = os.path.join(EMPIRICAL_DATA_DIR, "processed")
-RESULTS_DIR = os.path.join(SCRIPT_DIR, "Results")
-EMPIRICAL_RESULTS_DIR = os.path.join(RESULTS_DIR, "Empirical", CURRENT_EMPIRICAL_TRIAL_ID)
-SIMULATION_RESULTS_DIR = os.path.join(RESULTS_DIR, "Simulations_dual")
-
-for d in [BASELINES_DIR, EMPIRICAL_RAW_DIR, EMPIRICAL_PROCESSED_DIR, EMPIRICAL_RESULTS_DIR, SIMULATION_RESULTS_DIR]:
-    os.makedirs(d, exist_ok=True)
-
-def get_baseline_path(n, k):
-    return os.path.join(BASELINES_DIR, f"baseline_N{n}_K{k}.json")
+SIMULATION_STUDY_NAME = "pilots45_3x5"
 
 # ==========================================
-# 3. CORE EXPERIMENT MECHANICS
+# 3. DIRECTORY STRUCTURE (pathlib)
+# ==========================================
+ROOT_DIR = Path(__file__).resolve().parent
+
+DATA_DIR = ROOT_DIR / "data"
+BASELINES_DIR = DATA_DIR / "baselines"
+
+EMPIRICAL_DATA_DIR = DATA_DIR / "empirical" / CURRENT_EMPIRICAL_TRIAL_ID
+EMPIRICAL_RAW_DIR = EMPIRICAL_DATA_DIR / "raw"
+EMPIRICAL_PROCESSED_DIR = EMPIRICAL_DATA_DIR / "processed"
+
+RESULTS_DIR = ROOT_DIR / "Results"
+EMPIRICAL_RESULTS_DIR = RESULTS_DIR / "Empirical" / CURRENT_EMPIRICAL_TRIAL_ID
+SIMULATION_RESULTS_DIR = RESULTS_DIR / "Simulations" / SIMULATION_STUDY_NAME
+POWER_RESULTS_DIR = RESULTS_DIR / "Power_Analysis" / SIMULATION_STUDY_NAME
+
+for d in [BASELINES_DIR, EMPIRICAL_RAW_DIR, EMPIRICAL_PROCESSED_DIR, 
+          EMPIRICAL_RESULTS_DIR, SIMULATION_RESULTS_DIR, POWER_RESULTS_DIR]:
+    d.mkdir(parents=True, exist_ok=True)
+
+def get_baseline_path(n: int, k: int) -> Path:
+    return BASELINES_DIR / f"baseline_N{n}_K{k}.json"
+
+def get_sim_sweep_dir(priority_flag: bool, regime_name: str, k: int) -> Path:
+    p_str = "Priority_TRUE" if priority_flag else "Priority_FALSE"
+    return SIMULATION_RESULTS_DIR / p_str / f"Regime_{regime_name}" / f"K{k}"
+
+def get_power_sweep_dir(priority_flag: bool, regime_name: str, k: int) -> Path:
+    p_str = "Priority_TRUE" if priority_flag else "Priority_FALSE"
+    return POWER_RESULTS_DIR / p_str / f"Regime_{regime_name}" / f"K{k}"
+
+# ==========================================
+# 4. CORE EXPERIMENT MECHANICS
 # ==========================================
 ROUNDS = 5                     
 NUM_UNIQUE_ITEMS = 160         
@@ -42,26 +56,30 @@ MAX_REFILL_LIMIT = 4
 MAX_VISIBLE_ITEMS = 4          
 
 # ==========================================
-# 4. SIMULATION SPECIFIC SETTINGS
+# 5. SIMULATION & POWER ANALYSIS SETTINGS
 # ==========================================
 N_VALUES = [20, 40, 60, 80, 100]           
-K_VALUES = [4, 5]                 
+K_VALUES = [5]                 
 NUM_TRIALS = 100
 SIM_TOPICS = ['base_topic', 'side_topic']
+DETAILED_SIM_N = [20, 40, 60, 80, 100] 
 
-# Only generate detailed PDFs for these N values to prevent folder bloat
-DETAILED_SIM_N = [20, 60]
+BASE_TOPIC_EXTREME_FRACTION = 0.9
 
-PPM_CROSS_EDGE_FRACTIONS = [0.067] 
+PPM_CROSS_EDGE_FRACTIONS = [0.067]
 PRIORITY_QUEUING = True            
 LAST_ROUND_PRIORITY = [True]         
-USE_EPISTEMIC_NOISE = True 
 USE_ALEATORIC_NOISE = True
 ALEATORIC_ERROR_RATE = 0.05 
 
-SIDE_TOPIC_ASSIGNMENT_METHOD = 'probabilistic'
-SIDE_TOPIC_SPLIT_LEFT_BASE = {'Left': 0.35, 'Center-Left': 0.35, 'Center': 0.23, 'Center-Right': 0.03, 'Right': 0.04}
-SIDE_TOPIC_SPLIT_RIGHT_BASE = {'Left': 0.12, 'Center-Left': 0.12, 'Center': 0.12, 'Center-Right': 0.32, 'Right': 0.32}
+# Monte Carlo Power Analysis Parameters
+MC_POOL_SIZE = 500
+MC_ITERATIONS = 10000
+ANALYSIS_WINDOW_SIZE = 1  # 1 = evaluates ONLY the final round
+
+SIDE_TOPIC_ASSIGNMENT_METHOD = 'largest_remainder'
+SIDE_TOPIC_SPLIT_LEFT_BASE = {'Left': 0.80, 'Center-Left': 0.00, 'Center': 0.10, 'Center-Right': 0.00, 'Right': 0.10}
+SIDE_TOPIC_SPLIT_RIGHT_BASE = {'Left': 0.10, 'Center-Left': 0.00, 'Center': 0.10, 'Center-Right': 0.00, 'Right': 0.80}
 SIDE_OPINION_VALUES = {'Left': 0.1, 'Center-Left': 0.3, 'Center': 0.5, 'Center-Right': 0.7, 'Right': 0.9}
 
 FILTER_REGIMES = {
@@ -69,56 +87,121 @@ FILTER_REGIMES = {
 }
 
 # ==========================================
-# 5. BOT SHARING MATRICES PER TOPIC
+# 6. EMPIRICAL EXCLUSIONS
 # ==========================================
-SHARE_PROB_MATRIX_BASE = [
-    [0.697, 0.600, 0.579, 0.500, 0.176],
-    [0.688, 0.938, 0.273, 0.500, 0.286],
-    [0.000, 0.000, 0.000, 0.000, 0.000],
-    [0.188, 0.417, 0.490, 0.5553, 0.490],
-    [0.188, 0.417, 0.490, 0.5553, 0.490]
+EMPIRICAL_GLOBAL_EXCLUSIONS = [
 ]
 
-SHARE_PROB_MATRIX_SIDE = [
-    [0.647, 0.516, 0.548, 0.333, 0.188],
-    [0.750, 0.619, 0.519, 0.571, 0.111],
-    [0.490, 0.450, 0.400, 0.470, 0.310],
-    [0.429, 0.600, 0.444, 0.500, 0.667],
-    [0.148, 0.071, 0.095, 0.462, 0.260]
-]
-
-SHARE_PROB_MATRICES = {
-    'base_topic': SHARE_PROB_MATRIX_BASE,
-    'side_topic': SHARE_PROB_MATRIX_SIDE
+EMPIRICAL_ROUND_EXCLUSIONS = {
+    1: [], 2: [], 3: [], 4: [], 5: [], 6: []
 }
 
 # ==========================================
-# 6. CENTRALIZED CATEGORIZATION MAPPINGS
+# 7. SHARING PROBABILITY MATRICES
+# ==========================================
+
+#Complete
+SHARE_PROB_MATRIX_BASE_SEG = [
+    [0.75, 0.56, 0.55, 0.15, 0.30],
+    [0.75, 0.56, 0.55, 0.15, 0.30],
+    [0.00, 0.00, 0.00, 0.00, 0.00],
+    [0.70, 0.40, 0.70, 0.60, 0.45],
+    [0.30, 0.45, 0.45, 0.45, 0.55] 
+]
+
+SHARE_PROB_MATRIX_BASE_INT = [
+    [0.55, 0.45, 0.35, 0.30, 0.20],  
+    [0.70, 0.75, 0.95, 0.20, 0.35],  
+    [0.50, 0.50, 0.50, 0.50, 0.50],  
+    [0.30, 0.30, 0.10, 0.40, 0.10],  
+    [0.20, 0.20, 0.20, 0.50, 0.65]   
+]
+
+SHARE_PROB_MATRIX_SIDE_LEFT_CHAMBER = [
+    [0.80, 0.90, 0.55, 0.50, 0.25],
+    [0.35, 0.20, 0.05, 0.05, 0.05],
+    [0.75, 0.50, 0.25, 0.35, 0.50],
+    [0.50, 0.45, 0.25, 0.30, 0.05],
+    [0.35, 0.45, 0.45, 0.50, 0.05]
+]
+
+SHARE_PROB_MATRIX_SIDE_RIGHT_CHAMBER = [
+    [0.95, 0.70, 0.95, 0.65, 0.05],
+    [0.80, 0.60, 0.15, 0.45, 0.25],
+    [0.65, 0.50, 0.65, 0.65, 0.90],
+    [0.50, 0.45, 0.25, 0.30, 0.05],
+    [0.10, 0.10, 0.05, 0.20, 0.25]
+]
+
+SHARE_PROB_MATRIX_SIDE_INT = [
+    [0.85, 0.80, 0.60, 0.55, 0.10], 
+    [0.70, 0.50, 0.10, 0.40, 0.25],  
+    [0.75, 0.50, 0.25, 0.35, 0.50],  
+    [0.25, 0.25, 0.25, 0.30, 0.05],  
+    [0.15, 0.20, 0.35, 0.30, 0.15] 
+]
+
+#5X3
+SHARE_PROB_MATRIX_BASE_SEG = [
+    [0.65, 0.60, 0.50, 0.15, 0.30],
+    [0.65, 0.60, 0.50, 0.15, 0.30],
+    [0.00, 0.00, 0.00, 0.00, 0.00],
+    [0.45, 0.40, 0.55, 0.50, 0.50],
+    [0.45, 0.40, 0.55, 0.50, 0.50] 
+]
+
+SHARE_PROB_MATRIX_BASE_INT = [
+    [0.60, 0.50, 0.45, 0.30, 0.25],  
+    [0.60, 0.50, 0.45, 0.30, 0.25],  
+    [0.00, 0.00, 0.00, 0.00, 0.00],  
+    [0.25, 0.25, 0.15, 0.50, 0.50],  
+    [0.25, 0.25, 0.15, 0.50, 0.50]   
+]
+
+SHARE_PROB_MATRIX_SIDE_LEFT_CHAMBER = [
+    [0.70, 0.55, 0.35, 0.10, 0.00],
+    [0.70, 0.55, 0.35, 0.10, 0.00],
+    [0.90, 0.45, 0.05, 0.95, 0.05],
+    [0.85, 0.90, 0.50, 0.50, 0.95],
+    [0.85, 0.90, 0.50, 0.50, 0.95]
+]
+
+SHARE_PROB_MATRIX_SIDE_RIGHT_CHAMBER = [
+    [0.30, 0.45, 0.25, 0.55, 0.40],
+    [0.30, 0.45, 0.25, 0.55, 0.40],
+    [0.65, 0.50, 0.95, 0.65, 0.90],
+    [0.25, 0.10, 0.10, 0.35, 0.50],
+    [0.25, 0.10, 0.10, 0.35, 0.50]
+]
+
+SHARE_PROB_MATRIX_SIDE_INT = [
+    [0.80, 0.65, 0.35, 0.48, 0.15], 
+    [0.80, 0.65, 0.35, 0.48, 0.15],  
+    [0.75, 0.50, 0.25, 0.35, 0.50],  
+    [0.20, 0.25, 0.30, 0.30, 0.10],  
+    [0.20, 0.25, 0.30, 0.30, 0.10]
+]
+
+
+SHARE_PROB_MATRICES = {
+    'base_topic': {
+        'Left': SHARE_PROB_MATRIX_BASE_SEG,
+        'Right': SHARE_PROB_MATRIX_BASE_SEG,
+        'integrated': SHARE_PROB_MATRIX_BASE_INT
+    },
+    'side_topic': {
+        'Left': SHARE_PROB_MATRIX_SIDE_LEFT_CHAMBER,
+        'Right': SHARE_PROB_MATRIX_SIDE_RIGHT_CHAMBER,
+        'integrated': SHARE_PROB_MATRIX_SIDE_INT
+    }
+}
+
+# ==========================================
+# 8. MAPPINGS & PRESENTATION PALETTES
 # ==========================================
 USER_CATS = ['Left', 'Center-Left', 'Center', 'Center-Right', 'Right']
 ITEM_CATS = ['Left', 'Center-Left', 'Center', 'Center-Right', 'Right']
 LEANING_ORDER = ['Left', 'Center Left', 'Center', 'Center Right', 'Right']
-
-def get_bucket(val, is_item=False):
-    idx = min(4, max(0, int(val * 5)))
-    cats = ITEM_CATS if is_item else USER_CATS
-    return cats[idx]
-
-def get_emp_item_bucket(lean_str):
-    clean_str = str(lean_str).strip().title()
-    if clean_str in ['Left']: return 'Left'
-    if clean_str in ['Lean Left', 'Center Left', 'Center-Left']: return 'Center-Left'
-    if clean_str in ['Lean Right', 'Center Right', 'Center-Right']: return 'Center-Right'
-    if clean_str in ['Right']: return 'Right'
-    return 'Center'
-
-def get_emp_user_bucket(val):
-    val = int(val)
-    if val == 5: return 'Left'
-    if val == 4: return 'Center-Left'
-    if val == 3: return 'Center'
-    if val == 2: return 'Center-Right'
-    return 'Right'
 
 POS_COLORS = {5: '#3498db', 4: '#85c1e9', 3: '#bdc3c7', 2: '#f1948a', 1: '#e74c3c'}
 POS_LABELS = {5: 'Left', 4: 'Center Left', 3: 'Center', 2: 'Center Right', 1: 'Right'}
