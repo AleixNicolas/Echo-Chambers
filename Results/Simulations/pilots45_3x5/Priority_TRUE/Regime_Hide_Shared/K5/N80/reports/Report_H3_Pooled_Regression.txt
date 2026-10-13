@@ -1,0 +1,42 @@
+==========================================
+ H3 POOLED LOGISTIC REGRESSION: SIDE_TOPIC
+==========================================
+
+Unit of Analysis: Item-Level Exposure (Seen Events)
+Dependent Variable: is_shared (0 or 1)
+Standard Errors: Clustered at the User_ID level
+
+Total Exposure Events Analyzed: 26800
+
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:              is_shared   No. Observations:                26800
+Model:                          Logit   Df Residuals:                    26788
+Method:                           MLE   Df Model:                           11
+Date:                Mon, 12 Oct 2026   Pseudo R-squ.:                 0.07622
+Time:                        18:53:49   Log-Likelihood:                -16908.
+converged:                       True   LL-Null:                       -18303.
+Covariance Type:              cluster   LLR p-value:                     0.000
+=====================================================================================================================================================================
+                                                                                                        coef    std err          z      P>|z|      [0.025      0.975]
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Intercept                                                                                            -0.2776      0.068     -4.067      0.000      -0.411      -0.144
+C(treatment, Treatment(reference='integrated'))[T.segregated]                                        -0.3130      0.083     -3.788      0.000      -0.475      -0.151
+C(Type)[T.Type_B_ProImm_ClimRight]                                                                   -1.5111      0.139    -10.835      0.000      -1.784      -1.238
+C(Type)[T.Type_C_AntiImm_ClimLeft]                                                                    0.0002      0.109      0.002      0.998      -0.214       0.214
+C(Type)[T.Type_D_AntiImm_ClimRight]                                                                  -1.4000      0.083    -16.914      0.000      -1.562      -1.238
+C(item_cat)[T.Center-Left]                                                                            0.6004      0.047     12.652      0.000       0.507       0.693
+C(item_cat)[T.Center-Right]                                                                           0.3427      0.051      6.674      0.000       0.242       0.443
+C(item_cat)[T.Left]                                                                                   0.9845      0.050     19.564      0.000       0.886       1.083
+C(item_cat)[T.Right]                                                                                  0.0752      0.069      1.092      0.275      -0.060       0.210
+C(treatment, Treatment(reference='integrated'))[T.segregated]:C(Type)[T.Type_B_ProImm_ClimRight]      2.2476      0.298      7.537      0.000       1.663       2.832
+C(treatment, Treatment(reference='integrated'))[T.segregated]:C(Type)[T.Type_C_AntiImm_ClimLeft]     -0.3241      0.151     -2.146      0.032      -0.620      -0.028
+C(treatment, Treatment(reference='integrated'))[T.segregated]:C(Type)[T.Type_D_AntiImm_ClimRight]     0.7543      0.112      6.761      0.000       0.536       0.973
+=====================================================================================================================================================================
+
+
+=== HOW TO READ THIS FOR H3 ===
+Look at the interaction terms (e.g., 'C(treatment...)[T.segregated]:C(Type)[T.Type_C...]').
+A positive, significant coefficient (P>|z| < 0.05) here means that being placed in the
+Segregated network significantly INCREASES the probability of that specific cross-pressured
+demographic sharing an item, compared to the exact same demographic in the Integrated network.

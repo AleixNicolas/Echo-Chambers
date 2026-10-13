@@ -1,0 +1,467 @@
+==========================================
+ SIMULATION SWEEP SUMMARY
+ Regime: Hide_Shared | Priority: TRUE | K: 5
+==========================================
+
+=== INTEGRATED TOPOLOGY ===
+
+[ N = 20 ]
+
+  --- TOPIC: BASE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.07 | Variance: 1.87)
+         [Right Chamber] (Feed Slant: 0.38 | Variance: 2.03)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: 0.09 | Variance: 2.18)
+         [Right Chamber] (Feed Slant: 0.38 | Variance: 1.93)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: 0.21 | Variance: 2.21)
+         [Right Chamber] (Feed Slant: 0.22 | Variance: 2.25)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: 0.17 | Variance: 2.24)
+         [Right Chamber] (Feed Slant: 0.22 | Variance: 2.19)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: 0.25 | Variance: 2.31)
+         [Right Chamber] (Feed Slant: 0.26 | Variance: 2.24)
+
+  --- TOPIC: SIDE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.07 | Variance: 1.87)
+         [Right Chamber] (Feed Slant: 0.38 | Variance: 2.03)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.15 | Variance: 1.90)
+         [Right Chamber] (Feed Slant: 0.00 | Variance: 1.74)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.52 | Variance: 1.77)
+         [Right Chamber] (Feed Slant: -0.28 | Variance: 1.67)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.53 | Variance: 1.78)
+         [Right Chamber] (Feed Slant: -0.66 | Variance: 1.70)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.35 | Variance: 1.84)
+         [Right Chamber] (Feed Slant: -0.51 | Variance: 1.75)
+
+[ N = 40 ]
+
+  --- TOPIC: BASE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: -0.01 | Variance: 1.74)
+         [Right Chamber] (Feed Slant: 0.03 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.10 | Variance: 1.93)
+         [Right Chamber] (Feed Slant: 0.05 | Variance: 2.02)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.00 | Variance: 2.08)
+         [Right Chamber] (Feed Slant: -0.05 | Variance: 2.16)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.07 | Variance: 2.13)
+         [Right Chamber] (Feed Slant: -0.11 | Variance: 2.20)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.03 | Variance: 2.24)
+         [Right Chamber] (Feed Slant: -0.11 | Variance: 2.23)
+
+  --- TOPIC: SIDE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: -0.01 | Variance: 1.74)
+         [Right Chamber] (Feed Slant: 0.03 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.35 | Variance: 1.60)
+         [Right Chamber] (Feed Slant: -0.25 | Variance: 1.67)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.54 | Variance: 1.58)
+         [Right Chamber] (Feed Slant: -0.62 | Variance: 1.55)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.73 | Variance: 1.48)
+         [Right Chamber] (Feed Slant: -0.80 | Variance: 1.48)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.85 | Variance: 1.54)
+         [Right Chamber] (Feed Slant: -0.84 | Variance: 1.38)
+
+[ N = 60 ]
+
+  --- TOPIC: BASE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: -0.31 | Variance: 1.41)
+         [Right Chamber] (Feed Slant: -0.16 | Variance: 2.42)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.10 | Variance: 2.20)
+         [Right Chamber] (Feed Slant: -0.13 | Variance: 1.86)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: 0.01 | Variance: 2.20)
+         [Right Chamber] (Feed Slant: -0.31 | Variance: 2.24)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.17 | Variance: 2.37)
+         [Right Chamber] (Feed Slant: -0.23 | Variance: 2.21)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.18 | Variance: 2.27)
+         [Right Chamber] (Feed Slant: -0.29 | Variance: 2.30)
+
+  --- TOPIC: SIDE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: -0.31 | Variance: 1.41)
+         [Right Chamber] (Feed Slant: -0.16 | Variance: 2.42)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.60 | Variance: 1.85)
+         [Right Chamber] (Feed Slant: -0.64 | Variance: 1.46)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.82 | Variance: 1.39)
+         [Right Chamber] (Feed Slant: -0.92 | Variance: 1.48)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -1.00 | Variance: 1.27)
+         [Right Chamber] (Feed Slant: -1.00 | Variance: 1.26)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -1.10 | Variance: 1.15)
+         [Right Chamber] (Feed Slant: -1.16 | Variance: 1.06)
+
+[ N = 80 ]
+
+  --- TOPIC: BASE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.03 | Variance: 2.12)
+         [Right Chamber] (Feed Slant: 0.05 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.02 | Variance: 2.09)
+         [Right Chamber] (Feed Slant: -0.08 | Variance: 2.05)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.17 | Variance: 2.16)
+         [Right Chamber] (Feed Slant: -0.11 | Variance: 2.12)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.12 | Variance: 2.23)
+         [Right Chamber] (Feed Slant: -0.15 | Variance: 2.16)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.08 | Variance: 2.18)
+         [Right Chamber] (Feed Slant: -0.12 | Variance: 2.27)
+
+  --- TOPIC: SIDE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.03 | Variance: 2.12)
+         [Right Chamber] (Feed Slant: 0.05 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.34 | Variance: 1.83)
+         [Right Chamber] (Feed Slant: -0.28 | Variance: 1.89)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.66 | Variance: 1.61)
+         [Right Chamber] (Feed Slant: -0.67 | Variance: 1.62)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.81 | Variance: 1.49)
+         [Right Chamber] (Feed Slant: -0.83 | Variance: 1.54)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.95 | Variance: 1.46)
+         [Right Chamber] (Feed Slant: -1.01 | Variance: 1.40)
+
+[ N = 100 ]
+
+  --- TOPIC: BASE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.06 | Variance: 2.13)
+         [Right Chamber] (Feed Slant: 0.22 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: 0.08 | Variance: 2.16)
+         [Right Chamber] (Feed Slant: 0.05 | Variance: 2.16)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: 0.08 | Variance: 2.24)
+         [Right Chamber] (Feed Slant: -0.02 | Variance: 2.26)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.01 | Variance: 2.29)
+         [Right Chamber] (Feed Slant: -0.02 | Variance: 2.25)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: 0.05 | Variance: 2.29)
+         [Right Chamber] (Feed Slant: -0.11 | Variance: 2.30)
+
+  --- TOPIC: SIDE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.06 | Variance: 2.13)
+         [Right Chamber] (Feed Slant: 0.22 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.29 | Variance: 1.87)
+         [Right Chamber] (Feed Slant: -0.33 | Variance: 1.90)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.62 | Variance: 1.68)
+         [Right Chamber] (Feed Slant: -0.62 | Variance: 1.64)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.77 | Variance: 1.60)
+         [Right Chamber] (Feed Slant: -0.81 | Variance: 1.52)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.92 | Variance: 1.40)
+         [Right Chamber] (Feed Slant: -0.97 | Variance: 1.39)
+=== SEGREGATED TOPOLOGY ===
+
+[ N = 20 ]
+
+  --- TOPIC: BASE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.07 | Variance: 1.87)
+         [Right Chamber] (Feed Slant: 0.38 | Variance: 2.03)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.33 | Variance: 1.93)
+         [Right Chamber] (Feed Slant: 0.51 | Variance: 1.68)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.49 | Variance: 1.81)
+         [Right Chamber] (Feed Slant: 0.57 | Variance: 1.61)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.60 | Variance: 1.69)
+         [Right Chamber] (Feed Slant: 0.20 | Variance: 2.03)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.19 | Variance: 2.01)
+         [Right Chamber] (Feed Slant: -0.01 | Variance: 1.89)
+
+  --- TOPIC: SIDE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.07 | Variance: 1.87)
+         [Right Chamber] (Feed Slant: 0.38 | Variance: 2.03)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.53 | Variance: 1.80)
+         [Right Chamber] (Feed Slant: 0.62 | Variance: 1.90)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.76 | Variance: 1.48)
+         [Right Chamber] (Feed Slant: 0.78 | Variance: 1.72)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.61 | Variance: 1.70)
+         [Right Chamber] (Feed Slant: 0.47 | Variance: 2.04)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.32 | Variance: 1.80)
+         [Right Chamber] (Feed Slant: 0.13 | Variance: 2.36)
+
+[ N = 40 ]
+
+  --- TOPIC: BASE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: -0.01 | Variance: 1.74)
+         [Right Chamber] (Feed Slant: 0.03 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.49 | Variance: 1.42)
+         [Right Chamber] (Feed Slant: 0.01 | Variance: 1.88)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.75 | Variance: 1.16)
+         [Right Chamber] (Feed Slant: -0.12 | Variance: 1.76)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.82 | Variance: 0.96)
+         [Right Chamber] (Feed Slant: -0.02 | Variance: 1.78)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.70 | Variance: 1.03)
+         [Right Chamber] (Feed Slant: -0.09 | Variance: 1.95)
+
+  --- TOPIC: SIDE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: -0.01 | Variance: 1.74)
+         [Right Chamber] (Feed Slant: 0.03 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.60 | Variance: 1.47)
+         [Right Chamber] (Feed Slant: 0.19 | Variance: 2.11)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.91 | Variance: 1.22)
+         [Right Chamber] (Feed Slant: 0.22 | Variance: 2.18)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -1.06 | Variance: 1.17)
+         [Right Chamber] (Feed Slant: 0.17 | Variance: 2.34)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -1.07 | Variance: 1.33)
+         [Right Chamber] (Feed Slant: 0.11 | Variance: 2.38)
+
+[ N = 60 ]
+
+  --- TOPIC: BASE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: -0.31 | Variance: 1.41)
+         [Right Chamber] (Feed Slant: -0.16 | Variance: 2.42)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.55 | Variance: 1.21)
+         [Right Chamber] (Feed Slant: -0.10 | Variance: 2.37)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.76 | Variance: 1.09)
+         [Right Chamber] (Feed Slant: -0.13 | Variance: 2.24)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.74 | Variance: 1.24)
+         [Right Chamber] (Feed Slant: -0.14 | Variance: 2.06)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.81 | Variance: 1.22)
+         [Right Chamber] (Feed Slant: -0.17 | Variance: 1.89)
+
+  --- TOPIC: SIDE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: -0.31 | Variance: 1.41)
+         [Right Chamber] (Feed Slant: -0.16 | Variance: 2.42)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.66 | Variance: 1.29)
+         [Right Chamber] (Feed Slant: 0.12 | Variance: 2.64)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.93 | Variance: 1.28)
+         [Right Chamber] (Feed Slant: 0.35 | Variance: 2.57)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -1.13 | Variance: 1.20)
+         [Right Chamber] (Feed Slant: 0.39 | Variance: 2.68)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -1.17 | Variance: 1.23)
+         [Right Chamber] (Feed Slant: 0.32 | Variance: 2.75)
+
+[ N = 80 ]
+
+  --- TOPIC: BASE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.03 | Variance: 2.12)
+         [Right Chamber] (Feed Slant: 0.05 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.43 | Variance: 1.90)
+         [Right Chamber] (Feed Slant: 0.10 | Variance: 1.76)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.69 | Variance: 1.45)
+         [Right Chamber] (Feed Slant: 0.06 | Variance: 1.81)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.80 | Variance: 1.31)
+         [Right Chamber] (Feed Slant: -0.02 | Variance: 1.83)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.83 | Variance: 1.32)
+         [Right Chamber] (Feed Slant: -0.02 | Variance: 1.74)
+
+  --- TOPIC: SIDE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.03 | Variance: 2.12)
+         [Right Chamber] (Feed Slant: 0.05 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.66 | Variance: 1.64)
+         [Right Chamber] (Feed Slant: 0.23 | Variance: 2.05)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -1.00 | Variance: 1.30)
+         [Right Chamber] (Feed Slant: 0.34 | Variance: 2.20)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -1.17 | Variance: 1.23)
+         [Right Chamber] (Feed Slant: 0.35 | Variance: 2.35)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -1.27 | Variance: 1.12)
+         [Right Chamber] (Feed Slant: 0.27 | Variance: 2.49)
+
+[ N = 100 ]
+
+  --- TOPIC: BASE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.06 | Variance: 2.13)
+         [Right Chamber] (Feed Slant: 0.22 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.40 | Variance: 2.04)
+         [Right Chamber] (Feed Slant: 0.25 | Variance: 1.80)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.61 | Variance: 1.77)
+         [Right Chamber] (Feed Slant: 0.22 | Variance: 1.77)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -0.78 | Variance: 1.59)
+         [Right Chamber] (Feed Slant: 0.09 | Variance: 1.85)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -0.89 | Variance: 1.46)
+         [Right Chamber] (Feed Slant: 0.07 | Variance: 1.88)
+
+  --- TOPIC: SIDE_TOPIC ---
+
+    -- ROUND 1 --
+         [Left Chamber] (Feed Slant: 0.06 | Variance: 2.13)
+         [Right Chamber] (Feed Slant: 0.22 | Variance: 1.85)
+
+    -- ROUND 2 --
+         [Left Chamber] (Feed Slant: -0.63 | Variance: 1.83)
+         [Right Chamber] (Feed Slant: 0.51 | Variance: 1.98)
+
+    -- ROUND 3 --
+         [Left Chamber] (Feed Slant: -0.96 | Variance: 1.58)
+         [Right Chamber] (Feed Slant: 0.58 | Variance: 2.09)
+
+    -- ROUND 4 --
+         [Left Chamber] (Feed Slant: -1.13 | Variance: 1.45)
+         [Right Chamber] (Feed Slant: 0.52 | Variance: 2.24)
+
+    -- ROUND 5 --
+         [Left Chamber] (Feed Slant: -1.19 | Variance: 1.38)
+         [Right Chamber] (Feed Slant: 0.32 | Variance: 2.62)

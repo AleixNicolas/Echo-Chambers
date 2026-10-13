@@ -1,0 +1,322 @@
+==========================================
+ SUMMARY: SIDE_TOPIC | INTEGRATED
+==========================================
+
+
+Zero-Share Participants : 150
+  - User ID: sim_integrated_0_17
+  - User ID: sim_integrated_0_2
+  - User ID: sim_integrated_0_21
+  - User ID: sim_integrated_0_31
+  - User ID: sim_integrated_0_33
+  - User ID: sim_integrated_0_36
+  - User ID: sim_integrated_0_37
+  - User ID: sim_integrated_0_46
+  - User ID: sim_integrated_0_52
+  - User ID: sim_integrated_0_54
+  - User ID: sim_integrated_0_70
+  - User ID: sim_integrated_0_73
+  - User ID: sim_integrated_0_82
+  - User ID: sim_integrated_0_88
+  - User ID: sim_integrated_0_90
+  - User ID: sim_integrated_1_18
+  - User ID: sim_integrated_1_2
+  - User ID: sim_integrated_1_21
+  - User ID: sim_integrated_1_26
+  - User ID: sim_integrated_1_29
+  - User ID: sim_integrated_1_30
+  - User ID: sim_integrated_1_49
+  - User ID: sim_integrated_1_50
+  - User ID: sim_integrated_1_53
+  - User ID: sim_integrated_1_56
+  - User ID: sim_integrated_1_60
+  - User ID: sim_integrated_1_62
+  - User ID: sim_integrated_1_64
+  - User ID: sim_integrated_1_85
+  - User ID: sim_integrated_1_97
+  - User ID: sim_integrated_2_11
+  - User ID: sim_integrated_2_14
+  - User ID: sim_integrated_2_20
+  - User ID: sim_integrated_2_28
+  - User ID: sim_integrated_2_29
+  - User ID: sim_integrated_2_40
+  - User ID: sim_integrated_2_46
+  - User ID: sim_integrated_2_51
+  - User ID: sim_integrated_2_62
+  - User ID: sim_integrated_2_66
+  - User ID: sim_integrated_2_71
+  - User ID: sim_integrated_2_73
+  - User ID: sim_integrated_2_77
+  - User ID: sim_integrated_2_8
+  - User ID: sim_integrated_2_81
+  - User ID: sim_integrated_3_10
+  - User ID: sim_integrated_3_12
+  - User ID: sim_integrated_3_15
+  - User ID: sim_integrated_3_17
+  - User ID: sim_integrated_3_3
+  - User ID: sim_integrated_3_39
+  - User ID: sim_integrated_3_40
+  - User ID: sim_integrated_3_41
+  - User ID: sim_integrated_3_57
+  - User ID: sim_integrated_3_58
+  - User ID: sim_integrated_3_61
+  - User ID: sim_integrated_3_76
+  - User ID: sim_integrated_3_77
+  - User ID: sim_integrated_3_8
+  - User ID: sim_integrated_3_85
+  - User ID: sim_integrated_4_1
+  - User ID: sim_integrated_4_12
+  - User ID: sim_integrated_4_24
+  - User ID: sim_integrated_4_40
+  - User ID: sim_integrated_4_43
+  - User ID: sim_integrated_4_50
+  - User ID: sim_integrated_4_51
+  - User ID: sim_integrated_4_53
+  - User ID: sim_integrated_4_56
+  - User ID: sim_integrated_4_57
+  - User ID: sim_integrated_4_9
+  - User ID: sim_integrated_4_90
+  - User ID: sim_integrated_4_92
+  - User ID: sim_integrated_4_94
+  - User ID: sim_integrated_4_98
+  - User ID: sim_integrated_5_13
+  - User ID: sim_integrated_5_22
+  - User ID: sim_integrated_5_28
+  - User ID: sim_integrated_5_38
+  - User ID: sim_integrated_5_42
+  - User ID: sim_integrated_5_45
+  - User ID: sim_integrated_5_49
+  - User ID: sim_integrated_5_60
+  - User ID: sim_integrated_5_64
+  - User ID: sim_integrated_5_68
+  - User ID: sim_integrated_5_70
+  - User ID: sim_integrated_5_81
+  - User ID: sim_integrated_5_83
+  - User ID: sim_integrated_5_87
+  - User ID: sim_integrated_5_93
+  - User ID: sim_integrated_6_11
+  - User ID: sim_integrated_6_25
+  - User ID: sim_integrated_6_31
+  - User ID: sim_integrated_6_37
+  - User ID: sim_integrated_6_39
+  - User ID: sim_integrated_6_40
+  - User ID: sim_integrated_6_44
+  - User ID: sim_integrated_6_48
+  - User ID: sim_integrated_6_5
+  - User ID: sim_integrated_6_52
+  - User ID: sim_integrated_6_54
+  - User ID: sim_integrated_6_59
+  - User ID: sim_integrated_6_65
+  - User ID: sim_integrated_6_75
+  - User ID: sim_integrated_6_81
+  - User ID: sim_integrated_7_28
+  - User ID: sim_integrated_7_3
+  - User ID: sim_integrated_7_33
+  - User ID: sim_integrated_7_47
+  - User ID: sim_integrated_7_5
+  - User ID: sim_integrated_7_52
+  - User ID: sim_integrated_7_59
+  - User ID: sim_integrated_7_61
+  - User ID: sim_integrated_7_63
+  - User ID: sim_integrated_7_68
+  - User ID: sim_integrated_7_69
+  - User ID: sim_integrated_7_76
+  - User ID: sim_integrated_7_78
+  - User ID: sim_integrated_7_93
+  - User ID: sim_integrated_7_98
+  - User ID: sim_integrated_8_13
+  - User ID: sim_integrated_8_27
+  - User ID: sim_integrated_8_28
+  - User ID: sim_integrated_8_30
+  - User ID: sim_integrated_8_32
+  - User ID: sim_integrated_8_40
+  - User ID: sim_integrated_8_41
+  - User ID: sim_integrated_8_47
+  - User ID: sim_integrated_8_52
+  - User ID: sim_integrated_8_58
+  - User ID: sim_integrated_8_68
+  - User ID: sim_integrated_8_77
+  - User ID: sim_integrated_8_83
+  - User ID: sim_integrated_8_85
+  - User ID: sim_integrated_8_89
+  - User ID: sim_integrated_9_1
+  - User ID: sim_integrated_9_12
+  - User ID: sim_integrated_9_23
+  - User ID: sim_integrated_9_37
+  - User ID: sim_integrated_9_42
+  - User ID: sim_integrated_9_50
+  - User ID: sim_integrated_9_60
+  - User ID: sim_integrated_9_61
+  - User ID: sim_integrated_9_63
+  - User ID: sim_integrated_9_83
+  - User ID: sim_integrated_9_87
+  - User ID: sim_integrated_9_91
+  - User ID: sim_integrated_9_94
+  - User ID: sim_integrated_9_97
+  - User ID: sim_integrated_9_99
+
+--- ROUND 1 ---
+  Active Participants: 1000
+  Sourcing Averages : 0.00 Repeats | N/A  Pool | N/A  Backlog
+
+  [Left Chamber] (Feed Slant: 0.06 | Variance: 2.13)
+    Left         Seen  :  20.9% L |  20.7% C-L |  17.2% C |  18.3% C-R |  22.9% R
+    Left         Share :  78.3% L |  67.7% C-L |  33.6% C |  46.4% C-R |  17.9% R
+    Center       Seen  :  16.8% L |  19.7% C-L |  20.6% C |  17.6% C-R |  25.3% R
+    Center       Share :  66.7% L |  50.7% C-L |  24.3% C |  43.3% C-R |  54.7% R
+    Right        Seen  :  19.2% L |  16.1% C-L |  14.7% C |  25.4% C-R |  24.6% R
+    Right        Share :  27.9% L |  22.2% C-L |  30.3% C |  28.1% C-R |   9.1% R
+
+  [Right Chamber] (Feed Slant: 0.22 | Variance: 1.85)
+    Left         Seen  :  14.3% L |  18.4% C-L |  20.0% C |  24.4% C-R |  22.9% R
+    Left         Share :  75.4% L |  58.4% C-L |  39.2% C |  49.2% C-R |  20.7% R
+    Center       Seen  :  17.2% L |  18.6% C-L |  20.6% C |  23.5% C-R |  20.1% R
+    Center       Share :  60.0% L |  39.5% C-L |  38.1% C |  27.1% C-R |  43.9% R
+    Right        Seen  :  14.2% L |  17.8% C-L |  21.4% C |  23.9% C-R |  22.7% R
+    Right        Share :  22.0% L |  26.2% C-L |  29.5% C |  30.3% C-R |  12.8% R
+
+--- ROUND 2 ---
+  Active Participants: 1000
+  Sourcing Averages : 0.01 Repeats | 0.00 Pool | 0.00 Backlog
+
+  [Left Chamber] (Feed Slant: -0.29 | Variance: 1.87)
+    Left         Seen  :  25.5% L |  24.2% C-L |  18.1% C |  20.3% C-R |  12.0% R
+    Left         Share :  79.5% L |  62.5% C-L |  36.9% C |  45.4% C-R |  15.7% R
+    Center       Seen  :  26.8% L |  25.0% C-L |  13.5% C |  23.2% C-R |  11.5% R
+    Center       Share :  74.7% L |  54.1% C-L |  26.1% C |  39.2% C-R |  59.0% R
+    Right        Seen  :  22.8% L |  21.4% C-L |  20.1% C |  20.1% C-R |  15.6% R
+    Right        Share :  17.6% L |  27.1% C-L |  33.3% C |  40.0% C-R |   8.6% R
+
+  [Right Chamber] (Feed Slant: -0.33 | Variance: 1.90)
+    Left         Seen  :  26.2% L |  26.4% C-L |  14.0% C |  21.7% C-R |  11.6% R
+    Left         Share :  74.8% L |  64.8% C-L |  35.3% C |  50.5% C-R |  14.3% R
+    Center       Seen  :  23.5% L |  24.5% C-L |  14.7% C |  24.0% C-R |  13.2% R
+    Center       Share :  64.6% L |  46.0% C-L |  26.7% C |  36.7% C-R |  48.1% R
+    Right        Seen  :  27.0% L |  24.9% C-L |  15.5% C |  20.4% C-R |  12.3% R
+    Right        Share :  21.5% L |  24.5% C-L |  35.5% C |  25.8% C-R |   9.3% R
+
+--- ROUND 3 ---
+  Active Participants: 1000
+  Sourcing Averages : 0.02 Repeats | 0.00 Pool | 0.00 Backlog
+
+  [Left Chamber] (Feed Slant: -0.62 | Variance: 1.68)
+    Left         Seen  :  32.5% L |  27.1% C-L |  14.1% C |  19.6% C-R |   6.7% R
+    Left         Share :  73.9% L |  66.1% C-L |  39.1% C |  47.9% C-R |  22.9% R
+    Center       Seen  :  36.2% L |  27.4% C-L |  12.4% C |  17.1% C-R |   7.1% R
+    Center       Share :  70.7% L |  54.8% C-L |  26.2% C |  29.3% C-R |  58.3% R
+    Right        Seen  :  34.8% L |  29.0% C-L |  11.2% C |  19.6% C-R |   5.4% R
+    Right        Share :  28.2% L |  23.1% C-L |  32.0% C |  36.4% C-R |   0.0% R
+
+  [Right Chamber] (Feed Slant: -0.62 | Variance: 1.64)
+    Left         Seen  :  32.0% L |  28.5% C-L |  15.3% C |  18.8% C-R |   5.4% R
+    Left         Share :  73.5% L |  70.3% C-L |  37.8% C |  50.5% C-R |  30.8% R
+    Center       Seen  :  38.2% L |  26.0% C-L |  14.2% C |  16.2% C-R |   5.4% R
+    Center       Share :  66.7% L |  62.3% C-L |  17.2% C |  36.4% C-R |  36.4% R
+    Right        Seen  :  32.5% L |  28.4% C-L |  12.2% C |  20.9% C-R |   6.1% R
+    Right        Share :  24.2% L |  26.9% C-L |  31.2% C |  28.5% C-R |  16.2% R
+
+--- ROUND 4 ---
+  Active Participants: 1000
+  Sourcing Averages : 0.04 Repeats | 0.00 Pool | 0.00 Backlog
+
+  [Left Chamber] (Feed Slant: -0.77 | Variance: 1.60)
+    Left         Seen  :  38.8% L |  27.2% C-L |  11.4% C |  17.8% C-R |   4.7% R
+    Left         Share :  75.0% L |  65.2% C-L |  45.1% C |  48.8% C-R |  11.8% R
+    Center       Seen  :  37.1% L |  25.6% C-L |  10.9% C |  22.1% C-R |   4.4% R
+    Center       Share :  77.0% L |  54.0% C-L |  24.3% C |  32.0% C-R |  53.3% R
+    Right        Seen  :  39.7% L |  29.0% C-L |   9.8% C |  16.5% C-R |   4.9% R
+    Right        Share :  18.0% L |  16.9% C-L |  40.9% C |  32.4% C-R |   0.0% R
+
+  [Right Chamber] (Feed Slant: -0.81 | Variance: 1.52)
+    Left         Seen  :  36.8% L |  32.2% C-L |  10.3% C |  16.7% C-R |   3.9% R
+    Left         Share :  77.0% L |  63.5% C-L |  32.0% C |  40.7% C-R |  21.1% R
+    Center       Seen  :  36.3% L |  31.4% C-L |   9.8% C |  16.7% C-R |   5.9% R
+    Center       Share :  67.6% L |  50.0% C-L |  15.0% C |  38.2% C-R |  41.7% R
+    Right        Seen  :  39.0% L |  28.9% C-L |  10.1% C |  18.1% C-R |   3.8% R
+    Right        Share :  24.2% L |  23.0% C-L |  31.6% C |  34.0% C-R |   6.0% R
+
+--- ROUND 5 ---
+  Active Participants: 1000
+  Sourcing Averages : 0.07 Repeats | 0.00 Pool | 0.00 Backlog
+
+  [Left Chamber] (Feed Slant: -0.92 | Variance: 1.40)
+    Left         Seen  :  41.6% L |  30.2% C-L |   8.4% C |  17.7% C-R |   2.1% R
+    Left         Share :  77.9% L |  64.0% C-L |  43.8% C |  46.1% C-R |  23.3% R
+    Center       Seen  :  46.5% L |  27.6% C-L |   6.8% C |  17.1% C-R |   2.1% R
+    Center       Share :  70.9% L |  52.1% C-L |  34.8% C |  39.7% C-R |  14.3% R
+    Right        Seen  :  40.6% L |  28.6% C-L |  10.3% C |  17.0% C-R |   3.6% R
+    Right        Share :  28.6% L |  31.2% C-L |  17.4% C |  23.7% C-R |  12.5% R
+
+  [Right Chamber] (Feed Slant: -0.97 | Variance: 1.39)
+    Left         Seen  :  45.7% L |  28.5% C-L |   9.1% C |  14.9% C-R |   1.9% R
+    Left         Share :  70.6% L |  67.4% C-L |  47.7% C |  50.0% C-R |  22.2% R
+    Center       Seen  :  44.1% L |  27.5% C-L |   8.3% C |  17.2% C-R |   2.9% R
+    Center       Share :  66.7% L |  44.6% C-L |  41.2% C |  20.0% C-R |  16.7% R
+    Right        Seen  :  45.5% L |  26.3% C-L |   9.8% C |  16.0% C-R |   2.4% R
+    Right        Share :  22.1% L |  27.2% C-L |  36.7% C |  28.6% C-R |  28.1% R
+
+========================================
+ GLOBAL SHARE RATE MATRIX (5x5, ALL ROUNDS, BOTH CHAMBERS)
+========================================
+
+item_cat      Left  Center-Left  Center  Center-Right  Right
+user_cat                                                    
+Left         76.0%        65.1%   38.6%         47.3%  18.3%
+Center-Left   0.0%         0.0%    0.0%          0.0%   0.0%
+Center       70.0%        51.7%   27.0%         34.8%  50.0%
+Center-Right  0.0%         0.0%    0.0%          0.0%   0.0%
+Right        23.1%        25.3%   32.3%         29.8%  11.7%
+
+========================================
+ GLOBAL SHARE RATE MATRIX (3x5 COLLAPSED, ALL ROUNDS)
+========================================
+
+item_cat    Left  Center-Left  Center  Center-Right  Right
+user_cat_3                                                
+Left       76.0%        65.1%   38.6%         47.3%  18.3%
+Center     70.0%        51.7%   27.0%         34.8%  50.0%
+Right      23.1%        25.3%   32.3%         29.8%  11.7%
+
+========================================
+ LEFT CHAMBER: SHARE RATE MATRIX (5x5)
+========================================
+
+item_cat      Left  Center-Left  Center  Center-Right  Right
+user_cat                                                    
+Left         76.7%        65.0%   38.7%         46.9%  17.7%
+Center-Left   0.0%         0.0%    0.0%          0.0%   0.0%
+Center       72.4%        53.3%   26.1%         36.7%  54.4%
+Center-Right  0.0%         0.0%    0.0%          0.0%   0.0%
+Right        24.1%        24.1%   31.1%         32.1%   7.4%
+
+========================================
+ LEFT CHAMBER: SHARE RATE MATRIX (3x5 COLLAPSED)
+========================================
+
+item_cat    Left  Center-Left  Center  Center-Right  Right
+user_cat_3                                                
+Left       76.7%        65.0%   38.7%         46.9%  17.7%
+Center     72.4%        53.3%   26.1%         36.7%  54.4%
+Right      24.1%        24.1%   31.1%         32.1%   7.4%
+
+========================================
+ RIGHT CHAMBER: SHARE RATE MATRIX (5x5)
+========================================
+
+item_cat      Left  Center-Left  Center  Center-Right  Right
+user_cat                                                    
+Left         73.9%        65.3%   38.1%         48.4%  20.4%
+Center-Left   0.0%         0.0%    0.0%          0.0%   0.0%
+Center       65.8%        49.0%   28.3%         31.7%  42.3%
+Center-Right  0.0%         0.0%    0.0%          0.0%   0.0%
+Right        22.9%        25.5%   32.5%         29.4%  12.6%
+
+========================================
+ RIGHT CHAMBER: SHARE RATE MATRIX (3x5 COLLAPSED)
+========================================
+
+item_cat    Left  Center-Left  Center  Center-Right  Right
+user_cat_3                                                
+Left       73.9%        65.3%   38.1%         48.4%  20.4%
+Center     65.8%        49.0%   28.3%         31.7%  42.3%
+Right      22.9%        25.5%   32.5%         29.4%  12.6%

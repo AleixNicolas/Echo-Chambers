@@ -1,0 +1,2 @@
+ERROR: 'statsmodels' library is not installed.
+Run 'pip install statsmodels' to generate the H3 logistic regression report.

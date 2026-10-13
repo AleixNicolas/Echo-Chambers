@@ -1,0 +1,112 @@
+=== FEED SOURCES REPORT: integrated ===
+
+--- GLOBAL CHAMBER / SCOPE ---
+
+  Round 1:
+    Repeats       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Pool          : N/A
+    Backlog       : N/A
+    Hidden        : N/A
+    Cross-Chamber : Avg:  0.00 (± 0.00) | Max:  0.00
+
+  Round 2:
+    Repeats       : Avg:  0.01 (± 0.08) | Max:  1.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  0.83 (± 0.86) | Max:  4.00
+
+  Round 3:
+    Repeats       : Avg:  0.02 (± 0.13) | Max:  1.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  1.70 (± 1.19) | Max:  6.00
+
+  Round 4:
+    Repeats       : Avg:  0.03 (± 0.17) | Max:  2.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  2.62 (± 1.40) | Max:  8.00
+
+  Round 5:
+    Repeats       : Avg:  0.05 (± 0.24) | Max:  2.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  3.51 (± 1.61) | Max: 10.00
+
+--- LEFT CHAMBER / SCOPE ---
+
+  Round 1:
+    Repeats       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Pool          : N/A
+    Backlog       : N/A
+    Hidden        : N/A
+    Cross-Chamber : Avg:  0.00 (± 0.00) | Max:  0.00
+
+  Round 2:
+    Repeats       : Avg:  0.01 (± 0.09) | Max:  1.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  0.78 (± 0.85) | Max:  3.00
+
+  Round 3:
+    Repeats       : Avg:  0.02 (± 0.13) | Max:  1.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  1.50 (± 1.11) | Max:  6.00
+
+  Round 4:
+    Repeats       : Avg:  0.03 (± 0.18) | Max:  2.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  2.27 (± 1.24) | Max:  7.00
+
+  Round 5:
+    Repeats       : Avg:  0.05 (± 0.22) | Max:  2.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  3.00 (± 1.41) | Max:  8.00
+
+--- RIGHT CHAMBER / SCOPE ---
+
+  Round 1:
+    Repeats       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Pool          : N/A
+    Backlog       : N/A
+    Hidden        : N/A
+    Cross-Chamber : Avg:  0.00 (± 0.00) | Max:  0.00
+
+  Round 2:
+    Repeats       : Avg:  0.01 (± 0.07) | Max:  1.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  0.89 (± 0.88) | Max:  4.00
+
+  Round 3:
+    Repeats       : Avg:  0.02 (± 0.13) | Max:  1.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  1.90 (± 1.23) | Max:  6.00
+
+  Round 4:
+    Repeats       : Avg:  0.03 (± 0.17) | Max:  1.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  2.96 (± 1.46) | Max:  8.00
+
+  Round 5:
+    Repeats       : Avg:  0.06 (± 0.25) | Max:  2.00
+    Pool          : Avg:  0.00 (± 0.00) | Max:  0.00
+    Backlog       : Avg:  0.00 (± 0.00) | Max:  0.00
+    Hidden        : Avg:  0.00 (± 0.00) | Max:  0.00
+    Cross-Chamber : Avg:  4.01 (± 1.63) | Max: 10.00

@@ -1,0 +1,25 @@
+==========================================
+ H3 HYPOTHESIS REPORT: SIDE TOPIC (SIDE_TOPIC)
+==========================================
+
+Comparing exact demographic 2D types across structural treatments to remove confounding.
+
+--- TYPE A (PRO-IMM, CLIMATE-LEFT) ---
+  Segregated Share Rate :  38.9%  (Shared 599 of 1540 seen)
+  Integrated Share Rate :  52.6%  (Shared 747 of 1420 seen)
+  Effect (Seg - Int)    : -13.7%
+
+--- TYPE B (PRO-IMM, CLIMATE-RIGHT) ---
+  Segregated Share Rate :  63.3%  (Shared 76 of 120 seen)
+  Integrated Share Rate :  28.1%  (Shared 73 of 260 seen)
+  Effect (Seg - Int)    :  35.3%
+
+--- TYPE C (ANTI-IMM, CLIMATE-LEFT) ---
+  Segregated Share Rate :  45.3%  (Shared 272 of 600 seen)
+  Integrated Share Rate :  55.7%  (Shared 334 of 600 seen)
+  Effect (Seg - Int)    : -10.3%
+
+--- TYPE D (ANTI-IMM, CLIMATE-RIGHT) ---
+  Segregated Share Rate :  36.3%  (Shared 428 of 1180 seen)
+  Integrated Share Rate :  24.8%  (Shared 297 of 1200 seen)
+  Effect (Seg - Int)    :  11.5%

@@ -38,11 +38,11 @@
     Cross-Chamber : Avg:  1.90 (± 1.21) | Max:  5.00
 
   Round 6:
-    Repeats       : Avg:  2.85 (± 2.32) | Max:  7.00
-    Pool          : Avg:  1.40 (± 2.46) | Max:  9.00
+    Repeats       : Avg:  1.80 (± 1.74) | Max:  5.00
+    Pool          : Avg:  1.90 (± 2.38) | Max:  9.00
     Backlog       : Avg:  0.90 (± 1.25) | Max:  4.00
     Hidden        : Avg: 12.85 (± 9.55) | Max: 34.00
-    Cross-Chamber : Avg:  2.70 (± 1.75) | Max:  6.00
+    Cross-Chamber : Avg:  2.50 (± 1.32) | Max:  5.00
 
 --- LEFT CHAMBER / SCOPE ---
 
@@ -82,11 +82,11 @@
     Cross-Chamber : Avg:  2.30 (± 1.25) | Max:  5.00
 
   Round 6:
-    Repeats       : Avg:  3.00 (± 2.40) | Max:  7.00
-    Pool          : Avg:  1.00 (± 1.15) | Max:  3.00
+    Repeats       : Avg:  1.50 (± 1.43) | Max:  4.00
+    Pool          : Avg:  2.00 (± 0.94) | Max:  3.00
     Backlog       : Avg:  1.20 (± 1.48) | Max:  4.00
     Hidden        : Avg: 15.00 (±10.82) | Max: 34.00
-    Cross-Chamber : Avg:  2.80 (± 1.55) | Max:  6.00
+    Cross-Chamber : Avg:  2.40 (± 1.07) | Max:  5.00
 
 --- RIGHT CHAMBER / SCOPE ---
 
@@ -126,8 +126,8 @@
     Cross-Chamber : Avg:  1.50 (± 1.08) | Max:  3.00
 
   Round 6:
-    Repeats       : Avg:  2.70 (± 2.36) | Max:  6.00
+    Repeats       : Avg:  2.10 (± 2.02) | Max:  5.00
     Pool          : Avg:  1.80 (± 3.33) | Max:  9.00
     Backlog       : Avg:  0.60 (± 0.97) | Max:  3.00
     Hidden        : Avg: 10.70 (± 8.08) | Max: 28.00
-    Cross-Chamber : Avg:  2.60 (± 2.01) | Max:  6.00
+    Cross-Chamber : Avg:  2.60 (± 1.58) | Max:  5.00
